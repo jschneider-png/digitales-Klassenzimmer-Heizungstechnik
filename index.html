@@ -6,15 +6,21 @@
 <title>Virtuelles Klassenzimmer · Heizungstechnik</title>
 <style>
 :root{--navy:#0f3f67;--blue:#2e91c2;--blue-dark:#0e5b8d;--bg:#e9f1f5;--line:#b8cdd8;--ink:#17384f;--muted:#607787}
-*{box-sizing:border-box}html{scroll-behavior:smooth}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
 body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:linear-gradient(180deg,#edf4f7,#e4edf2);color:var(--ink)}
-a{color:inherit}.container{max-width:1300px;margin:auto;padding:0 18px}
+a{color:inherit}
+.container{max-width:1300px;margin:auto;padding:0 18px}
 header{background:#fff;border-bottom:1px solid #d5e2e9;box-shadow:0 2px 8px rgba(24,57,76,.05)}
 .nav{min-height:66px;display:flex;align-items:center;justify-content:space-between;gap:18px}
-.brand{display:flex;align-items:center;gap:11px;text-decoration:none}.brand-mark{font-size:1.55rem}
-.brand strong{display:block;color:#143e5b;font-size:1rem}.brand small{display:block;color:#6c8392;font-size:.77rem;margin-top:2px}
-.menu{display:flex;gap:5px;flex-wrap:wrap}.menu a{padding:8px 10px;border-radius:8px;text-decoration:none;color:#365d74;font-size:.84rem;font-weight:750}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none}
+.brand-mark{font-size:1.55rem}
+.brand strong{display:block;color:#143e5b;font-size:1rem}
+.brand small{display:block;color:#6c8392;font-size:.77rem;margin-top:2px}
+.menu{display:flex;gap:5px;flex-wrap:wrap}
+.menu a{padding:8px 10px;border-radius:8px;text-decoration:none;color:#365d74;font-size:.84rem;font-weight:750}
 .menu a:hover,.menu a[aria-current="page"]{background:#e9f3f8;color:#12658f}
+
 main{padding:20px 0 28px}
 .section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;margin-bottom:12px}
 .eyebrow{font-size:.72rem;font-weight:850;letter-spacing:.11em;color:#287da7;text-transform:uppercase}
@@ -24,188 +30,162 @@ main{padding:20px 0 28px}
 .classroom-shell{position:relative;border:1px solid #afc8d5;border-radius:18px;overflow:hidden;background:#d7e3e9;box-shadow:0 18px 42px rgba(22,57,77,.15)}
 .room{position:relative;line-height:0;background:#fff}
 .room>img{display:block;width:100%;height:auto}
-.hotspot-map{position:absolute;inset:0;width:100%;height:100%;z-index:3}
+.hotspot-map{position:absolute;inset:0;width:100%;height:100%;z-index:4}
 .hotspot-map a{cursor:pointer;outline:none}
-.hotspot-map a rect,.hotspot-map a polygon{fill:transparent;stroke:none;transition:.15s}
-.hotspot-map a:hover rect,.hotspot-map a:hover polygon,.hotspot-map a:focus-visible rect,.hotspot-map a:focus-visible polygon{fill:rgba(23,111,155,.11);stroke:rgba(23,111,155,.34);stroke-width:3}
+.hotspot-map rect,.hotspot-map polygon{
+  fill:rgba(43,145,194,0);
+  stroke:rgba(255,255,255,0);
+  stroke-width:3;
+  vector-effect:non-scaling-stroke;
+  transition:fill .14s ease,stroke .14s ease,filter .14s ease
+}
+.hotspot-map a:hover rect,.hotspot-map a:focus-visible rect,
+.hotspot-map a:hover polygon,.hotspot-map a:focus-visible polygon{
+  fill:rgba(43,145,194,.16);
+  stroke:rgba(126,224,255,.9);
+  filter:drop-shadow(0 0 7px rgba(56,180,238,.7))
+}
+.hotspot-map a:focus-visible{outline:none}
 
-/* Jahresreise als eigener Bereich im Klassenzimmer */
 .journey-link{
-  position:absolute;right:2.2%;top:2.8%;z-index:8;
+  position:absolute;right:2.2%;top:2.4%;z-index:8;
   display:flex;align-items:center;gap:8px;
-  padding:8px 11px;border-radius:10px;
+  padding:9px 12px;border-radius:10px;
   background:rgba(255,255,255,.94);
-  border:1px solid rgba(155,190,210,.9);
-  box-shadow:0 6px 18px rgba(9,42,62,.2);
-  text-decoration:none;color:#0e5b8d;
-  font-size:.76rem;font-weight:850;line-height:1.1
+  border:1px solid #9fc6d9;
+  box-shadow:0 7px 20px rgba(7,39,59,.23);
+  text-decoration:none;color:#0b5d8d;
+  font-size:.78rem;font-weight:900;line-height:1
 }
-.journey-link:hover,.journey-link:focus-visible{transform:translateY(-2px);outline:none;box-shadow:0 9px 22px rgba(9,42,62,.28)}
+.journey-link:hover,.journey-link:focus-visible{transform:translateY(-2px);outline:none;box-shadow:0 10px 24px rgba(7,39,59,.3)}
 
-.week-overlay{
-  position:absolute;left:0;right:0;bottom:0;z-index:6;
-  padding:28px 10px 10px;
-  background:linear-gradient(180deg,rgba(8,35,56,0),rgba(8,35,56,.18) 22%,rgba(8,35,56,.78) 78%,rgba(8,35,56,.93));
-  line-height:normal
+.week-hover-info{
+  position:absolute;left:50%;bottom:35.5%;z-index:9;
+  width:min(390px,calc(100% - 28px));
+  transform:translateX(-50%) translateY(8px);
+  opacity:0;pointer-events:none;
+  background:rgba(255,255,255,.98);color:#17384f;
+  border:1px solid #b7d1df;border-radius:13px;
+  padding:13px 15px;
+  box-shadow:0 14px 34px rgba(5,33,52,.28);
+  transition:opacity .14s ease,transform .14s ease;
+  line-height:1.35
 }
-.week-strip{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:5px}
-.week-card{
-  position:relative;min-width:0;display:flex;flex-direction:column;min-height:210px;
-  background:#fff;border:2px solid #6ec9f0;border-radius:12px;overflow:hidden;text-decoration:none;
-  box-shadow:0 4px 12px rgba(0,31,53,.38),0 0 0 1px rgba(255,255,255,.32) inset;
-  transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease
-}
-.week-card:hover,.week-card:focus-visible{
-  transform:translateY(-8px);border-color:#9be9ff;
-  box-shadow:0 14px 25px rgba(0,31,53,.5),0 0 22px rgba(67,193,248,.72);outline:none
-}
-.week-no{
-  padding:7px 3px;text-align:center;
-  background:linear-gradient(180deg,#2f9fd5,#187ab0);
-  color:#fff;font-size:.68rem;font-weight:900;
-  border-bottom:1px solid rgba(255,255,255,.3)
-}
-.week-topic{
-  min-height:82px;padding:8px 4px 6px;
-  background:linear-gradient(180deg,#ffffff,#eef7fb);
-  color:#0e3960;text-align:center;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
-  font-size:.66rem;line-height:1.08;font-weight:900
-}
-.week-icon{font-size:1.65rem;line-height:1;filter:saturate(.9)}
-.week-visual{
-  position:relative;min-height:88px;overflow:hidden;
-  display:flex;align-items:flex-end;justify-content:center;
-  padding:7px 5px 8px;text-align:center;
-  font-size:.57rem;font-weight:850;line-height:1.12;
-  color:#123b58;text-shadow:none;
-  border-top:1px solid #d7e6ee
-}
-.week-visual::before{
-  content:attr(data-symbol);
-  position:absolute;left:50%;top:43%;
-  transform:translate(-50%,-50%);
-  font-size:2.7rem;line-height:1;
-  filter:drop-shadow(0 3px 3px rgba(0,0,0,.18));
-  z-index:1
-}
-.week-visual::after{
-  content:"";position:absolute;inset:0;
-  background:
-    linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.25) 55%,rgba(5,48,75,.12)),
-    repeating-linear-gradient(135deg,rgba(255,255,255,.12) 0 5px,rgba(255,255,255,0) 5px 11px);
-  pointer-events:none
-}
-.week-visual span{
-  position:relative;z-index:2;
-  width:100%;padding:3px 2px;border-radius:5px;
-  background:rgba(255,255,255,.78);
-  color:#163c56
-}
-.w1{background:linear-gradient(155deg,#ead0a0,#c58b49 50%,#78502b)}
-.w2{background:linear-gradient(155deg,#ffe3b0,#f58b42 48%,#4b8cca)}
-.w3{background:linear-gradient(155deg,#dce7ec,#8799a3 50%,#4b5f6b)}
-.w4{background:linear-gradient(155deg,#f0d3a9,#b87e42 48%,#748c48)}
-.w5{background:linear-gradient(155deg,#f6f7f7,#c7d0d4 52%,#8398a3)}
-.w6{background:linear-gradient(155deg,#d9ecf6,#8fb7cd 48%,#8b6849)}
-.w7{background:linear-gradient(155deg,#f0b3a7,#cf4936 45%,#3d86b4)}
-.w8{background:linear-gradient(155deg,#eef2f4,#a8b6be 52%,#607684)}
-.w9{background:linear-gradient(155deg,#e7f3c7,#8acb69 52%,#f1d65a)}
-.w10{background:linear-gradient(155deg,#d9eef8,#83bddd 50%,#4d7e9b)}
-.w11{background:linear-gradient(155deg,#e2e9ed,#9baab3 52%,#61727b)}
-.w12{background:linear-gradient(155deg,#f4f6f7,#d6e0e5 52%,#9bb0bc)}
-.week-open{
-  margin:5px;padding:6px 3px;border-radius:8px;
-  background:linear-gradient(180deg,#12649a,#0a507f);
-  color:#fff;text-align:center;font-size:.60rem;font-weight:900
-}
-
-.week-hover-info{position:absolute;left:50%;bottom:225px;z-index:9;width:min(390px,calc(100% - 28px));transform:translateX(-50%) translateY(8px);opacity:0;pointer-events:none;background:rgba(255,255,255,.98);color:#17384f;border:1px solid #b7d1df;border-radius:13px;padding:13px 15px;box-shadow:0 14px 34px rgba(5,33,52,.28);transition:opacity .14s ease,transform .14s ease;line-height:1.35}
 .week-hover-info.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .week-hover-info strong{display:block;color:#0f5f91;margin-bottom:5px;font-size:.92rem}
-.week-hover-info ul{margin:0;padding-left:18px;color:#4f6878;font-size:.78rem}.week-hover-info li{margin:2px 0}
+.week-hover-info ul{margin:0;padding-left:18px;color:#4f6878;font-size:.78rem}
+.week-hover-info li{margin:2px 0}
 
 .helper-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:13px}
 .helper{background:#fff;border:1px solid #d3e0e7;border-radius:12px;padding:12px 14px;text-decoration:none;box-shadow:0 3px 10px rgba(23,56,79,.05)}
-.helper strong{display:block;color:#173f59;margin-bottom:3px;font-size:.92rem}.helper span{font-size:.81rem;color:#657d8c;line-height:1.35}
+.helper strong{display:block;color:#173f59;margin-bottom:3px;font-size:.92rem}
+.helper span{font-size:.81rem;color:#657d8c;line-height:1.35}
+
 footer{padding:20px 0;color:#6f8390;font-size:.82rem}
 
-@media(max-width:1100px){
-  .week-overlay{padding-top:36px}.week-strip{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:3px}
-  .week-card{flex:0 0 104px;scroll-snap-align:start;min-height:185px}.week-hover-info{bottom:214px}
-}
 @media(max-width:760px){
-  .container{padding:0 10px}.nav{align-items:flex-start;flex-direction:column;padding:9px 0}.menu a{font-size:.76rem;padding:6px 7px}
-  .section-head{align-items:flex-start;flex-direction:column}.helper-row{grid-template-columns:1fr}main{padding-top:15px}.classroom-shell{border-radius:13px}
-  .journey-link{top:8px;right:8px;font-size:.68rem;padding:7px 9px}
-  .week-overlay{position:relative;padding:8px;background:linear-gradient(180deg,#d7e4eb,#c8d9e2)}
-  .week-card{flex-basis:100px;min-height:180px}.week-hover-info{display:none}
+  .container{padding:0 10px}
+  .nav{align-items:flex-start;flex-direction:column;padding:9px 0}
+  .menu a{font-size:.76rem;padding:6px 7px}
+  .section-head{align-items:flex-start;flex-direction:column}
+  .helper-row{grid-template-columns:1fr}
+  main{padding-top:15px}
+  .classroom-shell{border-radius:13px}
+  .journey-link{top:7px;right:7px;font-size:.67rem;padding:7px 9px}
+  .week-hover-info{display:none}
 }
 </style>
 </head>
 <body>
-<header><div class="container nav">
-<a class="brand" href="index.html"><span class="brand-mark">🔥</span><span><strong>Lernwerkstatt Heizungstechnik</strong><small>Digitales Klassenzimmer</small></span></a>
-<nav class="menu"><a href="index.html" aria-current="page">Startseite</a><a href="lernpfad.html">Lernpfad</a><a href="lernorte.html">Links & Lernorte</a><a href="aktuelles.html">Aktuelles</a><a href="jahresreise-karte.html">Jahresreise</a></nav>
-</div></header>
+<header>
+  <div class="container nav">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">🔥</span>
+      <span><strong>Lernwerkstatt Heizungstechnik</strong><small>Digitales Klassenzimmer</small></span>
+    </a>
+    <nav class="menu">
+      <a href="index.html" aria-current="page">Startseite</a>
+      <a href="lernpfad.html">Lernpfad</a>
+      <a href="lernorte.html">Links & Lernorte</a>
+      <a href="aktuelles.html">Aktuelles</a>
+      <a href="jahresreise-karte.html">Jahresreise</a>
+    </nav>
+  </div>
+</header>
 
-<main><div class="container">
-<div class="section-head"><div><div class="eyebrow">Dein digitaler Fachraum</div><h1>Virtuelles Klassenzimmer Heizungstechnik</h1></div><p>Wähle einen Bereich im Klassenzimmer oder öffne unten direkt die passende Blockwoche.</p></div>
+<main>
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Dein digitaler Fachraum</div>
+        <h1>Virtuelles Klassenzimmer Heizungstechnik</h1>
+      </div>
+      <p>Klicke direkt auf eine Blockwoche im Bild. Beim Darüberfahren siehst du die wichtigsten Inhalte der Woche.</p>
+    </div>
 
-<div class="classroom-shell"><div class="room">
-<img src="klassenzimmer.png" alt="Virtuelles Klassenzimmer Heizungstechnik">
+    <div class="classroom-shell">
+      <div class="room">
+        <img src="klassenzimmer-heizung.jpg" alt="Virtuelles Klassenzimmer Heizungstechnik mit zwölf Blockwochen">
 
-<a class="journey-link" href="jahresreise-karte.html" aria-label="Jahresreise öffnen">🗺️ Jahresreise</a>
+        <a class="journey-link" href="jahresreise-karte.html" aria-label="Jahresreise öffnen">🗺️ Jahresreise</a>
 
-<svg class="hotspot-map" viewBox="0 0 1672 941" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-<a href="lernpfad.html?bw=1"><polygon points="175,102 441,106 440,465 167,465"/></a>
-<a href="lernorte.html#tafelbilder"><polygon points="456,78 1060,82 1060,484 453,484"/></a>
-<a href="lernorte.html#lernraum"><polygon points="45,498 256,498 246,628 8,628"/></a>
-<a href="jahresreise-karte.html"><polygon points="1405,32 1647,12 1645,227 1404,255"/></a>
-<a href="https://mebis.bycs.de/" target="_blank" rel="noopener"><polygon points="1351,263 1567,266 1568,499 1350,499"/></a>
-<a href="lernorte.html#skripte"><rect x="1086" y="405" width="90" height="78"/></a>
-<a href="lernorte.html#arbeitsblaetter"><rect x="1176" y="405" width="90" height="78"/></a>
-<a href="lernorte.html#videos"><rect x="1086" y="483" width="90" height="72"/></a>
-<a href="lernorte.html#normen"><rect x="1176" y="483" width="90" height="72"/></a>
-<a href="lernorte.html#fachbuecher"><rect x="1086" y="555" width="90" height="78"/></a>
-<a href="lernorte.html#links"><rect x="1176" y="555" width="90" height="78"/></a>
-</svg>
+        <svg class="hotspot-map" viewBox="0 0 1672 941" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-label="Anklickbare Bereiche im virtuellen Klassenzimmer">
+          <a href="lernpfad.html?bw=1" class="week-hotspot" data-title="1. Woche · Brennstoffe" data-info="Öl, Gas, Holz und Pellets|Brennstoffeigenschaften|Einsatz und Auswahl" aria-label="Blockwoche 1 öffnen"><rect x="10" y="596" width="130" height="326" rx="12"/></a>
+          <a href="lernpfad.html?bw=2" class="week-hotspot" data-title="2. Woche · Energiegehalt & Verbrennung" data-info="Heizwert und Brennwert|Energieinhalt|Verbrennung und Emissionen" aria-label="Blockwoche 2 öffnen"><rect x="145" y="596" width="130" height="326" rx="12"/></a>
+          <a href="lernpfad.html?bw=3" class="week-hotspot" data-title="3. Woche · Heizöllagerung" data-info="Tankarten und Aufbau|Befüllung und Entlüftung|Sicherheit und Schutzmaßnahmen" aria-label="Blockwoche 3 öffnen"><rect x="280" y="596" width="130" height="326" rx="12"/></a>
+          <a href="lernpfad.html?bw=4" class="week-hotspot" data-title="4. Woche · Festbrennstofflager" data-info="Pellets, Scheitholz und Hackschnitzel|Lagerbedingungen|Austragung und Sicherheit" aria-label="Blockwoche 4 öffnen"><rect x="415" y="596" width="130" height="326" rx="12"/></a>
+          <a href="lernpfad.html?bw=5" class="week-hotspot" data-title="5. Woche · Wärmeerzeuger" data-info="Kessel und Wärmeerzeuger|Brennwerttechnik|Biomasse und Anlagenwahl" aria-label="Blockwoche 5 öffnen"><rect x="550" y="596" width="130" height="326" rx="12"/></a>
+          <a href="lernpfad.html?bw=6" class="week-hotspot" data-title="6. Woche · Abgastechnik" data-info="Abgasführung und Schornstein|Förderdruck und Druckverluste|Kondensat und Brandschutz" aria-label="Blockwoche 6 öffnen"><rect x="685" y="596" width="130" height="326" rx="12"/></a>
+          <a href="lernpfad.html?bw=7" class="week-hotspot" data-title="7. Woche · Hydraulik" data-info="Rohrnetz, Pumpen und Ventile|Volumenstrom und Druckverlust|Hydraulischer Abgleich" aria-label="Blockwoche 7 öffnen"><rect x="820" y="596" width="130" height="326" rx="12"/></a>
+          <a href="lernpfad.html?bw=8" class="week-hotspot" data-title="8. Woche · Regelung" data-info="Steuerung und Sensorik|Regelstrategien|Hydraulischer Abgleich" aria-label="Blockwoche 8 öffnen"><rect x="955" y="596" width="130" height="326" rx="12"/></a>
+          <a href="lernpfad.html?bw=9" class="week-hotspot" data-title="9. Woche · Effizienz" data-info="Energieeinsparung|Anlagenoptimierung|Förderung und Wirtschaftlichkeit" aria-label="Blockwoche 9 öffnen"><rect x="1090" y="596" width="130" height="326" rx="12"/></a>
+          <a href="lernpfad.html?bw=10" class="week-hotspot" data-title="10. Woche · Wärmepumpe Grundlagen" data-info="Grundprinzip und Kältekreislauf|Wärmequellen|Komponenten und Leistungszahl" aria-label="Blockwoche 10 öffnen"><rect x="1225" y="596" width="130" height="326" rx="12"/></a>
+          <a href="lernpfad.html?bw=11" class="week-hotspot" data-title="11. Woche · Wärmepumpe optimieren" data-info="Auslegung und Betriebsweise|COP, SCOP und Jahresarbeitszahl|Fehlersuche und Optimierung" aria-label="Blockwoche 11 öffnen"><rect x="1360" y="596" width="130" height="326" rx="12"/></a>
+          <a href="lernpfad.html?bw=12" class="week-hotspot" data-title="12. Woche · Projekt & Anwendung" data-info="Anlagenplanung|Inbetriebnahme und Übergabe|Praxisbeispiele und Fachgespräch" aria-label="Blockwoche 12 öffnen"><rect x="1495" y="596" width="165" height="326" rx="12"/></a>
 
-<div id="weekHoverInfo" class="week-hover-info"><strong id="weekHoverTitle"></strong><ul id="weekHoverList"></ul></div>
+          <a href="https://mebis.bycs.de/" target="_blank" rel="noopener" aria-label="Mebis öffnen"><rect x="1270" y="55" width="310" height="270" rx="8"/></a>
+          <a href="lernorte.html#arbeitsblaetter" aria-label="Arbeitsblätter öffnen"><rect x="1025" y="275" width="80" height="90" rx="4"/></a>
+          <a href="lernorte.html#videos" aria-label="Videos öffnen"><rect x="1110" y="275" width="80" height="90" rx="4"/></a>
+          <a href="lernorte.html#zusatzmaterial" aria-label="Zusatzmaterial öffnen"><rect x="1025" y="370" width="80" height="90" rx="4"/></a>
+          <a href="lernorte.html#uebungsmaterial" aria-label="Übungsmaterial öffnen"><rect x="1110" y="370" width="80" height="90" rx="4"/></a>
+        </svg>
 
-<div class="week-overlay"><div class="week-strip">
-<a class="week-card" href="lernpfad.html?bw=1" data-title="1. Woche · Brennstoffe" data-info="Öl, Gas, Holz und Pellets|Brennstoffeigenschaften|Einsatz und Auswahl"><div class="week-no">1. Woche</div><div class="week-topic"><span class="week-icon">🔥</span>Brennstoffe</div><div class="week-visual w1" data-symbol="🪵🔥"><span>Öl · Gas · Holz · Pellets</span></div><div class="week-open">Woche öffnen</div></a>
-<a class="week-card" href="lernpfad.html?bw=2" data-title="2. Woche · Energiegehalt & Verbrennung" data-info="Heizwert und Brennwert|Energieinhalt|Verbrennung und Emissionen"><div class="week-no">2. Woche</div><div class="week-topic"><span class="week-icon">🔥</span>Energiegehalt & Verbrennung</div><div class="week-visual w2" data-symbol="🔥⚡"><span>Heizwert · Brennwert · Verbrennung</span></div><div class="week-open">Woche öffnen</div></a>
-<a class="week-card" href="lernpfad.html?bw=3" data-title="3. Woche · Heizöllagerung" data-info="Tankarten und Aufbau|Befüllung und Entlüftung|Sicherheit und Schutzmaßnahmen"><div class="week-no">3. Woche</div><div class="week-topic"><span class="week-icon">🛢️</span>Heizöllagerung</div><div class="week-visual w3" data-symbol="🛢️"><span>Tankarten · Sicherheit</span></div><div class="week-open">Woche öffnen</div></a>
-<a class="week-card" href="lernpfad.html?bw=4" data-title="4. Woche · Festbrennstofflager" data-info="Pellets, Scheitholz und Hackschnitzel|Lagerbedingungen|Austragung und Sicherheit"><div class="week-no">4. Woche</div><div class="week-topic"><span class="week-icon">🪵</span>Festbrennstofflager</div><div class="week-visual w4" data-symbol="🪵"><span>Pellets · Holz · Lagerung</span></div><div class="week-open">Woche öffnen</div></a>
-<a class="week-card" href="lernpfad.html?bw=5" data-title="5. Woche · Wärmeerzeuger" data-info="Kessel und Wärmeerzeuger|Brennwerttechnik|Biomasse und Anlagenwahl"><div class="week-no">5. Woche</div><div class="week-topic"><span class="week-icon">♨️</span>Wärmeerzeuger</div><div class="week-visual w5" data-symbol="♨️"><span>Kessel · Brennwert · Biomasse</span></div><div class="week-open">Woche öffnen</div></a>
-<a class="week-card" href="lernpfad.html?bw=6" data-title="6. Woche · Abgastechnik" data-info="Abgasführung und Schornstein|Förderdruck und Druckverluste|Kondensat und Brandschutz"><div class="week-no">6. Woche</div><div class="week-topic"><span class="week-icon">🏭</span>Abgastechnik</div><div class="week-visual w6" data-symbol="🏭"><span>Abgasführung · Schornstein</span></div><div class="week-open">Woche öffnen</div></a>
-<a class="week-card" href="lernpfad.html?bw=7" data-title="7. Woche · Hydraulik" data-info="Rohrnetz, Pumpen und Ventile|Volumenstrom und Druckverlust|Hydraulischer Abgleich"><div class="week-no">7. Woche</div><div class="week-topic"><span class="week-icon">♨️</span>Hydraulik</div><div class="week-visual w7" data-symbol="🔧"><span>Rohrnetz · Pumpen · Ventile</span></div><div class="week-open">Woche öffnen</div></a>
-<a class="week-card" href="lernpfad.html?bw=8" data-title="8. Woche · Regelung" data-info="Steuerung und Sensorik|Regelstrategien|Hydraulischer Abgleich"><div class="week-no">8. Woche</div><div class="week-topic"><span class="week-icon">🎛️</span>Regelung</div><div class="week-visual w8" data-symbol="🎛️"><span>Steuerung · Sensoren · Regelung</span></div><div class="week-open">Woche öffnen</div></a>
-<a class="week-card" href="lernpfad.html?bw=9" data-title="9. Woche · Effizienz" data-info="Energieeinsparung|Anlagenoptimierung|Förderung und Wirtschaftlichkeit"><div class="week-no">9. Woche</div><div class="week-topic"><span class="week-icon">🌿</span>Effizienz</div><div class="week-visual w9" data-symbol="🌿"><span>Energieeinsparung · Förderung</span></div><div class="week-open">Woche öffnen</div></a>
-<a class="week-card" href="lernpfad.html?bw=10" data-title="10. Woche · Wärmepumpe Grundlagen" data-info="Grundprinzip und Kältekreislauf|Wärmequellen|Komponenten und Leistungszahl"><div class="week-no">10. Woche</div><div class="week-topic"><span class="week-icon">🌀</span>Wärmepumpe Grundlagen</div><div class="week-visual w10" data-symbol="🌀"><span>Funktionsweise · Komponenten</span></div><div class="week-open">Woche öffnen</div></a>
-<a class="week-card" href="lernpfad.html?bw=11" data-title="11. Woche · Wärmepumpe optimieren" data-info="Auslegung und Betriebsweise|COP, SCOP und JAZ|Fehlersuche und Optimierung"><div class="week-no">11. Woche</div><div class="week-topic"><span class="week-icon">📊</span>Wärmepumpe optimieren</div><div class="week-visual w11" data-symbol="📊"><span>Auslegung · Betrieb · Effizienz</span></div><div class="week-open">Woche öffnen</div></a>
-<a class="week-card" href="lernpfad.html?bw=12" data-title="12. Woche · Projekt & Anwendung" data-info="Anlagenplanung|Inbetriebnahme und Übergabe|Praxisbeispiele und Fachgespräch"><div class="week-no">12. Woche</div><div class="week-topic"><span class="week-icon">📋</span>Projekt & Anwendung</div><div class="week-visual w12" data-symbol="📐"><span>Planung · Inbetriebnahme · Praxis</span></div><div class="week-open">Woche öffnen</div></a>
-</div></div>
-</div></div>
+        <div id="weekHoverInfo" class="week-hover-info" aria-live="polite">
+          <strong id="weekHoverTitle"></strong>
+          <ul id="weekHoverList"></ul>
+        </div>
+      </div>
+    </div>
 
-<div class="helper-row">
-<a class="helper" href="lernpfad.html"><strong>📚 Lernpfad</strong><span>Alle Blockwochen und Lerneinheiten im Überblick.</span></a>
-<a class="helper" href="lernorte.html"><strong>🧰 Materialien & Lernorte</strong><span>Skripte, Arbeitsblätter, Videos, Normen und Links.</span></a>
-<a class="helper" href="jahresreise-karte.html"><strong>🗺️ Jahresreise</strong><span>Der Jahresfahrplan über alle zwölf Blockwochen.</span></a>
-</div>
-</div></main>
+    <div class="helper-row">
+      <a class="helper" href="lernpfad.html"><strong>📚 Lernpfad</strong><span>Alle Blockwochen und Lerneinheiten im Überblick.</span></a>
+      <a class="helper" href="lernorte.html"><strong>🧰 Materialien & Lernorte</strong><span>Skripte, Arbeitsblätter, Videos, Normen und Links.</span></a>
+      <a class="helper" href="jahresreise-karte.html"><strong>🗺️ Jahresreise</strong><span>Der Jahresfahrplan über alle zwölf Blockwochen.</span></a>
+    </div>
+  </div>
+</main>
 
 <footer><div class="container">Lernwerkstatt Heizungstechnik</div></footer>
 
 <script>
 (function(){
- const info=document.getElementById('weekHoverInfo'),title=document.getElementById('weekHoverTitle'),list=document.getElementById('weekHoverList');
- document.querySelectorAll('.week-card').forEach(card=>{
-   const show=()=>{title.textContent=card.dataset.title||'Blockwoche';list.innerHTML=(card.dataset.info||'').split('|').filter(Boolean).map(x=>'<li>'+x+'</li>').join('');info.classList.add('show')};
-   const hide=()=>info.classList.remove('show');
-   card.addEventListener('mouseenter',show);card.addEventListener('mouseleave',hide);card.addEventListener('focus',show);card.addEventListener('blur',hide);
- });
+  const info=document.getElementById('weekHoverInfo');
+  const title=document.getElementById('weekHoverTitle');
+  const list=document.getElementById('weekHoverList');
+
+  function show(el){
+    title.textContent=el.dataset.title||'Blockwoche';
+    list.innerHTML=(el.dataset.info||'').split('|').filter(Boolean).map(x=>'<li>'+x+'</li>').join('');
+    info.classList.add('show');
+  }
+  function hide(){info.classList.remove('show')}
+
+  document.querySelectorAll('.week-hotspot').forEach(el=>{
+    el.addEventListener('mouseenter',()=>show(el));
+    el.addEventListener('mouseleave',hide);
+    el.addEventListener('focus',()=>show(el));
+    el.addEventListener('blur',hide);
+  });
 })();
 </script>
 </body>
