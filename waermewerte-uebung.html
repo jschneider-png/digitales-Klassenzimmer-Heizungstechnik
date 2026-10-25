@@ -41,6 +41,15 @@ table{width:100%;border-collapse:collapse;margin-top:10px;font-size:.85rem}th,td
 .field-status.tip{background:#eef6fb;color:#315a70;border:1px solid #c5dce8}
 input.is-correct{background:#f0faf3;border-color:#76b98f;box-shadow:0 0 0 2px rgba(72,155,103,.10)}
 input.is-wrong{background:#fff8f2;border-color:#d99b6b;box-shadow:0 0 0 2px rgba(197,111,47,.08)}
+
+.help-ladder{margin:10px 0 2px;padding:9px 10px;border:1px solid #d4e3ea;border-radius:10px;background:#f8fbfd}
+.help-ladder-title{font-size:.75rem;font-weight:800;color:#4f6c7c;margin-bottom:7px}
+.help-ladder-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.help-step{position:relative;padding:7px 8px;border-radius:8px;background:#eef3f6;color:#667d89;font-size:.74rem;font-weight:700;text-align:center;border:1px solid #d8e3e9;transition:.15s}
+.help-step.active{background:#fff1d8;color:#8a5718;border-color:#e8c57d}
+.help-step.done{background:#edf8f1;color:#1d6b43;border-color:#b8dec6}
+.help-step .num{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#fff;margin-right:4px;font-size:.7rem}
+@media(max-width:620px){.help-ladder-steps{grid-template-columns:1fr}.help-step{text-align:left}}
 </style>
 </head>
 <body>
@@ -203,17 +212,36 @@ document.querySelectorAll("input[data-a]").forEach(input=>{
  });
  input.addEventListener("blur",()=>checkSingleField(input,{onBlur:true}));
 });
+function ensureHelpLadder(task){
+ if(task.querySelector(".help-ladder"))return;
+ const actions=task.querySelector(".actions");
+ if(!actions)return;
+ const ladder=document.createElement("div");
+ ladder.className="help-ladder";
+ ladder.innerHTML='<div class="help-ladder-title">🪜 Deine Hilfe-Leiter</div><div class="help-ladder-steps"><div class="help-step" data-step="1"><span class="num">1</span>Denkanstoß</div><div class="help-step" data-step="2"><span class="num">2</span>Formel</div><div class="help-step" data-step="3"><span class="num">3</span>Rechenschritt</div></div>';
+ actions.insertAdjacentElement("beforebegin",ladder);
+}
+function updateHelpLadder(task,level,solved=false){
+ ensureHelpLadder(task);
+ task.querySelectorAll(".help-step").forEach(step=>{
+   const n=Number(step.dataset.step);
+   step.classList.toggle("active",!solved&&n===Math.min(Math.max(level,1),3));
+   step.classList.toggle("done",solved||n<level);
+ });
+}
 document.querySelectorAll(".task").forEach(task=>{
  let tries=0;const fb=task.querySelector(".feedback"),sol=task.querySelector(".solution"),id=task.dataset.id||"";
+ ensureHelpLadder(task);
+ updateHelpLadder(task,1,false);
  const check=task.querySelector(".check"),help=task.querySelector(".help"),sample=task.querySelector(".sample");
  if(check)check.addEventListener("click",()=>{
   const inputs=[...task.querySelectorAll("input[data-a]")];tries++;
   const results=inputs.map(i=>checkSingleField(i));
   const ok=inputs.length&&results.every(Boolean);
-  if(ok){fb.className="feedback show ok";fb.textContent="✓ Richtig. Vergleiche jetzt deinen Rechenweg.";sol&&sol.classList.add("show");}
-  else{fb.className="feedback show bad";const arr=hints[id]||["Prüfe Gegeben, Gesucht, Formel und Einheit."];fb.textContent="Noch nicht richtig. "+arr[Math.min(tries-1,arr.length-1)];sol&&sol.classList.remove("show");}
+  if(ok){fb.className="feedback show ok";fb.textContent="✓ Richtig. Vergleiche jetzt deinen Rechenweg.";sol&&sol.classList.add("show");updateHelpLadder(task,4,true);}
+  else{fb.className="feedback show bad";const arr=hints[id]||["Prüfe Gegeben, Gesucht, Formel und Einheit."];fb.textContent="Noch nicht richtig. "+arr[Math.min(tries-1,arr.length-1)];sol&&sol.classList.remove("show");updateHelpLadder(task,Math.min(tries,3),false);}
  });
- if(help)help.addEventListener("click",()=>{tries++;fb.className="feedback show bad";const arr=hints[id]||["Prüfe Gegeben, Gesucht, Formel und Einheit."];fb.textContent="Hinweis: "+arr[Math.min(tries-1,arr.length-1)];});
+ if(help)help.addEventListener("click",()=>{tries++;fb.className="feedback show bad";const arr=hints[id]||["Prüfe Gegeben, Gesucht, Formel und Einheit."];fb.textContent="Hinweis: "+arr[Math.min(tries-1,arr.length-1)];updateHelpLadder(task,Math.min(tries,3),false);});
  if(sample)sample.addEventListener("click",()=>sol&&sol.classList.toggle("show"));
 });
 const quizAnswers={q1:"b",q2:"a",q3:"b",q4:"a",q5:"a"};
