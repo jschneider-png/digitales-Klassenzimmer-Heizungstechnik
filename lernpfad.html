@@ -307,25 +307,39 @@ footer{background:#0f273a;color:#aec1cf;padding:30px 0;margin-top:28px}.footer-r
 
 
 /* BW2 Verbrennung: Bild als interaktive Lernoberfläche */
-.comb-image-shell{position:relative;margin-top:12px;border-radius:18px;overflow:hidden;border:1px solid #adc9d8;background:#0b527d;box-shadow:0 16px 38px rgba(18,58,82,.16)}
-.comb-image-shell>img{display:block;width:100%;height:auto}
+.comb-image-shell{
+  position:relative;margin-top:12px;border-radius:18px;overflow:hidden;
+  border:1px solid #adc9d8;background:#0b527d url("verbrennung-interaktiv.png?v=20261025-1645") center/cover no-repeat;
+  box-shadow:0 16px 38px rgba(18,58,82,.16)
+}
+.comb-image-shell>img{display:block;width:100%;height:auto;position:relative;z-index:1}
 .comb-map-hotspot{position:absolute;border:0;border-radius:12px;background:rgba(55,177,225,0);cursor:pointer;z-index:3;transition:.16s}
 .comb-map-hotspot:hover,.comb-map-hotspot:focus-visible,.comb-map-hotspot.active{background:rgba(69,190,235,.10);box-shadow:inset 0 0 0 2px rgba(129,225,255,.72),0 0 12px rgba(49,171,219,.28);outline:none}
 .comb-map-hotspot.hot-unvoll:hover,.comb-map-hotspot.hot-unvoll:focus-visible,.comb-map-hotspot.hot-unvoll.active{background:rgba(231,74,40,.09);box-shadow:inset 0 0 0 2px rgba(255,166,145,.72),0 0 12px rgba(211,55,30,.2)}
-.comb-topic-drawer{position:absolute;inset:5.5% 4%;z-index:8;display:none;flex-direction:column;background:rgba(246,251,254,.985);border:1px solid #a9ccdc;border-radius:16px;box-shadow:0 24px 55px rgba(3,35,55,.35);overflow:hidden}
+.comb-topic-drawer{
+  position:absolute;left:5%;right:5%;bottom:4.5%;z-index:8;
+  display:none;flex-direction:column;
+  max-height:48%;
+  background:rgba(242,250,254,.94);
+  backdrop-filter:blur(9px);
+  border:1px solid rgba(169,204,220,.92);
+  border-radius:16px;
+  box-shadow:0 18px 40px rgba(3,35,55,.28);
+  overflow:hidden
+}
 .comb-topic-drawer.open{display:flex}
 .comb-topic-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;background:linear-gradient(100deg,#d9f0fa,#eef9fd);border-bottom:1px solid #bdd9e6}
 .comb-topic-head strong{color:#154c69;font-size:1rem}
 .comb-topic-close{border:0;border-radius:999px;width:34px;height:34px;background:#fff;color:#174e6b;font-size:1.2rem;font-weight:900;cursor:pointer}
-.comb-topic-body{padding:14px;overflow:auto;max-height:73vh}
+.comb-topic-body{padding:14px;overflow:auto;max-height:330px}
 .comb-topic-body .comb-phase{display:block!important;margin:0 0 12px}
 .comb-topic-body .comb-phase:last-child{margin-bottom:0}
 .comb-topic-body .comb-nextrow{display:none!important}
 .comb-topic-empty{padding:18px;color:#567180}
 .comb-image-hint{margin:8px 2px 0;color:#5d7483;font-size:.82rem}
 @media(max-width:760px){
- .comb-topic-drawer{inset:3% 2.5%}
- .comb-topic-body{padding:10px;max-height:76vh}
+ .comb-topic-drawer{left:2.5%;right:2.5%;bottom:2.5%;max-height:58%}
+ .comb-topic-body{padding:10px;max-height:260px}
  .comb-map-hotspot{border-radius:7px}
 }
 
@@ -674,7 +688,7 @@ function combustionLessonHtml(){
        <p>Klicke direkt auf einen Bereich im Bild. Die zugehörigen Aufgaben und Fachinformationen öffnen sich darüber.</p>
      </div>
      <div class="comb-image-shell" id="combImageShell">
-       <img src="verbrennung-interaktiv.png?v=20261025-1600" alt="Vollständige und unvollständige Verbrennung – interaktive Übersicht">
+       <img src="verbrennung-interaktiv.png?v=20261025-1645" alt="Vollständige und unvollständige Verbrennung – interaktive Übersicht">
        <div class="comb-global-timer" data-global-timer aria-live="polite">
          <span class="timer-label">Lesezeit</span>
          <span class="timer-value" data-global-timer-value>02:30</span>
