@@ -175,6 +175,68 @@ footer{background:#0f273a;color:#aec1cf;padding:30px 0;margin-top:28px}.footer-r
 .comb-richt{display:grid;gap:8px}.comb-richt div{padding:9px 11px;border-radius:9px;background:#f6fafc;color:#456273}
 @media(max-width:760px){.comb-tabs{grid-template-columns:1fr 1fr}.comb-compare,.comb-triangle{grid-template-columns:1fr}}
 
+
+/* Verbrennungsstunde: Inhalte schrittweise hinter oberen Buttons */
+.comb-stepnav{
+  display:flex;
+  gap:7px;
+  overflow-x:auto;
+  padding:8px 2px 12px;
+  margin:0 0 12px;
+  scrollbar-width:thin;
+  position:sticky;
+  top:0;
+  z-index:5;
+  background:linear-gradient(180deg,rgba(255,255,255,.98),rgba(255,255,255,.92));
+  backdrop-filter:blur(8px);
+}
+.comb-stepbtn{
+  flex:0 0 auto;
+  border:1px solid #b9ceda;
+  border-radius:999px;
+  background:#fff;
+  color:#23516d;
+  padding:8px 11px;
+  font:800 .78rem/1 system-ui;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:.15s;
+}
+.comb-stepbtn:hover,.comb-stepbtn:focus-visible,.comb-stepbtn.active{
+  background:#176f9b;
+  color:#fff;
+  border-color:#176f9b;
+  outline:none;
+}
+.comb-phase[hidden]{display:none!important}
+.comb-stage-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin:0 0 8px;
+  color:#5d7483;
+  font-size:.8rem;
+}
+.comb-nextrow{
+  display:flex;
+  justify-content:flex-end;
+  margin-top:12px;
+}
+.comb-next{
+  border:0;
+  border-radius:9px;
+  background:#173f59;
+  color:#fff;
+  padding:9px 12px;
+  font-weight:850;
+  cursor:pointer;
+}
+@media(max-width:760px){
+  .comb-stepnav{top:0;padding-top:6px}
+  .comb-stepbtn{font-size:.72rem;padding:8px 9px}
+}
+
 </style><style id="plainGrade12">
 :root{--radius:8px} body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
 .plain-sequence{margin:20px 0 28px;padding:22px;border:1px solid #cbd5e1;border-radius:8px;background:#fff;color:#1e293b;box-shadow:none}
@@ -621,20 +683,74 @@ function combustionLessonHtml(){
 }
 function initCombustionLesson(root){
  if(!root)return;
+
+ // Kompakte Navigation: immer nur eine Arbeitsphase sichtbar.
+ const labels=[
+   'Einstieg','Grundlage','Voraussetzungen','Verbrennungsarten',
+   'Zündverhalten','Stoffströme','Tabellenbuch','Lambda',
+   'Kennwerte','Mindmap','Diagnose','Kompetenzcheck'
+ ];
+ const phases=[...root.querySelectorAll('.comb-phase')];
+
+ // Die kompakte Verbrennungsübersicht gehört in die Grundlagen-Phase,
+ // damit sie nicht zusätzlich dauerhaft sichtbar ist.
  const overview=root.querySelector('#combOverview');
- if(overview){
-   const panel=overview.querySelector('[data-comb-panel]');
+ if(overview && phases[1] && overview.parentElement===root){
+   phases[1].insertBefore(overview, phases[1].firstChild);
+ }
+
+ const nav=document.createElement('div');
+ nav.className='comb-stepnav';
+ nav.setAttribute('aria-label','Arbeitsphasen der Verbrennungsstunde');
+ const stageHead=document.createElement('div');
+ stageHead.className='comb-stage-head';
+ const showStep=(index)=>{
+   phases.forEach((phase,i)=>phase.hidden=i!==index);
+   [...nav.querySelectorAll('.comb-stepbtn')].forEach((b,i)=>b.classList.toggle('active',i===index));
+   stageHead.innerHTML='<span>Arbeitsphase '+(index+1)+' von '+phases.length+'</span><strong>'+labels[index]+'</strong>';
+   const activeButton=nav.querySelectorAll('.comb-stepbtn')[index];
+   if(activeButton) activeButton.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+ };
+ phases.forEach((phase,i)=>{
+   const btn=document.createElement('button');
+   btn.type='button';
+   btn.className='comb-stepbtn';
+   btn.textContent=(i+1)+' · '+labels[i];
+   btn.onclick=()=>showStep(i);
+   nav.appendChild(btn);
+
+   const next=document.createElement('div');
+   next.className='comb-nextrow';
+   if(i<phases.length-1){
+     const nb=document.createElement('button');
+     nb.type='button';
+     nb.className='comb-next';
+     nb.textContent='Weiter: '+labels[i+1]+' →';
+     nb.onclick=()=>{showStep(i+1);root.scrollIntoView({behavior:'smooth',block:'start'});};
+     next.appendChild(nb);
+   }
+   phase.appendChild(next);
+ });
+ root.insertBefore(nav,root.firstChild);
+ root.insertBefore(stageHead,nav.nextSibling);
+ showStep(0);
+
+ // Schlagwort-Übersicht innerhalb der Grundlagen-Phase.
+ const compactOverview=root.querySelector('#combOverview');
+ if(compactOverview){
+   const panel=compactOverview.querySelector('[data-comb-panel]');
    const data={
      definition:'<h4>Was ist Verbrennung?</h4><p>Eine Verbrennung ist eine <strong>chemische Reaktion</strong> der brennbaren Bestandteile eines Brennstoffs mit <strong>Sauerstoff</strong>. Dabei wird Wärme frei.</p>',
      dreieck:'<h4>Verbrennungsdreieck</h4><div class="comb-triangle"><div class="comb-tri">🔥 Brennstoff</div><div class="comb-tri">💨 Sauerstoff</div><div class="comb-tri">🌡️ Zündtemperatur</div></div>',
      voll:'<h4>Vollständige Verbrennung</h4><div class="comb-compare"><div class="comb-side comb-good"><strong>Voraussetzungen</strong><ul><li>genügend Sauerstoff</li><li>gute Durchmischung</li></ul></div><div class="comb-side comb-good"><strong>typische Produkte</strong><ul><li>CO₂</li><li>H₂O</li><li>bei Schwefelanteilen auch SO₂</li></ul></div></div>',
      unvoll:'<h4>Unvollständige Verbrennung</h4><div class="comb-compare"><div class="comb-side comb-bad"><strong>mögliche Ursachen</strong><ul><li>Luftmangel</li><li>schlechte Durchmischung</li><li>gestörter Brenner</li></ul></div><div class="comb-side comb-bad"><strong>Hinweise</strong><ul><li>CO</li><li>Ruß</li><li>unverbrannte Kohlenwasserstoffe</li></ul></div></div>',
-     schadstoffe:'<h4>Schadstoffe & Richtwerte</h4><div class="comb-richt"><div><strong>CO:</strong> so niedrig wie möglich; erhöhte Werte weisen auf eine gestörte bzw. unvollständige Verbrennung hin.</div><div><strong>Ruß:</strong> bei sauber eingestellter Ölfeuerung möglichst geringe Rußzahl.</div><div><strong>NOₓ:</strong> hohe Verbrennungstemperaturen begünstigen die Bildung.</div><div><strong>Grenzwerte:</strong> Es gibt keinen einzigen pauschalen Maximalwert für alle Feuerungen. Die zulässigen Werte hängen von Brennstoff, Feuerungsart, Leistung und geltendem Regelwerk ab. Deshalb konkrete Werte im Tabellenbuch bzw. in der aktuellen Vorschrift nachschlagen.</div></div>'
+     schadstoffe:'<h4>Schadstoffe & Richtwerte</h4><div class="comb-richt"><div><strong>CO:</strong> so niedrig wie möglich; erhöhte Werte weisen auf eine gestörte bzw. unvollständige Verbrennung hin.</div><div><strong>Ruß:</strong> bei sauber eingestellter Ölfeuerung möglichst geringe Rußzahl.</div><div><strong>NOₓ:</strong> hohe Verbrennungstemperaturen begünstigen die Bildung.</div><div><strong>Grenzwerte:</strong> Konkrete zulässige Werte hängen von Brennstoff, Feuerungsart, Leistung und Regelwerk ab. Daher im Tabellenbuch bzw. in der aktuellen Vorschrift nachschlagen.</div></div>'
    };
-   const show=k=>{panel.innerHTML=data[k]||data.definition;overview.querySelectorAll('.comb-tab').forEach(b=>b.classList.toggle('active',b.dataset.panel===k));};
-   overview.querySelectorAll('.comb-tab').forEach(b=>{b.onclick=()=>show(b.dataset.panel);b.onmouseenter=()=>show(b.dataset.panel);});
+   const show=k=>{panel.innerHTML=data[k]||data.definition;compactOverview.querySelectorAll('.comb-tab').forEach(b=>b.classList.toggle('active',b.dataset.panel===k));};
+   compactOverview.querySelectorAll('.comb-tab').forEach(b=>{b.onclick=()=>show(b.dataset.panel);b.onmouseenter=()=>show(b.dataset.panel);});
    show('definition');
  }
+
  root.querySelectorAll('.comb-phase').forEach(phase=>{
    const check=phase.querySelector('[data-check-selects]');
    if(check)check.onclick=()=>{
@@ -645,6 +761,7 @@ function initCombustionLesson(root){
      fb.textContent=ok?'✓ Richtig. Jetzt auf das Arbeitsblatt übertragen.':'Noch nicht vollständig richtig. Prüfe deine Auswahl noch einmal.';
    };
  });
+
  root.querySelectorAll('.comb-timer').forEach(box=>{
    let remaining=Number(box.dataset.seconds||0),id=null;
    const clock=box.querySelector('.comb-clock'),start=box.querySelector('.comb-start'),plus=box.querySelector('.comb-plus');
