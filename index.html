@@ -96,23 +96,6 @@ footer{padding:20px 0;color:#6f8390;font-size:.82rem}
 }
 
 
-.room-poster{
-  position:absolute;z-index:8;display:block;padding:0;margin:0;
-  appearance:none;-webkit-appearance:none;line-height:0;cursor:pointer;
-  background:#fff;border:4px solid #eef4f7;border-radius:7px;overflow:hidden;
-  box-shadow:0 8px 18px rgba(8,37,55,.26),0 1px 2px rgba(255,255,255,.9) inset;
-  transition:transform .15s ease,box-shadow .15s ease
-}
-.room-poster img{display:block;width:100%;height:auto;object-fit:contain}
-.room-poster:hover,.room-poster:focus-visible{
-  transform:translateY(-2px);
-  box-shadow:0 12px 25px rgba(8,37,55,.34);
-  outline:2px solid rgba(126,224,255,.9);outline-offset:2px
-}
-/* linke Wandfläche: über der bisherigen Heizungstechnik-Legende */
-.room-poster.learnmap{left:15.2%;top:4.2%;width:17.2%;max-width:none}
-/* rechte Wandfläche: wie ein gerahmtes Bild oberhalb des Mebis-Monitors */
-.room-poster.journey{left:76.4%;top:4.1%;width:18.1%;max-width:none}
 .learning-dialog{width:min(980px,94vw);max-height:92vh;border:0;border-radius:20px;padding:0;box-shadow:0 28px 70px rgba(6,31,48,.45);color:#17384f}
 .learning-dialog::backdrop{background:rgba(7,31,47,.72);backdrop-filter:blur(3px)}
 .learning-dialog-inner{padding:18px;background:#eef5f8}
@@ -130,8 +113,6 @@ footer{padding:20px 0;color:#6f8390;font-size:.82rem}
 .week-map-btn strong{display:block;color:#173f59;font-size:.88rem}
 .week-map-btn small{display:block;color:#687f8d;margin-top:2px;font-size:.73rem}
 @media(max-width:760px){
- .room-poster.learnmap{left:14.5%;top:3.6%;width:18.5%}
- .room-poster.journey{left:75.8%;top:3.5%;width:19%}
  .learning-overview{grid-template-columns:1fr}.learning-overview-poster{display:none}.week-map-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media(max-width:440px){.week-map-grid{grid-template-columns:1fr}}
@@ -167,12 +148,11 @@ footer{padding:20px 0;color:#6f8390;font-size:.82rem}
 
     <div class="classroom-shell">
       <div class="room">
-        <img src="Virtuelles%20Klassenzimmer%20Heizungstechnik.png?v=20261024-1918" alt="Virtuelles Klassenzimmer Heizungstechnik mit zwölf Blockwochen">
-
-        <button class="room-poster learnmap" id="openLearningMap" type="button" aria-label="Lernlandkarte Heizungstechnik mit 12 Blockwochen öffnen"><img src="lernlandkarte-startseite.svg?v=20261025-1035" alt="Lernlandkarte Heizungstechnik – 12. Klasse, 12 Blockwochen"></button>
-        <a class="room-poster journey" href="jahresreise-karte.html" aria-label="Jahresreise öffnen"><img src="jahresreise.png?v=20261025-1035" alt="Jahresreise Heizungstechnik"></a>
+        <img src="startbild-heizungstechnik.svg?v=20261025-1115" alt="Virtuelles Klassenzimmer Heizungstechnik mit integrierter Lernlandkarte, Jahresreise und zwölf Blockwochen">
 
         <svg class="hotspot-map" viewBox="0 0 1672 941" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-label="Anklickbare Bereiche im virtuellen Klassenzimmer">
+          <a href="#" class="learningmap-hotspot" aria-label="Lernlandkarte Heizungstechnik öffnen"><rect x="174" y="42" width="345" height="480" rx="8"/></a>
+          <a href="jahresreise-karte.html" aria-label="Jahresreise öffnen"><rect x="1300" y="38" width="300" height="225" rx="8"/></a>
           <a href="lernpfad.html?bw=1" class="week-hotspot" data-title="1. Woche · Brennstoffe" data-info="Öl, Gas, Holz und Pellets|Brennstoffeigenschaften|Einsatz und Auswahl" aria-label="Blockwoche 1 öffnen"><rect x="10" y="596" width="130" height="326" rx="12"/></a>
           <a href="lernpfad.html?bw=2" class="week-hotspot" data-title="2. Woche · Energiegehalt & Verbrennung" data-info="Heizwert und Brennwert|Energieinhalt|Verbrennung und Emissionen" aria-label="Blockwoche 2 öffnen"><rect x="145" y="596" width="130" height="326" rx="12"/></a>
           <a href="lernpfad.html?bw=3" class="week-hotspot" data-title="3. Woche · Heizöllagerung" data-info="Tankarten und Aufbau|Befüllung und Entlüftung|Sicherheit und Schutzmaßnahmen" aria-label="Blockwoche 3 öffnen"><rect x="280" y="596" width="130" height="326" rx="12"/></a>
@@ -186,7 +166,7 @@ footer{padding:20px 0;color:#6f8390;font-size:.82rem}
           <a href="lernpfad.html?bw=11" class="week-hotspot" data-title="11. Woche · Wärmepumpe optimieren" data-info="Auslegung und Betriebsweise|COP, SCOP und Jahresarbeitszahl|Fehlersuche und Optimierung" aria-label="Blockwoche 11 öffnen"><rect x="1360" y="596" width="130" height="326" rx="12"/></a>
           <a href="lernpfad.html?bw=12" class="week-hotspot" data-title="12. Woche · Projekt & Anwendung" data-info="Anlagenplanung|Inbetriebnahme und Übergabe|Praxisbeispiele und Fachgespräch" aria-label="Blockwoche 12 öffnen"><rect x="1495" y="596" width="165" height="326" rx="12"/></a>
 
-          <a href="https://mebis.bycs.de/" target="_blank" rel="noopener" aria-label="Mebis öffnen"><rect x="1270" y="55" width="310" height="270" rx="8"/></a>
+          <a href="https://mebis.bycs.de/" target="_blank" rel="noopener" aria-label="Mebis öffnen"><rect x="1290" y="270" width="285" height="230" rx="8"/></a>
           <a href="lernorte.html#arbeitsblaetter" aria-label="Arbeitsblätter öffnen"><rect x="1025" y="275" width="80" height="90" rx="4"/></a>
           <a href="lernorte.html#videos" aria-label="Videos öffnen"><rect x="1110" y="275" width="80" height="90" rx="4"/></a>
           <a href="lernorte.html#zusatzmaterial" aria-label="Zusatzmaterial öffnen"><rect x="1025" y="370" width="80" height="90" rx="4"/></a>
@@ -210,7 +190,7 @@ footer{padding:20px 0;color:#6f8390;font-size:.82rem}
           <button class="dialog-close" id="closeLearningMap" type="button" aria-label="Fenster schließen">×</button>
         </div>
         <div class="learning-overview">
-          <div class="learning-overview-poster"><img src="lernlandkarte-startseite.svg?v=20261025-1035" alt="Übersicht der 12 Blockwochen"></div>
+          <div class="learning-overview-poster"><img src="lernlandkarte-startseite.svg?v=20261025-1115" alt="Übersicht der 12 Blockwochen"></div>
           <div class="week-map-grid">
             <a class="week-map-btn" href="lernlandkarte-bw1.png" target="_blank"><span class="week-map-no">1</span><span><strong>BW 1 · Brennstoffe</strong><small>Lernlandkarte öffnen</small></span></a>
             <a class="week-map-btn" href="lernlandkarte-bw2.png" target="_blank"><span class="week-map-no">2</span><span><strong>BW 2 · Verbrennung</strong><small>Lernlandkarte öffnen</small></span></a>
@@ -263,7 +243,7 @@ footer{padding:20px 0;color:#6f8390;font-size:.82rem}
 <script>
 (function(){
   const dlg=document.getElementById('learningMapDialog');
-  const openBtn=document.getElementById('openLearningMap');
+  const openBtn=document.querySelector('.learningmap-hotspot');
   const closeBtn=document.getElementById('closeLearningMap');
   if(dlg && openBtn && closeBtn){
     openBtn.addEventListener('click',()=>dlg.showModal());
