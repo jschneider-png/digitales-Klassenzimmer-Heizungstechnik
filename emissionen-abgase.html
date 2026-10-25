@@ -12,7 +12,7 @@ h1{margin:8px 0 3px;font-size:1.55rem}.sub{margin:0;color:#d6edf8;font-size:.94r
 .stage>img{display:block;width:100%;height:auto}
 .timer{position:absolute;right:1.4%;top:2.5%;z-index:15;background:rgba(9,55,88,.95);color:#fff;border:1px solid #9edcf5;border-radius:12px;padding:8px 11px;display:flex;gap:9px;align-items:center;font-weight:800}.timer small{font-size:.65rem;color:#bfe9fb}.timer strong{font-size:1.1rem;font-variant-numeric:tabular-nums}.timer.done{background:#a53b2c}
 .hot{position:absolute;border:0;background:rgba(255,255,255,0);border-radius:50%;cursor:pointer;z-index:4}.hot:hover,.hot:focus-visible,.hot.active{outline:none;background:rgba(98,199,239,.13);box-shadow:0 0 0 3px rgba(155,230,255,.75),0 0 18px rgba(65,177,222,.35)}
-.info{position:absolute;left:3%;right:3%;bottom:3%;z-index:10;display:none;background:rgba(244,251,254,.96);backdrop-filter:blur(8px);border:1px solid #a9ccdc;border-radius:15px;box-shadow:0 18px 40px rgba(3,35,55,.3);max-height:47%;overflow:auto}.info.open{display:block}
+.info{position:absolute;left:2.5%;right:2.5%;bottom:2.5%;z-index:10;display:none;background:rgba(244,251,254,.97);backdrop-filter:blur(8px);border:1px solid #a9ccdc;border-radius:15px;box-shadow:0 18px 40px rgba(3,35,55,.3);max-height:52%;overflow:auto}.info.open{display:block}
 .info-head{position:sticky;top:0;display:flex;justify-content:space-between;gap:12px;align-items:center;padding:11px 14px;background:#e5f4fb;border-bottom:1px solid #bedce8}.info-head h2{margin:0;font-size:1rem;color:#154c69}.close{border:0;border-radius:50%;width:32px;height:32px;background:#fff;color:#174e6b;font-weight:900;cursor:pointer}.info-body{padding:14px 16px;line-height:1.5}.reaction{display:inline-block;margin:8px 0;padding:8px 11px;border-radius:9px;background:#edf6fb;border-left:4px solid #4a9ec2;font-weight:800;color:#164b67}
 .hint{margin:8px 2px 16px;color:var(--muted);font-size:.82rem}
 .lesson{margin:20px 0 32px}.section-title{margin:22px 0 9px;color:var(--navy)}.steps{display:grid;gap:12px}.task{background:#fff;border:1px solid var(--line);border-radius:13px;padding:14px}.task h3{margin:0 0 7px;color:#174b68;font-size:1rem}.task p{margin:5px 0;color:#536f7e;line-height:1.5}
@@ -30,14 +30,14 @@ h1{margin:8px 0 3px;font-size:1.55rem}.sub{margin:0;color:#d6edf8;font-size:.94r
 <div class="stage" id="stage">
 <img src="emissionen-abgase.jpg?v=20261025-2000" alt="Schornstein mit Rauchwolke und Verbrennungsprodukten CO2, H2O, O2, N2, NOx, CO, SO2 und Ruß">
 <div class="timer" id="timer"><small>LESEZEIT</small><strong id="timerValue">02:30</strong></div>
-<button class="hot" data-k="co2" aria-label="CO2" style="left:38.5%;top:11%;width:10.5%;height:17%"></button>
-<button class="hot" data-k="h2o" aria-label="H2O" style="left:50.5%;top:9%;width:10.5%;height:17%"></button>
-<button class="hot" data-k="o2" aria-label="O2" style="left:33%;top:25%;width:10%;height:16%"></button>
-<button class="hot" data-k="n2" aria-label="N2" style="left:48%;top:24%;width:10%;height:16%"></button>
-<button class="hot" data-k="nox" aria-label="NOx" style="left:59.5%;top:24%;width:10%;height:16%"></button>
-<button class="hot" data-k="co" aria-label="CO" style="left:39%;top:37%;width:10%;height:16%"></button>
-<button class="hot" data-k="so2" aria-label="SO2" style="left:53.5%;top:39%;width:10%;height:16%"></button>
-<button class="hot" data-k="russ" aria-label="Ruß" style="left:33%;top:48%;width:11%;height:14%"></button>
+<button class="hot" data-k="co2" aria-label="CO2" style="left:39.3%;top:14.5%;width:8.8%;height:15.5%"></button>
+<button class="hot" data-k="h2o" aria-label="H2O" style="left:50.6%;top:9.8%;width:9.1%;height:16.5%"></button>
+<button class="hot" data-k="o2" aria-label="O2" style="left:33.1%;top:30.8%;width:8.9%;height:15.4%"></button>
+<button class="hot" data-k="n2" aria-label="N2" style="left:48.1%;top:28.8%;width:9.6%;height:16.8%"></button>
+<button class="hot" data-k="nox" aria-label="NOx" style="left:60.5%;top:27.7%;width:9.3%;height:16.7%"></button>
+<button class="hot" data-k="co" aria-label="CO" style="left:40.2%;top:42.0%;width:9.4%;height:16.4%"></button>
+<button class="hot" data-k="so2" aria-label="SO2" style="left:54.8%;top:42.9%;width:9.3%;height:16.4%"></button>
+<button class="hot" data-k="russ" aria-label="Ruß" style="left:33.8%;top:52.6%;width:11.1%;height:15.5%"></button>
 <div class="info" id="info"><div class="info-head"><h2 id="infoTitle"></h2><button class="close" id="close" type="button">×</button></div><div class="info-body" id="infoBody"></div></div>
 </div>
 <p class="hint">Klicke auf einen Abgasbestandteil. Bei jedem neuen Bereich startet die Lesezeit wieder bei 02:30.</p>
@@ -74,8 +74,22 @@ const stage=document.getElementById("stage"),box=document.getElementById("info")
 let tid=null,remain=150;
 function draw(){tv.textContent=String(Math.floor(remain/60)).padStart(2,"0")+":"+String(remain%60).padStart(2,"0")}
 function startTimer(){clearInterval(tid);remain=150;timer.classList.remove("done");draw();tid=setInterval(()=>{remain--;draw();if(remain<=0){clearInterval(tid);timer.classList.add("done")}},1000)}
-document.querySelectorAll(".hot").forEach(b=>{b.addEventListener("click",()=>{document.querySelectorAll(".hot").forEach(x=>x.classList.toggle("active",x===b));const d=infos[b.dataset.k];title.textContent=d.t;body.innerHTML=d.b;box.classList.add("open");startTimer()});b.addEventListener("mouseenter",()=>{const d=infos[b.dataset.k];b.title=d.t})});
-document.getElementById("close").onclick=()=>box.classList.remove("open");draw();
+let pinned=false;
+function showInfo(btn,start=false){
+ const d=infos[btn.dataset.k]; if(!d)return;
+ document.querySelectorAll(".hot").forEach(x=>x.classList.toggle("active",x===btn));
+ title.textContent=d.t; body.innerHTML=d.b; box.classList.add("open");
+ if(start) startTimer();
+}
+document.querySelectorAll(".hot").forEach(b=>{
+ b.addEventListener("mouseenter",()=>{ if(!pinned) showInfo(b,false); });
+ b.addEventListener("mouseleave",()=>{ if(!pinned){ box.classList.remove("open"); b.classList.remove("active"); } });
+ b.addEventListener("focus",()=>{ if(!pinned) showInfo(b,false); });
+ b.addEventListener("blur",()=>{ if(!pinned){ box.classList.remove("open"); b.classList.remove("active"); } });
+ b.addEventListener("click",()=>{ pinned=true; showInfo(b,true); });
+});
+document.getElementById("close").onclick=()=>{pinned=false;box.classList.remove("open");document.querySelectorAll(".hot").forEach(x=>x.classList.remove("active"));};
+draw();
 
 const hints=["Lies die Aufgabenstellung genau und markiere Gegeben/Gesucht.","Nutze die Fachbegriffe bzw. Formel aus dem vorherigen Schritt.","Prüfe Einheit, Größenordnung und fachliche Interpretation."];
 document.querySelectorAll(".task").forEach(task=>{let tries=0;const fb=task.querySelector(".feedback"),sol=task.querySelector(".solution"),check=task.querySelector(".check"),help=task.querySelector(".help"),sample=task.querySelector(".sample"),lad=[...task.querySelectorAll(".ladder span")];
