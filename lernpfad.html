@@ -317,9 +317,9 @@ footer{background:#0f273a;color:#aec1cf;padding:30px 0;margin-top:28px}.footer-r
 .comb-map-hotspot:hover,.comb-map-hotspot:focus-visible,.comb-map-hotspot.active{background:rgba(69,190,235,.10);box-shadow:inset 0 0 0 2px rgba(129,225,255,.72),0 0 12px rgba(49,171,219,.28);outline:none}
 .comb-map-hotspot.hot-unvoll:hover,.comb-map-hotspot.hot-unvoll:focus-visible,.comb-map-hotspot.hot-unvoll.active{background:rgba(231,74,40,.09);box-shadow:inset 0 0 0 2px rgba(255,166,145,.72),0 0 12px rgba(211,55,30,.2)}
 .comb-topic-drawer{
-  position:absolute;left:5%;right:5%;bottom:4.5%;z-index:8;
+  position:absolute;left:3%;right:3%;top:23%;bottom:3.5%;z-index:8;
   display:none;flex-direction:column;
-  max-height:48%;
+  max-height:none;
   background:rgba(242,250,254,.94);
   backdrop-filter:blur(9px);
   border:1px solid rgba(169,204,220,.92);
@@ -331,15 +331,15 @@ footer{background:#0f273a;color:#aec1cf;padding:30px 0;margin-top:28px}.footer-r
 .comb-topic-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;background:linear-gradient(100deg,#d9f0fa,#eef9fd);border-bottom:1px solid #bdd9e6}
 .comb-topic-head strong{color:#154c69;font-size:1rem}
 .comb-topic-close{border:0;border-radius:999px;width:34px;height:34px;background:#fff;color:#174e6b;font-size:1.2rem;font-weight:900;cursor:pointer}
-.comb-topic-body{padding:14px;overflow:auto;max-height:330px}
+.comb-topic-body{padding:16px 18px;overflow:auto;max-height:none;flex:1;min-height:0}
 .comb-topic-body .comb-phase{display:block!important;margin:0 0 12px}
 .comb-topic-body .comb-phase:last-child{margin-bottom:0}
 .comb-topic-body .comb-nextrow{display:none!important}
 .comb-topic-empty{padding:18px;color:#567180}
 .comb-image-hint{margin:8px 2px 0;color:#5d7483;font-size:.82rem}
 @media(max-width:760px){
- .comb-topic-drawer{left:2.5%;right:2.5%;bottom:2.5%;max-height:58%}
- .comb-topic-body{padding:10px;max-height:260px}
+ .comb-topic-drawer{left:2%;right:2%;top:20%;bottom:2%;max-height:none}
+ .comb-topic-body{padding:12px;max-height:none}
  .comb-map-hotspot{border-radius:7px}
 }
 
