@@ -305,6 +305,29 @@ footer{background:#0f273a;color:#aec1cf;padding:30px 0;margin-top:28px}.footer-r
 .topic-route-link strong{display:block;color:#174b68}
 .topic-route-link small{display:block;color:#6a7f8c;margin-top:2px}
 
+
+/* BW2 Verbrennung: Bild als interaktive Lernoberfläche */
+.comb-image-shell{position:relative;margin-top:12px;border-radius:18px;overflow:hidden;border:1px solid #adc9d8;background:#0b527d;box-shadow:0 16px 38px rgba(18,58,82,.16)}
+.comb-image-shell>img{display:block;width:100%;height:auto}
+.comb-map-hotspot{position:absolute;border:0;border-radius:12px;background:rgba(55,177,225,0);cursor:pointer;z-index:3;transition:.16s}
+.comb-map-hotspot:hover,.comb-map-hotspot:focus-visible,.comb-map-hotspot.active{background:rgba(69,190,235,.10);box-shadow:inset 0 0 0 2px rgba(129,225,255,.72),0 0 12px rgba(49,171,219,.28);outline:none}
+.comb-map-hotspot.hot-unvoll:hover,.comb-map-hotspot.hot-unvoll:focus-visible,.comb-map-hotspot.hot-unvoll.active{background:rgba(231,74,40,.09);box-shadow:inset 0 0 0 2px rgba(255,166,145,.72),0 0 12px rgba(211,55,30,.2)}
+.comb-topic-drawer{position:absolute;inset:5.5% 4%;z-index:8;display:none;flex-direction:column;background:rgba(246,251,254,.985);border:1px solid #a9ccdc;border-radius:16px;box-shadow:0 24px 55px rgba(3,35,55,.35);overflow:hidden}
+.comb-topic-drawer.open{display:flex}
+.comb-topic-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;background:linear-gradient(100deg,#d9f0fa,#eef9fd);border-bottom:1px solid #bdd9e6}
+.comb-topic-head strong{color:#154c69;font-size:1rem}
+.comb-topic-close{border:0;border-radius:999px;width:34px;height:34px;background:#fff;color:#174e6b;font-size:1.2rem;font-weight:900;cursor:pointer}
+.comb-topic-body{padding:14px;overflow:auto;max-height:73vh}
+.comb-topic-body .comb-phase{display:block!important;margin:0 0 12px}
+.comb-topic-body .comb-phase:last-child{margin-bottom:0}
+.comb-topic-body .comb-nextrow{display:none!important}
+.comb-topic-empty{padding:18px;color:#567180}
+.comb-image-hint{margin:8px 2px 0;color:#5d7483;font-size:.82rem}
+@media(max-width:760px){
+ .comb-topic-drawer{inset:3% 2.5%}
+ .comb-topic-body{padding:10px;max-height:76vh}
+ .comb-map-hotspot{border-radius:7px}
+}
 </style><style id="plainGrade12">
 :root{--radius:8px} body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
 .plain-sequence{margin:20px 0 28px;padding:22px;border:1px solid #cbd5e1;border-radius:8px;background:#fff;color:#1e293b;box-shadow:none}
@@ -621,56 +644,28 @@ function combustionLessonHtml(){
 
    <div class="comb-overview" id="combOverview">
      <div class="comb-overview-head">
-       <h3>Verbrennung kompakt</h3>
-       <p>Fahre mit der Maus über einen Button im Bild oder klicke ihn an. Die Zusatzinfo erscheint erst dann.</p>
+       <h3>Verbrennung interaktiv</h3>
+       <p>Klicke direkt auf einen Bereich im Bild. Die zugehörigen Aufgaben und Fachinformationen öffnen sich darüber.</p>
      </div>
-     <div class="comb-native">
-       <div class="comb-native-title">Vollständige und unvollständige Verbrennung</div>
-       <div class="comb-hotspotbar" aria-label="Interaktive Bereiche der Verbrennungsübersicht">
-         <button class="comb-imgbtn" type="button" data-panel="definition">❓ Was ist Verbrennung?</button>
-         <button class="comb-imgbtn" type="button" data-panel="dreieck">🔥 Verbrennungsdreieck</button>
-         <button class="comb-imgbtn" type="button" data-panel="voll">✅ Vollständig</button>
-         <button class="comb-imgbtn" type="button" data-panel="unvoll">❗ Unvollständig</button>
-         <button class="comb-imgbtn" type="button" data-panel="schadstoffe">📊 Schadstoffe & Richtwerte</button>
-       </div>
-       <div class="comb-native-grid">
-         <section class="comb-native-side good" aria-label="Vollständige Verbrennung">
-           <h4>✅ Vollständige Verbrennung</h4>
-           <div class="comb-boiler">
-             <div class="comb-soot"></div>
-             <div class="comb-flames"><span>🔥</span><span>🔥</span><span>🔥</span><span>🔥</span></div>
-           </div>
-           <div class="comb-native-badges">
-             <div class="comb-native-badge"><strong>Genügend Sauerstoff</strong>gute Durchmischung</div>
-             <div class="comb-native-badge"><strong>CO₂ + H₂O</strong>typische Produkte</div>
-             <div class="comb-native-badge"><strong>Hoher Wirkungsgrad</strong>gute Wärmeübertragung</div>
-             <div class="comb-native-badge"><strong>Wenig Schadstoffe</strong>kaum CO und Ruß</div>
-           </div>
-         </section>
-         <section class="comb-native-side bad" aria-label="Unvollständige Verbrennung">
-           <h4>❗ Unvollständige Verbrennung</h4>
-           <div class="comb-boiler">
-             <div class="comb-soot"></div>
-             <div class="comb-flames"><span>🔥</span><span>🔥</span><span>🔥</span><span>🔥</span></div>
-           </div>
-           <div class="comb-native-badges">
-             <div class="comb-native-badge"><strong>Sauerstoffmangel</strong>oder schlechte Durchmischung</div>
-             <div class="comb-native-badge"><strong>CO & Ruß</strong>unverbrannte Anteile möglich</div>
-             <div class="comb-native-badge"><strong>Geringerer Wirkungsgrad</strong>mehr Energieverluste</div>
-             <div class="comb-native-badge"><strong>Mehr Schadstoffe</strong>Ablagerungen und Störungen</div>
-           </div>
-         </section>
-       </div>
-       <div class="comb-native-footer">
-         <div class="comb-native-info"><strong>Schadstoffe & Richtwerte:</strong> CO so niedrig wie möglich, Rußzahl bei Ölfeuerungen möglichst gering, NOₓ besonders bei hohen Verbrennungstemperaturen.</div>
-         <div class="comb-native-info warn"><strong>Praxis:</strong> Luftmangel, verschmutzter Brenner, falsche Einstellung oder gestörte Luftzufuhr sind typische Fehlerquellen.</div>
-       </div>
-       <div class="comb-image-panel" data-comb-panel>
-         <button type="button" class="comb-image-close" aria-label="Info schließen">×</button>
-         <div data-comb-panel-content></div>
+     <div class="comb-image-shell" id="combImageShell">
+       <img src="verbrennung-interaktiv.png?v=20261025-1600" alt="Vollständige und unvollständige Verbrennung – interaktive Übersicht">
+       <button type="button" class="comb-map-hotspot" data-topic="definition" aria-label="Was ist Verbrennung?" style="left:1.1%;top:8.0%;width:21.3%;height:5.7%"></button>
+       <button type="button" class="comb-map-hotspot" data-topic="dreieck" aria-label="Verbrennungsdreieck" style="left:23.1%;top:8.0%;width:18.8%;height:5.7%"></button>
+       <button type="button" class="comb-map-hotspot" data-topic="voll" aria-label="Vollständige Verbrennung" style="left:42.4%;top:8.0%;width:15.1%;height:5.7%"></button>
+       <button type="button" class="comb-map-hotspot hot-unvoll" data-topic="unvoll" aria-label="Unvollständige Verbrennung" style="left:58.1%;top:8.0%;width:18.0%;height:5.7%"></button>
+       <button type="button" class="comb-map-hotspot" data-topic="schadstoffe" aria-label="Schadstoffe und Richtwerte" style="left:76.7%;top:8.0%;width:21.3%;height:5.7%"></button>
+
+       <button type="button" class="comb-map-hotspot" data-topic="voll" aria-label="Bereich vollständige Verbrennung" style="left:1.0%;top:29.1%;width:48.1%;height:50.0%"></button>
+       <button type="button" class="comb-map-hotspot hot-unvoll" data-topic="unvoll" aria-label="Bereich unvollständige Verbrennung" style="left:50.0%;top:29.1%;width:48.4%;height:50.0%"></button>
+       <button type="button" class="comb-map-hotspot" data-topic="schadstoffe" aria-label="Schadstoffe und Richtwerte" style="left:1.0%;top:80.1%;width:51.1%;height:17.0%"></button>
+       <button type="button" class="comb-map-hotspot hot-unvoll" data-topic="praxis" aria-label="Praxis Hinweise" style="left:53.2%;top:80.1%;width:45.2%;height:17.0%"></button>
+
+       <div class="comb-topic-drawer" data-topic-drawer>
+         <div class="comb-topic-head"><strong data-topic-title></strong><button type="button" class="comb-topic-close" aria-label="Fenster schließen">×</button></div>
+         <div class="comb-topic-body" data-topic-body></div>
        </div>
      </div>
-     <p class="comb-visual-hint">Tipp: Hover am PC · Tippen/Klicken am Tablet oder Smartphone.</p>
+     <p class="comb-image-hint">Tipp: Am PC mit der Maus über die Bereiche fahren; per Klick öffnest du die Aufgaben. Auf Tablet/Smartphone einfach tippen.</p>
    </div>
    <div class="comb-phase">
      <div class="comb-meta"><span class="comb-chip">Interaktiv · Lückentext</span><span class="comb-chip comb-sheet">Arbeitsblatt „Verbrennungsvorgänge“ · Grundlage</span></div>
@@ -834,83 +829,55 @@ function combustionLessonHtml(){
 function initCombustionLesson(root){
  if(!root)return;
 
- // Kompakte Navigation: immer nur eine Arbeitsphase sichtbar.
- const labels=[
-   'Einstieg','Grundlage','Voraussetzungen','Verbrennungsarten',
-   'Zündverhalten','Stoffströme','Tabellenbuch','Lambda',
-   'Kennwerte','Mindmap','Diagnose','Kompetenzcheck'
- ];
  const phases=[...root.querySelectorAll('.comb-phase')];
-
- // Die kompakte Verbrennungsübersicht gehört in die Grundlagen-Phase,
- // damit sie nicht zusätzlich dauerhaft sichtbar ist.
  const overview=root.querySelector('#combOverview');
- if(overview && phases[1] && overview.parentElement===root){
-   phases[1].insertBefore(overview, phases[1].firstChild);
- }
+ const shell=root.querySelector('#combImageShell');
+ const drawer=root.querySelector('[data-topic-drawer]');
+ const drawerBody=root.querySelector('[data-topic-body]');
+ const drawerTitle=root.querySelector('[data-topic-title]');
+ const closeBtn=root.querySelector('.comb-topic-close');
 
- const nav=document.createElement('div');
- nav.className='comb-stepnav';
- nav.setAttribute('aria-label','Arbeitsphasen der Verbrennungsstunde');
- const stageHead=document.createElement('div');
- stageHead.className='comb-stage-head';
- const showStep=(index)=>{
-   phases.forEach((phase,i)=>phase.hidden=i!==index);
-   [...nav.querySelectorAll('.comb-stepbtn')].forEach((b,i)=>b.classList.toggle('active',i===index));
-   stageHead.innerHTML='<span>Arbeitsphase '+(index+1)+' von '+phases.length+'</span><strong>'+labels[index]+'</strong>';
-   const activeButton=nav.querySelectorAll('.comb-stepbtn')[index];
-   if(activeButton) activeButton.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+ // Alle bisherigen Inhalte bleiben erhalten, sind aber zunächst nicht sichtbar.
+ phases.forEach(p=>p.hidden=true);
+
+ const groups={
+   definition:{title:'Was ist Verbrennung?',steps:[0,1]},
+   dreieck:{title:'Verbrennungsdreieck & Zündverhalten',steps:[2,4]},
+   voll:{title:'Vollständige Verbrennung',steps:[3,5,7]},
+   unvoll:{title:'Unvollständige Verbrennung & Diagnose',steps:[3,10]},
+   schadstoffe:{title:'Schadstoffe, Richtwerte & Kennwerte',steps:[6,8,9,11]},
+   praxis:{title:'Praxis-Hinweise & Kundenfall',steps:[0,10,11]}
  };
- phases.forEach((phase,i)=>{
-   const btn=document.createElement('button');
-   btn.type='button';
-   btn.className='comb-stepbtn';
-   btn.textContent=(i+1)+' · '+labels[i];
-   btn.onclick=()=>showStep(i);
-   nav.appendChild(btn);
 
-   const next=document.createElement('div');
-   next.className='comb-nextrow';
-   if(i<phases.length-1){
-     const nb=document.createElement('button');
-     nb.type='button';
-     nb.className='comb-next';
-     nb.textContent='Weiter: '+labels[i+1]+' →';
-     nb.onclick=()=>{showStep(i+1);root.scrollIntoView({behavior:'smooth',block:'start'});};
-     next.appendChild(nb);
-   }
-   phase.appendChild(next);
- });
- root.insertBefore(nav,root.firstChild);
- root.insertBefore(stageHead,nav.nextSibling);
- showStep(0);
+ const restore=()=>{
+   phases.forEach(p=>{p.hidden=true; if(p.parentElement!==root) root.appendChild(p);});
+   if(drawerBody) drawerBody.innerHTML='';
+ };
 
- // Schlagwort-Übersicht innerhalb der Grundlagen-Phase.
- const compactOverview=root.querySelector('#combOverview');
- if(compactOverview){
-   const panel=compactOverview.querySelector('[data-comb-panel]');
-   const panelContent=compactOverview.querySelector('[data-comb-panel-content]');
-   const closeBtn=compactOverview.querySelector('.comb-image-close');
-   const data={
-     definition:'<h4>Was ist Verbrennung?</h4><p>Eine Verbrennung ist eine <strong>chemische Reaktion</strong> der brennbaren Bestandteile eines Brennstoffs mit <strong>Sauerstoff</strong>. Dabei wird Wärme frei.</p>',
-     dreieck:'<h4>Verbrennungsdreieck</h4><div class="comb-triangle"><div class="comb-tri">🔥 Brennstoff</div><div class="comb-tri">💨 Sauerstoff</div><div class="comb-tri">🌡️ Zündtemperatur</div></div><p>Nur wenn alle drei Voraussetzungen gleichzeitig erfüllt sind, kann die Verbrennung selbstständig ablaufen.</p>',
-     voll:'<h4>Vollständige Verbrennung</h4><div class="comb-compare"><div class="comb-side comb-good"><strong>Voraussetzungen</strong><ul><li>genügend Sauerstoff</li><li>gute Durchmischung</li></ul></div><div class="comb-side comb-good"><strong>typische Produkte</strong><ul><li>CO₂</li><li>H₂O</li><li>bei Schwefelanteilen auch SO₂</li></ul></div></div>',
-     unvoll:'<h4>Unvollständige Verbrennung</h4><div class="comb-compare"><div class="comb-side comb-bad"><strong>mögliche Ursachen</strong><ul><li>Luftmangel</li><li>schlechte Durchmischung</li><li>gestörter oder verschmutzter Brenner</li></ul></div><div class="comb-side comb-bad"><strong>Hinweise</strong><ul><li>CO</li><li>Ruß</li><li>unverbrannte Kohlenwasserstoffe</li></ul></div></div>',
-     schadstoffe:'<h4>Schadstoffe & Richtwerte</h4><div class="comb-richt"><div><strong>CO:</strong> so niedrig wie möglich; erhöhte Werte weisen auf eine gestörte/unvollständige Verbrennung hin.</div><div><strong>Ruß:</strong> bei sauber eingestellter Ölfeuerung möglichst geringe Rußzahl.</div><div><strong>NOₓ:</strong> hohe Verbrennungstemperaturen begünstigen die Bildung.</div><div><strong>Wichtig:</strong> konkrete zulässige Grenzwerte hängen von Brennstoff, Feuerungsart, Leistung und Regelwerk ab – daher Tabellenbuch bzw. aktuelle Vorschrift verwenden.</div></div>'
-   };
-   const show=k=>{
-     panelContent.innerHTML=data[k]||'';
-     panel.classList.add('open');
-     compactOverview.querySelectorAll('.comb-imgbtn').forEach(b=>b.classList.toggle('active',b.dataset.panel===k));
-   };
-   const hide=()=>{panel.classList.remove('open');compactOverview.querySelectorAll('.comb-imgbtn').forEach(b=>b.classList.remove('active'));};
-   compactOverview.querySelectorAll('.comb-imgbtn').forEach(b=>{
-     b.onmouseenter=()=>show(b.dataset.panel);
-     b.onfocus=()=>show(b.dataset.panel);
-     b.onclick=()=>show(b.dataset.panel);
+ const openTopic=(key)=>{
+   const cfg=groups[key]; if(!cfg||!drawer||!drawerBody)return;
+   restore();
+   drawerTitle.textContent=cfg.title;
+   cfg.steps.forEach(i=>{
+     const phase=phases[i];
+     if(phase){phase.hidden=false;drawerBody.appendChild(phase);}
    });
-   if(closeBtn) closeBtn.onclick=hide;
- }
+   drawer.classList.add('open');
+   root.querySelectorAll('.comb-map-hotspot').forEach(b=>b.classList.toggle('active',b.dataset.topic===key));
+ };
+ const closeTopic=()=>{
+   if(drawer)drawer.classList.remove('open');
+   root.querySelectorAll('.comb-map-hotspot').forEach(b=>b.classList.remove('active'));
+   setTimeout(restore,0);
+ };
+
+ root.querySelectorAll('.comb-map-hotspot').forEach(btn=>{
+   btn.onclick=()=>openTopic(btn.dataset.topic);
+   btn.onfocus=()=>btn.classList.add('active');
+   btn.onblur=()=>{if(!drawer.classList.contains('open'))btn.classList.remove('active');};
+ });
+ if(closeBtn) closeBtn.onclick=closeTopic;
+
  root.querySelectorAll('.comb-phase').forEach(phase=>{
    const check=phase.querySelector('[data-check-selects]');
    if(check)check.onclick=()=>{
@@ -934,6 +901,9 @@ function initCombustionLesson(root){
    };
    if(plus)plus.onclick=()=>{remaining+=120;draw();};
  });
+
+ // Nur das Bild ist zunächst sichtbar.
+ root.querySelectorAll(':scope > .comb-phase').forEach(p=>p.hidden=true);
 }
 
 function extraContentHtml(bw,stunde){
