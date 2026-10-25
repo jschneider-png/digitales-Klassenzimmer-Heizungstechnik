@@ -328,6 +328,32 @@ footer{background:#0f273a;color:#aec1cf;padding:30px 0;margin-top:28px}.footer-r
  .comb-topic-body{padding:10px;max-height:76vh}
  .comb-map-hotspot{border-radius:7px}
 }
+
+.comb-global-timer{
+  position:absolute;right:1.6%;top:15.1%;z-index:12;
+  display:flex;align-items:center;gap:9px;
+  min-width:122px;padding:8px 11px;
+  border-radius:12px;
+  background:rgba(9,55,88,.94);
+  color:#fff;
+  border:1px solid rgba(157,224,250,.7);
+  box-shadow:0 5px 16px rgba(0,0,0,.2);
+  pointer-events:none
+}
+.comb-global-timer .timer-label{
+  font-size:.66rem;font-weight:850;letter-spacing:.06em;text-transform:uppercase;color:#bfe9fb
+}
+.comb-global-timer .timer-value{
+  font-variant-numeric:tabular-nums;font-size:1.12rem;font-weight:950;line-height:1
+}
+.comb-global-timer.running{background:rgba(10,86,126,.96)}
+.comb-global-timer.done{background:rgba(174,45,28,.96);border-color:rgba(255,183,164,.82)}
+.comb-topic-body .comb-timer{display:none!important}
+@media(max-width:760px){
+ .comb-global-timer{right:2.5%;top:15.3%;min-width:105px;padding:6px 8px}
+ .comb-global-timer .timer-label{font-size:.58rem}
+ .comb-global-timer .timer-value{font-size:1rem}
+}
 </style><style id="plainGrade12">
 :root{--radius:8px} body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
 .plain-sequence{margin:20px 0 28px;padding:22px;border:1px solid #cbd5e1;border-radius:8px;background:#fff;color:#1e293b;box-shadow:none}
@@ -649,6 +675,10 @@ function combustionLessonHtml(){
      </div>
      <div class="comb-image-shell" id="combImageShell">
        <img src="verbrennung-interaktiv.png?v=20261025-1600" alt="Vollständige und unvollständige Verbrennung – interaktive Übersicht">
+       <div class="comb-global-timer" data-global-timer aria-live="polite">
+         <span class="timer-label">Lesezeit</span>
+         <span class="timer-value" data-global-timer-value>02:30</span>
+       </div>
        <button type="button" class="comb-map-hotspot" data-topic="definition" aria-label="Was ist Verbrennung?" style="left:1.1%;top:8.0%;width:21.3%;height:5.7%"></button>
        <button type="button" class="comb-map-hotspot" data-topic="dreieck" aria-label="Verbrennungsdreieck" style="left:23.1%;top:8.0%;width:18.8%;height:5.7%"></button>
        <button type="button" class="comb-map-hotspot" data-topic="voll" aria-label="Vollständige Verbrennung" style="left:42.4%;top:8.0%;width:15.1%;height:5.7%"></button>
@@ -872,11 +902,17 @@ function initCombustionLesson(root){
  };
 
  root.querySelectorAll('.comb-map-hotspot').forEach(btn=>{
-   btn.onclick=()=>openTopic(btn.dataset.topic);
+   btn.onclick=()=>{resetAndStartGlobalTimer();openTopic(btn.dataset.topic);};
    btn.onfocus=()=>btn.classList.add('active');
    btn.onblur=()=>{if(!drawer.classList.contains('open'))btn.classList.remove('active');};
  });
- if(closeBtn) closeBtn.onclick=closeTopic;
+ if(closeBtn) closeBtn.onclick=()=>{
+    closeTopic();
+    stopGlobalTimer();
+    globalRemaining=150;
+    drawGlobalTimer();
+    if(globalTimer) globalTimer.classList.remove('running','done');
+  };
 
  root.querySelectorAll('.comb-phase').forEach(phase=>{
    const check=phase.querySelector('[data-check-selects]');
@@ -889,18 +925,43 @@ function initCombustionLesson(root){
    };
  });
 
- root.querySelectorAll('.comb-timer').forEach(box=>{
-   let remaining=Number(box.dataset.seconds||0),id=null;
-   const clock=box.querySelector('.comb-clock'),start=box.querySelector('.comb-start'),plus=box.querySelector('.comb-plus');
-   const draw=()=>{const m=Math.floor(remaining/60),s=remaining%60;clock.textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');};
-   draw();
-   if(start)start.onclick=()=>{
-     if(id){clearInterval(id);id=null;start.textContent='Weiter';return;}
-     start.textContent='Pause';
-     id=setInterval(()=>{if(remaining>0){remaining--;draw();}else{clearInterval(id);id=null;start.textContent='Fertig';}},1000);
-   };
-   if(plus)plus.onclick=()=>{remaining+=120;draw();};
- });
+ const globalTimer=root.querySelector('[data-global-timer]');
+ const globalTimerValue=root.querySelector('[data-global-timer-value]');
+ let globalTimerId=null;
+ let globalRemaining=150;
+
+ const drawGlobalTimer=()=>{
+   const m=Math.floor(globalRemaining/60);
+   const s=globalRemaining%60;
+   if(globalTimerValue) globalTimerValue.textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+ };
+ const stopGlobalTimer=()=>{
+   if(globalTimerId){clearInterval(globalTimerId);globalTimerId=null;}
+ };
+ const resetAndStartGlobalTimer=()=>{
+   stopGlobalTimer();
+   globalRemaining=150;
+   drawGlobalTimer();
+   if(globalTimer){
+     globalTimer.classList.remove('done');
+     globalTimer.classList.add('running');
+   }
+   globalTimerId=setInterval(()=>{
+     if(globalRemaining>0){
+       globalRemaining--;
+       drawGlobalTimer();
+     }
+     if(globalRemaining<=0){
+       stopGlobalTimer();
+       if(globalTimer){
+         globalTimer.classList.remove('running');
+         globalTimer.classList.add('done');
+       }
+     }
+   },1000);
+ };
+ drawGlobalTimer();
+
 
  // Nur das Bild ist zunächst sichtbar.
  root.querySelectorAll(':scope > .comb-phase').forEach(p=>p.hidden=true);
