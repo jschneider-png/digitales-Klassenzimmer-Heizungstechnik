@@ -75,16 +75,18 @@ main{padding:20px 0 28px}
   border-bottom:1px solid rgba(105,174,204,.35);
   color:#17384f
 }
+
 .week-hover-icon{
-  display:block;
-  width:28px;height:28px;flex:0 0 28px;
-  border-radius:7px;
-  background-image:url("startbild-heizungstechnik.png?v=20261025-1405");
-  background-repeat:no-repeat;
-  background-size:940px 627px;
-  background-position:var(--icon-x-scaled,0) -484px;
-  box-shadow:0 1px 4px rgba(24,91,120,.12);
-  border:1px solid rgba(255,255,255,.96)
+  display:grid;
+  place-items:center;
+  width:38px;height:38px;flex:0 0 38px;
+  border-radius:10px;
+  background:rgba(255,255,255,.82);
+  border:1px solid rgba(255,255,255,.96);
+  box-shadow:0 2px 6px rgba(24,91,120,.12);
+  color:#0f5f91;
+  font-size:1.35rem;
+  line-height:1
 }
 .week-hover-copy{min-width:0}
 .week-hover-kicker{
@@ -281,9 +283,7 @@ footer{padding:20px 0;color:#6f8390;font-size:.82rem}
   function show(el){
     title.textContent=el.dataset.title||'Blockwoche';
     if(icon){
-      const sourceX=Number(el.dataset.iconX||0);
-      const scaledX=Math.round(sourceX*0.612);
-      icon.style.setProperty('--icon-x-scaled',scaledX+'px');
+      icon.textContent=el.dataset.icon||'📘';
     }
     list.innerHTML=(el.dataset.info||'').split('|').filter(Boolean).map(x=>'<li>'+x+'</li>').join('');
     info.classList.add('show');
