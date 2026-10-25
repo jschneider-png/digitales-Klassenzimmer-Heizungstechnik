@@ -167,7 +167,7 @@ footer{background:#0f273a;color:#aec1cf;padding:30px 0;margin-top:28px}.footer-r
 .comb-tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;padding:10px}
 .comb-tab{border:1px solid #b9ceda;border-radius:11px;background:#fff;padding:10px 8px;font:800 .82rem/1.2 system-ui;color:#23516d;cursor:pointer;transition:.15s}
 .comb-tab:hover,.comb-tab:focus-visible,.comb-tab.active{background:#176f9b;color:#fff;border-color:#176f9b;transform:translateY(-1px);outline:none}
-.comb-panel{margin:0 10px 10px;padding:15px;border-radius:13px;background:#fff;border:1px solid #d7e4eb;min-height:112px}
+.comb-panel{margin:0 10px 10px;padding:15px;border-radius:13px;background:#eaf6fc;border:1px solid #bdd9e7;min-height:112px}
 .comb-panel h4{margin:0 0 7px;color:#173f59}.comb-panel p{margin:0;color:#536f7f;line-height:1.5}
 .comb-compare{display:grid;grid-template-columns:1fr 1fr;gap:10px}.comb-side{border-radius:12px;padding:12px}.comb-good{background:#edf8f2;border:1px solid #b9dcc8}.comb-bad{background:#fff0ed;border:1px solid #e4b5ab}
 .comb-side strong{display:block;margin-bottom:5px}.comb-side ul{margin:0;padding-left:18px;color:#536f7f;line-height:1.45}
@@ -246,11 +246,11 @@ footer{background:#0f273a;color:#aec1cf;padding:30px 0;margin-top:28px}.footer-r
 .comb-imgbtn:hover,.comb-imgbtn:focus-visible,.comb-imgbtn.active{background:rgba(0,126,188,.96);border-color:#82ddff;outline:none;transform:translateY(-1px)}
 .comb-imgbtn[data-panel="unvoll"]{background:rgba(182,39,22,.94)}
 .comb-imgbtn[data-panel="unvoll"]:hover,.comb-imgbtn[data-panel="unvoll"].active{background:rgba(221,60,27,.98);border-color:#ffd0c6}
-.comb-image-panel{position:absolute;left:8%;right:8%;top:18%;z-index:4;background:rgba(255,255,255,.97);border:1px solid #cbdce5;border-radius:14px;padding:14px 16px;box-shadow:0 12px 32px rgba(0,0,0,.22);display:none}
+.comb-image-panel{position:absolute;left:8%;right:8%;top:18%;z-index:4;background:rgba(235,247,253,.98);border:1px solid #aed2e3;border-radius:14px;padding:14px 16px;box-shadow:0 12px 32px rgba(0,0,0,.22);display:none}
 .comb-image-panel.open{display:block}
 .comb-image-panel h4{margin:0 28px 7px 0;color:#173f59}
 .comb-image-panel p,.comb-image-panel li{color:#4a6676;line-height:1.45}
-.comb-image-close{position:absolute;right:9px;top:8px;border:0;background:#eef5f8;color:#234f68;border-radius:999px;width:28px;height:28px;font-weight:900;cursor:pointer}
+.comb-image-close{position:absolute;right:9px;top:8px;border:0;background:#dceff8;color:#234f68;border-radius:999px;width:28px;height:28px;font-weight:900;cursor:pointer}
 .comb-visual-hint{margin:8px 0 0;color:#5d7483;font-size:.82rem}
 @media(max-width:760px){
  .comb-hotspotbar{top:7.3%;height:8%;gap:.35%}
@@ -293,6 +293,17 @@ footer{background:#0f273a;color:#aec1cf;padding:30px 0;margin-top:28px}.footer-r
  .comb-native .comb-hotspotbar{grid-template-columns:1fr 1fr}
  .comb-native .comb-imgbtn:last-child{grid-column:1/-1}
 }
+
+
+/* BW2 Stunde 1 · BayernCloud-Schule Lernweg */
+.topic-route{margin:12px 0;padding:12px;border:1px solid #c6dce8;border-radius:12px;background:#f3f9fc}
+.topic-route-title{font-weight:900;color:#1b4f6b;margin-bottom:8px}
+.topic-route-link{display:grid;grid-template-columns:30px 32px 1fr;gap:9px;align-items:center;text-decoration:none;padding:9px 10px;margin-top:7px;border:1px solid #d4e4ec;border-radius:10px;background:#fff;color:#244b61;transition:.15s}
+.topic-route-link:hover,.topic-route-link:focus-visible{background:#e9f5fb;border-color:#9fc9dc;transform:translateY(-1px);outline:none}
+.topic-route-link .n{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#176f9b;color:#fff;font-weight:900}
+.topic-route-link img{width:28px;height:28px;object-fit:contain}
+.topic-route-link strong{display:block;color:#174b68}
+.topic-route-link small{display:block;color:#6a7f8c;margin-top:2px}
 
 </style><style id="plainGrade12">
 :root{--radius:8px} body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
@@ -985,7 +996,8 @@ document.getElementById('unitClose').onclick=closeUnit;document.getElementById('
  bw.stunden.forEach((title,i)=>{
    let z=weekState(bw.bw),st=z[1],direct=((STUNDEN_LINKS[bw.bw]||{})['stunde'+(i+1)]||'').trim();
    let c=document.createElement('article');c.className='topic-card'+(st.hours[i]?' is-done':'');
-   c.innerHTML='<div class="badge">Stunde '+(i+1)+' <span class="tasktype">Pflicht</span></div><h4>'+esc(title)+'</h4><p>'+esc(LERNEINHEITEN[bw.bw][i].question)+'</p><button class="btn secondary open-unit" type="button">Lerneinheit öffnen →</button>'+materialButtons(bw.bw,i+1)+(direct?'<a class="btn outline" style="width:100%;margin-top:8px" href="'+direct+'" target="_blank" rel="noopener">Direktlink / Mebis ↗</a>':'')+'<button class="done-toggle '+(st.hours[i]?'done':'')+'" type="button">'+(st.hours[i]?'✓ erledigt':'als erledigt markieren')+'</button>';
+   let route=(bw.bw===2&&i===0)?'<div class="topic-route"><div class="topic-route-title">Dein Lernweg · Wärmewerte</div><a class="topic-route-link" href="https://lernplattform.bycs.de/mod/folder/view.php?id=101609248" target="_blank" rel="noopener"><span class="n">1</span><img src="https://lernplattform.bycs.de/theme/mebis/pix/bycs-lp-logo.svg" alt="BayernCloud Schule"><span><strong>Lernmaterial · Wärmewerte</strong><small>Grundlagen erarbeiten</small></span></a><a class="topic-route-link" href="https://lernplattform.bycs.de/mod/hvp/view.php?id=103361171" target="_blank" rel="noopener"><span class="n">2</span><img src="https://lernplattform.bycs.de/theme/mebis/pix/bycs-lp-logo.svg" alt="BayernCloud Schule"><span><strong>Übung · Brennstoff-Check</strong><small>Wissen anwenden und überprüfen</small></span></a></div>':'';
+   c.innerHTML='<div class="badge">Stunde '+(i+1)+' <span class="tasktype">Pflicht</span></div><h4>'+esc(title)+'</h4><p>'+esc(LERNEINHEITEN[bw.bw][i].question)+'</p>'+route+'<button class="btn secondary open-unit" type="button">Lerneinheit öffnen →</button>'+materialButtons(bw.bw,i+1)+(direct?'<a class="btn outline" style="width:100%;margin-top:8px" href="'+direct+'" target="_blank" rel="noopener">Direktlink / Mebis ↗</a>':'')+'<button class="done-toggle '+(st.hours[i]?'done':'')+'" type="button">'+(st.hours[i]?'✓ erledigt':'als erledigt markieren')+'</button>';
    c.querySelector('.open-unit').onclick=()=>openUnit(bw.bw,i);
    c.querySelector('.done-toggle').onclick=()=>{let q=weekState(bw.bw),p=q[0],ss=q[1];ss.hours[i]=!ss.hours[i];saveProgress(p);renderContent();};
    tg.appendChild(c);
