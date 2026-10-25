@@ -32,6 +32,15 @@ table{width:100%;border-collapse:collapse;margin-top:10px;font-size:.85rem}th,td
 .quiz-q label{display:block;margin:6px 0;color:#405c6c}.quiz-result{display:none;margin-top:12px;padding:12px;border-radius:10px;background:#eef7fb;color:#315a70;font-weight:700}.quiz-result.show{display:block}
 .h5p-slot{margin:18px 0;padding:14px;border:1px dashed #9fc6d8;border-radius:12px;background:#f7fbfd;color:#567180}
 @media(max-width:720px){.challenge-strip{grid-template-columns:1fr}}
+
+.input-wrap{display:grid;gap:4px}
+.field-status{display:none;font-size:.76rem;line-height:1.35;padding:5px 7px;border-radius:7px}
+.field-status.show{display:block}
+.field-status.ok{background:#edf8f1;color:#1d6b43;border:1px solid #b8dec6}
+.field-status.bad{background:#fff4ec;color:#8a4a1b;border:1px solid #ebc8aa}
+.field-status.tip{background:#eef6fb;color:#315a70;border:1px solid #c5dce8}
+input.is-correct{background:#f0faf3;border-color:#76b98f;box-shadow:0 0 0 2px rgba(72,155,103,.10)}
+input.is-wrong{background:#fff8f2;border-color:#d99b6b;box-shadow:0 0 0 2px rgba(197,111,47,.08)}
 </style>
 </head>
 <body>
@@ -53,15 +62,15 @@ table{width:100%;border-collapse:collapse;margin-top:10px;font-size:.85rem}th,td
 <div class="note"><strong>Arbeitsweise:</strong> Rechne zuerst selbst. Bei Fehlern bekommst du schrittweise Hilfe. Die vollständige Lösung erscheint erst bei richtiger Eingabe.</div>
 <div class="task" data-id="e1"><h2>1 · Tabellenwerte ergänzen</h2><p>Trage die Werte aus Fach- oder Tabellenbuch ein.</p>
 <table><tr><th>Brennstoff</th><th>Heizwert Hᵢ</th><th>Brennwert Hₛ</th></tr>
-<tr><td>Steinkohle</td><td><input data-a="8.06" data-t=".03" aria-label="Steinkohle Heizwert"></td><td><input data-a="8.10" data-t=".03" aria-label="Steinkohle Brennwert"></td></tr>
-<tr><td>Heizöl EL</td><td><input data-a="11.83" data-t=".04" aria-label="Heizöl Heizwert"></td><td><input data-a="12.60" data-t=".04" aria-label="Heizöl Brennwert"></td></tr>
-<tr><td>Erdgas LL</td><td><input data-a="9.03" data-t=".04" aria-label="Erdgas LL Heizwert"></td><td><input data-a="10.02" data-t=".04" aria-label="Erdgas LL Brennwert"></td></tr>
-<tr><td>Erdgas E</td><td><input data-a="10.03" data-t=".04" aria-label="Erdgas E Heizwert"></td><td><input data-a="11.13" data-t=".04" aria-label="Erdgas E Brennwert"></td></tr></table>
+<tr><td>Steinkohle</td><td><input data-a="8.06" data-t=".03" data-unit="kWh/kg" aria-label="Steinkohle Heizwert"></td><td><input data-a="8.10" data-t=".03" data-unit="kWh/kg" aria-label="Steinkohle Brennwert"></td></tr>
+<tr><td>Heizöl EL</td><td><input data-a="11.83" data-t=".04" data-unit="kWh/kg" aria-label="Heizöl Heizwert"></td><td><input data-a="12.60" data-t=".04" data-unit="kWh/kg" aria-label="Heizöl Brennwert"></td></tr>
+<tr><td>Erdgas LL</td><td><input data-a="9.03" data-t=".04" data-unit="kWh/m³" aria-label="Erdgas LL Heizwert"></td><td><input data-a="10.02" data-t=".04" data-unit="kWh/m³" aria-label="Erdgas LL Brennwert"></td></tr>
+<tr><td>Erdgas E</td><td><input data-a="10.03" data-t=".04" data-unit="kWh/m³" aria-label="Erdgas E Heizwert"></td><td><input data-a="11.13" data-t=".04" data-unit="kWh/m³" aria-label="Erdgas E Brennwert"></td></tr></table>
 <div class="actions"><button class="btn check">Prüfen</button><button class="btn help">Hilfe</button></div><div class="feedback"></div><div class="solution"><strong>Lösung:</strong> Steinkohle 8,06 / 8,10; Heizöl EL 11,83 / 12,60 kWh/kg; Erdgas LL 9,03 / 10,02; Erdgas E 10,03 / 11,13 kWh/m³.</div></div>
 
-<div class="task" data-id="e2"><h2>2 · Wärmemenge aus 15 kg Koks</h2><p>Hᵢ = 8,06 kWh/kg. Berechne Q.</p><div class="field"><label>Q in kWh</label><input data-a="120.9" data-t=".15"></div><div class="actions"><button class="btn check">Prüfen</button><button class="btn help">Hilfe</button></div><div class="feedback"></div><div class="solution"><strong>Rechenweg:</strong> Q = m · Hᵢ = 15 kg · 8,06 kWh/kg = <strong>120,9 kWh</strong>.</div></div>
+<div class="task" data-id="e2"><h2>2 · Wärmemenge aus 15 kg Koks</h2><p>Hᵢ = 8,06 kWh/kg. Berechne Q.</p><div class="field"><label>Q in kWh</label><input data-a="120.9" data-t=".15" data-unit="kWh"></div><div class="actions"><button class="btn check">Prüfen</button><button class="btn help">Hilfe</button></div><div class="feedback"></div><div class="solution"><strong>Rechenweg:</strong> Q = m · Hᵢ = 15 kg · 8,06 kWh/kg = <strong>120,9 kWh</strong>.</div></div>
 
-<div class="task" data-id="e3"><h2>3 · 20 kg Heizöl EL mit Kondensationswärme</h2><p>Hₛ = 12,60 kWh/kg. Berechne Q.</p><div class="field"><label>Q in kWh</label><input data-a="252" data-t=".2"></div><div class="actions"><button class="btn check">Prüfen</button><button class="btn help">Hilfe</button></div><div class="feedback"></div><div class="solution"><strong>Rechenweg:</strong> Q = m · Hₛ = 20 kg · 12,60 kWh/kg = <strong>252 kWh</strong>.</div></div>
+<div class="task" data-id="e3"><h2>3 · 20 kg Heizöl EL mit Kondensationswärme</h2><p>Hₛ = 12,60 kWh/kg. Berechne Q.</p><div class="field"><label>Q in kWh</label><input data-a="252" data-t=".2" data-unit="kWh"></div><div class="actions"><button class="btn check">Prüfen</button><button class="btn help">Hilfe</button></div><div class="feedback"></div><div class="solution"><strong>Rechenweg:</strong> Q = m · Hₛ = 20 kg · 12,60 kWh/kg = <strong>252 kWh</strong>.</div></div>
 
 <div class="task"><h2>4 · Fachbegriffe erklären</h2><p>Erkläre den Unterschied zwischen Heizwert und Brennwert und nenne drei Holzbrennstoffe.</p><textarea rows="4" placeholder="Deine Antwort …"></textarea><div class="actions"><button class="btn sample">Musterantwort vergleichen</button></div><div class="solution"><strong>Muster:</strong> Der Brennwert berücksichtigt zusätzlich die Kondensationswärme des Wasserdampfs; der Heizwert nicht. Beispiele: Pellets, Scheitholz, Hackschnitzel.</div></div>
 
@@ -77,35 +86,35 @@ table{width:100%;border-collapse:collapse;margin-top:10px;font-size:.85rem}th,td
 
 <section class="panel" data-panel="mid">
 <div class="task" data-id="m1"><h2>1 · Wärmemengen bei vollständiger Verbrennung</h2><p>Nutze jeweils den Heizwert Hᵢ.</p><div class="grid">
-<div class="field"><label>a) 15 kg Holzpellets · Q in kWh</label><input data-a="73.5" data-t=".15"></div>
-<div class="field"><label>b) 20 l Heizöl EL · Q in kWh</label><input data-a="200" data-t=".3"></div>
-<div class="field"><label>c) 3 m³ Erdgas LL · Q in kWh</label><input data-a="27.09" data-t=".08"></div></div>
+<div class="field"><label>a) 15 kg Holzpellets · Q in kWh</label><input data-a="73.5" data-t=".15" data-unit="kWh"></div>
+<div class="field"><label>b) 20 l Heizöl EL · Q in kWh</label><input data-a="200" data-t=".3" data-unit="kWh"></div>
+<div class="field"><label>c) 3 m³ Erdgas LL · Q in kWh</label><input data-a="27.09" data-t=".08" data-unit="kWh"></div></div>
 <div class="actions"><button class="btn check">Alle prüfen</button><button class="btn help">Hilfe</button></div><div class="feedback"></div><div class="solution"><strong>Rechenwege:</strong> a) 15 · 4,9 = 73,5 kWh · b) 20 · 10 = 200 kWh · c) 3 · 9,03 = 27,09 kWh.</div></div>
 
-<div class="task" data-id="m2"><h2>2 · Erdgasverbrauch</h2><p>Q = 135 kWh, HₛB = 10,8 kWh/m³. Bestimme V.</p><div class="field"><label>V in m³</label><input data-a="12.5" data-t=".05"></div><div class="actions"><button class="btn check">Prüfen</button><button class="btn help">Hilfe</button></div><div class="feedback"></div><div class="solution"><strong>Rechenweg:</strong> V = Q / HₛB = 135 / 10,8 = <strong>12,5 m³</strong>.</div></div>
+<div class="task" data-id="m2"><h2>2 · Erdgasverbrauch</h2><p>Q = 135 kWh, HₛB = 10,8 kWh/m³. Bestimme V.</p><div class="field"><label>V in m³</label><input data-a="12.5" data-t=".05" data-unit="m³"></div><div class="actions"><button class="btn check">Prüfen</button><button class="btn help">Hilfe</button></div><div class="feedback"></div><div class="solution"><strong>Rechenweg:</strong> V = Q / HₛB = 135 / 10,8 = <strong>12,5 m³</strong>.</div></div>
 
-<div class="task" data-id="m3"><h2>3 · Speicher-Wassererwärmer</h2><p>120 l Wasser von 25 °C auf 60 °C in 12 min. c = 1,163 Wh/(kg·K).</p><div class="grid"><div class="field"><label>Q in kWh</label><input data-a="4.8846" data-t=".03"></div><div class="field"><label>P in kW</label><input data-a="24.423" data-t=".08"></div></div><div class="actions"><button class="btn check">Prüfen</button><button class="btn help">Hilfe</button></div><div class="feedback"></div><div class="solution"><strong>Rechenweg:</strong> ΔT = 35 K; Q = 120 · 35 · 1,163 Wh = 4884,6 Wh = 4,8846 kWh. 12 min = 0,2 h. P = 4,8846 / 0,2 = <strong>24,423 kW</strong>.</div></div>
+<div class="task" data-id="m3"><h2>3 · Speicher-Wassererwärmer</h2><p>120 l Wasser von 25 °C auf 60 °C in 12 min. c = 1,163 Wh/(kg·K).</p><div class="grid"><div class="field"><label>Q in kWh</label><input data-a="4.8846" data-t=".03" data-unit="kWh"></div><div class="field"><label>P in kW</label><input data-a="24.423" data-t=".08" data-unit="kW"></div></div><div class="actions"><button class="btn check">Prüfen</button><button class="btn help">Hilfe</button></div><div class="feedback"></div><div class="solution"><strong>Rechenweg:</strong> ΔT = 35 K; Q = 120 · 35 · 1,163 Wh = 4884,6 Wh = 4,8846 kWh. 12 min = 0,2 h. P = 4,8846 / 0,2 = <strong>24,423 kW</strong>.</div></div>
 
 <div class="task thinking" data-id="m4">
   <div class="badge-row"><span class="mini-badge">🧩 Denkaufgabe</span><span class="mini-badge">Formelwahl</span></div>
   <h2>4 · Welche Formel passt?</h2>
   <p>Ein Gebäude benötigt 180 kWh Wärme. Zur Verfügung steht Erdgas mit 10,8 kWh/m³. Entscheide zuerst, ob multipliziert oder dividiert werden muss, und begründe deine Wahl.</p>
-  <div class="field"><label>Benötigte Gasmenge in m³</label><input data-a="16.667" data-t=".08"></div>
+  <div class="field"><label>Benötigte Gasmenge in m³</label><input data-a="16.667" data-t=".08" data-unit="m³"></div>
   <div class="actions"><button class="btn check">Prüfen</button><button class="btn help">Hilfe</button></div>
   <div class="feedback"></div><div class="solution"><strong>Rechenweg:</strong> Gesucht ist die Menge. Deshalb wird die Energie durch den Energieinhalt pro m³ geteilt: V = 180 / 10,8 ≈ <strong>16,67 m³</strong>.</div>
 </div>
 </section>
 
 <section class="panel" data-panel="hard">
-<div class="task" data-id="h1"><h2>1 · 20 l Heizöl EL mit Brennwert</h2><p>Hₛ = 12,60 kWh/kg, ρ = 860 kg/m³, 20 l = 0,020 m³.</p><div class="grid"><div class="field"><label>Masse m in kg</label><input data-a="17.2" data-t=".05"></div><div class="field"><label>Q in kWh</label><input data-a="216.72" data-t=".15"></div></div><div class="actions"><button class="btn check">Prüfen</button><button class="btn help">Hilfe</button></div><div class="feedback"></div><div class="solution"><strong>Rechenweg:</strong> m = ρ · V = 860 · 0,020 = 17,2 kg. Q = 17,2 · 12,60 = <strong>216,72 kWh</strong>.</div></div>
+<div class="task" data-id="h1"><h2>1 · 20 l Heizöl EL mit Brennwert</h2><p>Hₛ = 12,60 kWh/kg, ρ = 860 kg/m³, 20 l = 0,020 m³.</p><div class="grid"><div class="field"><label>Masse m in kg</label><input data-a="17.2" data-t=".05" data-unit="kg"></div><div class="field"><label>Q in kWh</label><input data-a="216.72" data-t=".15" data-unit="kWh"></div></div><div class="actions"><button class="btn check">Prüfen</button><button class="btn help">Hilfe</button></div><div class="feedback"></div><div class="solution"><strong>Rechenweg:</strong> m = ρ · V = 860 · 0,020 = 17,2 kg. Q = 17,2 · 12,60 = <strong>216,72 kWh</strong>.</div></div>
 
 <div class="task" data-id="h2"><h2>2 · 250 l Heizöl EL: Energie, Erdgasmenge und Kosten</h2><p>Hᵢ,Öl = 10 kWh/l; HᵢB,Erdgas = 9,9 kWh/m³; Heizölpreis 0,95 €/l; Gaspreis 0,82 €/m³.</p><div class="grid">
-<div class="field"><label>a) Q in kWh</label><input data-a="2500" data-t="1"></div>
-<div class="field"><label>a) Q in kJ</label><input data-a="9000000" data-t="3000"></div>
-<div class="field"><label>b) Erdgas in m³</label><input data-a="252.5" data-t=".15"></div>
-<div class="field"><label>c) Heizölkosten in €</label><input data-a="237.5" data-t=".06"></div>
-<div class="field"><label>c) Gaskosten in €</label><input data-a="207.05" data-t=".15"></div>
-<div class="field"><label>Kostendifferenz in €</label><input data-a="30.45" data-t=".15"></div></div>
+<div class="field"><label>a) Q in kWh</label><input data-a="2500" data-t="1" data-unit="kWh"></div>
+<div class="field"><label>a) Q in kJ</label><input data-a="9000000" data-t="3000" data-unit="kJ"></div>
+<div class="field"><label>b) Erdgas in m³</label><input data-a="252.5" data-t=".15" data-unit="m³"></div>
+<div class="field"><label>c) Heizölkosten in €</label><input data-a="237.5" data-t=".06" data-unit="€"></div>
+<div class="field"><label>c) Gaskosten in €</label><input data-a="207.05" data-t=".15" data-unit="€"></div>
+<div class="field"><label>Kostendifferenz in €</label><input data-a="30.45" data-t=".15" data-unit="€"></div></div>
 <div class="actions"><button class="btn check">Alle prüfen</button><button class="btn help">Hilfe</button></div><div class="feedback"></div><div class="solution"><strong>Rechenweg:</strong> Q = 250 · 10 = 2500 kWh = 9 000 000 kJ. V₍Gas₎ = 2500 / 9,9 ≈ 252,5 m³. Öl: 250 · 0,95 = 237,50 €. Gas: 252,5 · 0,82 ≈ 207,05 €. Differenz ≈ <strong>30,45 €</strong>.</div></div>
 
 <div class="task thinking">
@@ -148,12 +157,59 @@ document.querySelectorAll(".level").forEach(b=>b.addEventListener("click",()=>{
  document.querySelectorAll(".level").forEach(x=>x.classList.toggle("active",x===b));
  document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("active",p.dataset.panel===b.dataset.level));
 }));
+function ensureFieldStatus(input){
+ let s=input.nextElementSibling;
+ if(!s||!s.classList.contains("field-status")){
+   s=document.createElement("div");s.className="field-status";input.insertAdjacentElement("afterend",s);
+ }
+ return s;
+}
+function checkSingleField(input,{onBlur=false}={}){
+ const status=ensureFieldStatus(input);
+ const raw=String(input.value||"").trim();
+ const unit=input.dataset.unit||"";
+ input.classList.remove("is-correct","is-wrong");
+ if(!raw){
+   status.className="field-status show tip";
+   status.textContent=unit?"Eingabe erwartet · Einheit: "+unit:"Bitte einen Zahlenwert eingeben.";
+   return null;
+ }
+ const v=num(raw),a=Number(input.dataset.a),t=Number(input.dataset.t||0);
+ if(!Number.isFinite(v)){
+   input.classList.add("is-wrong");
+   status.className="field-status show bad";
+   status.textContent="Bitte nur eine Zahl eingeben"+(unit?" · Einheit: "+unit:"")+".";
+   return false;
+ }
+ const ok=Math.abs(v-a)<=t;
+ if(ok){
+   input.classList.add("is-correct");
+   status.className="field-status show ok";
+   status.textContent="✓ Richtig"+(unit?" · Einheit: "+unit:"")+".";
+ }else{
+   input.classList.add("is-wrong");
+   status.className="field-status show bad";
+   status.textContent=(onBlur?"Noch nicht passend. ":"Nicht richtig. ")+(unit?"Achte auf die Einheit "+unit+" und ":"")+"prüfe Ansatz, Dezimalstelle und Größenordnung.";
+ }
+ return ok;
+}
+document.querySelectorAll("input[data-a]").forEach(input=>{
+ input.addEventListener("focus",()=>{
+   const status=ensureFieldStatus(input);
+   if(!input.value.trim()){
+     status.className="field-status show tip";
+     status.textContent=(input.dataset.unit?"Erwartete Einheit: "+input.dataset.unit+". ":"")+"Dezimalpunkt oder Dezimalkomma ist möglich.";
+   }
+ });
+ input.addEventListener("blur",()=>checkSingleField(input,{onBlur:true}));
+});
 document.querySelectorAll(".task").forEach(task=>{
  let tries=0;const fb=task.querySelector(".feedback"),sol=task.querySelector(".solution"),id=task.dataset.id||"";
  const check=task.querySelector(".check"),help=task.querySelector(".help"),sample=task.querySelector(".sample");
  if(check)check.addEventListener("click",()=>{
   const inputs=[...task.querySelectorAll("input[data-a]")];tries++;
-  const ok=inputs.length&&inputs.every(i=>{const v=num(i.value),a=Number(i.dataset.a),t=Number(i.dataset.t||0);return Number.isFinite(v)&&Math.abs(v-a)<=t;});
+  const results=inputs.map(i=>checkSingleField(i));
+  const ok=inputs.length&&results.every(Boolean);
   if(ok){fb.className="feedback show ok";fb.textContent="✓ Richtig. Vergleiche jetzt deinen Rechenweg.";sol&&sol.classList.add("show");}
   else{fb.className="feedback show bad";const arr=hints[id]||["Prüfe Gegeben, Gesucht, Formel und Einheit."];fb.textContent="Noch nicht richtig. "+arr[Math.min(tries-1,arr.length-1)];sol&&sol.classList.remove("show");}
  });
