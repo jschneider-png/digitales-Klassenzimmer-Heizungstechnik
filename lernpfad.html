@@ -1058,16 +1058,24 @@ document.getElementById('mapBackdrop').onclick=e=>{if(e.target.id==='mapBackdrop
 document.addEventListener('keydown',e=>{if(e.key==='Escape' && document.getElementById('mapBackdrop').classList.contains('open'))closeMap();});
 
 function waermemengeFormelnHtml(){
- return '<section class="unit-box" aria-label="Formelsammlung Wärmemenge">'+
- '<h3>🧮 Formelsammlung: Wärmemenge berechnen</h3>'+
- '<p><strong>1. Erwärmung eines Stoffes:</strong> <code>Q = m · c · ΔT</code></p>'+
- '<p>Q = Wärmemenge [kJ], m = Masse [kg], c = spezifische Wärmekapazität [kJ/(kg·K)], ΔT = Temperaturänderung [K]. Für Temperaturunterschiede gilt: 1 K = 1 °C.</p>'+
- '<p><strong>2. Mit Wasservolumen:</strong> <code>Q = ρ · V · c · ΔT</code>, denn <code>m = ρ · V</code>. Für Wasser näherungsweise ρ = 1 kg/l und c = 4,19 kJ/(kg·K).</p>'+
- '<p><strong>3. Umrechnung:</strong> <code>Q [kWh] = Q [kJ] / 3600</code>. Bei Wasser: <code>Q [kWh] ≈ V [l] · 1,163 · ΔT [K] / 1000</code>.</p>'+
- '<p><strong>4. Wärmeenergie aus Leistung und Zeit:</strong> <code>Q = P · t</code> (P in kW, t in h, Q in kWh).</p>'+
- '<p><strong>5. Energie aus Brennstoffen:</strong> <code>E = Brennstoffmenge · Heizwert (H<sub>u</sub>)</code>; nutzbare Wärme näherungsweise <code>Q<sub>nutz</sub> = E · η</code> (η als Dezimalzahl).</p>'+
- '<div class="term"><strong>Beispiel:</strong> 200 l Wasser von 20 °C auf 60 °C erwärmen: ΔT = 40 K; Q = 200 · 4,19 · 40 = 33 520 kJ ≈ <strong>9,31 kWh</strong> (ohne Wärmeverluste).</div>'+
- '<p class="small-note">Merke: Bei der Wassererwärmung berechnen wir die aufgenommene Wärmemenge; beim Brennstoff zunächst dessen Energieinhalt. Wärmeverluste und Wirkungsgrad sind bei einer realen Anlage zusätzlich zu berücksichtigen.</p>'+
+ return '<section class="unit-box" aria-label="Formelsammlung Brennstoffenergie">'+
+ '<h3>🧮 Formelsammlung: Heizwert, Brennwert und Wärmemenge</h3>'+
+ '<p>Mit diesen Formeln berechnest du den Energieinhalt eines Brennstoffs. Welchen Heiz- oder Brennwert du verwendest, hängt von Brennstoff und Bezugsgröße (kg, l oder m³) ab.</p>'+
+ '<h4>Feste und flüssige Brennstoffe</h4>'+
+ '<div class="unit-grid">'+
+ '<div class="term"><strong>Über die Masse (Heizwert)</strong><p><code>Q = m · H<sub>i</sub></code></p></div>'+
+ '<div class="term"><strong>Über die Masse (Brennwert)</strong><p><code>Q = m · H<sub>s</sub></code></p></div>'+
+ '<div class="term"><strong>Über das Volumen (Heizwert)</strong><p><code>Q = V · H<sub>i</sub></code></p></div>'+
+ '<div class="term"><strong>Über das Volumen (Brennwert)</strong><p><code>Q = V · H<sub>s</sub></code></p></div>'+
+ '</div>'+
+ '<h4>Gasförmige Brennstoffe</h4>'+
+ '<div class="unit-grid">'+
+ '<div class="term"><strong>Heizwert im Betriebszustand</strong><p><code>Q = V · H<sub>i,B</sub></code></p></div>'+
+ '<div class="term"><strong>Brennwert im Betriebszustand</strong><p><code>Q = V · H<sub>s,B</sub></code></p></div>'+
+ '</div>'+
+ '<p><strong>Formelzeichen:</strong> Q = Energieinhalt/Wärmemenge [z. B. kWh]; m = Brennstoffmasse [kg]; V = Brennstoffvolumen [l oder m³]; H<sub>i</sub> = Heizwert; H<sub>s</sub> = Brennwert; Index B = bezogen auf den Betriebszustand des Gases.</p>'+
+ '<p class="small-note">Achte auf passende Einheiten: Bei m in kg benötigt H die Einheit kWh/kg; bei V in l die Einheit kWh/l und bei V in m³ die Einheit kWh/m³. Volumenbezogene Werte für feste Brennstoffe sind nur bei bekannter Schütt- oder Lagerdichte sinnvoll.</p>'+
+ '<div class="term"><strong>Rechenbeispiel (Heizöl):</strong> 150 l Heizöl mit angenommenem Heizwert 10 kWh/l ergeben <code>Q = 150 l · 10 kWh/l = 1.500 kWh</code> Brennstoffenergie. Die tatsächlich nutzbare Wärme hängt vom Wirkungsgrad der Anlage ab.</div>'+
  '</section>';
 }
 function openUnit(bw,i){
