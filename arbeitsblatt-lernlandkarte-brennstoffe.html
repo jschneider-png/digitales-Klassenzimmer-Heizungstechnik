@@ -17,7 +17,7 @@
 .map-buttons button{font-size:.9rem;background:#edf4f8;border:1px solid #c5d7e4;color:#23658b}
 #map-topic[hidden],.legacy-panel[hidden]{display:none!important}
 #map-topic{scroll-margin-top:16px}
-</style></head><body><header><a href="lernpfad.html?bw=1">← Zurück zu Blockwoche 1</a><div class="tag">Wiederholung vor den Wärmewerten</div><h1>Arbeitsblatt: Lernlandkarte Brennstoffe</h1><p>Die wichtigsten Grundbegriffe verstehen, erklären und anwenden. Erst die Zusammenfassung lesen, dann ohne Hilfe lösen und anschließend selbst kontrollieren.</p></header><main class="wrap"><section class="panel" id="map-start"><h2>Interaktive Lernlandkarte Brennstoffe</h2><p>Klicke auf einen Begriff im Bild. Erst danach erscheinen Erklärung und passende Übung.</p>
+</style></head><body><header><a href="lernpfad.html?bw=1">← Zurück zu Blockwoche 1</a><div class="tag">Wiederholung vor den Wärmewerten</div><h1>Arbeitsblatt: Lernlandkarte Brennstoffe</h1><p>Die wichtigsten Grundbegriffe verstehen, erklären und anwenden. Erst die Zusammenfassung lesen, dann ohne Hilfe lösen und anschließend selbst kontrollieren.</p></header><main class="wrap"><section class="panel" id="map-start"><h2>Wiederholung der 1. Blockwoche</h2><p>Klicke auf einen Begriff im Bild. Erst danach erscheinen Erklärung und passende Übung.</p>
 <div class="interactive-map"><img src="lernlandkarte-brennstoffe-interaktiv.png" alt="Lernlandkarte Brennstoffe – sieben anklickbare Fachthemen">
 <button class="z1" data-topic="0" aria-label="Brennstoffarten öffnen"></button>
 <button class="z2" data-topic="1" aria-label="Verbrennung und Feuerdreieck öffnen"></button>
@@ -67,4 +67,64 @@
 })();
 </script><script>
 document.querySelectorAll('.task').forEach(t=>{const c=t.querySelector('.check');if(c)c.addEventListener('click',()=>{const s=t.querySelector('select'),f=t.querySelector('.feedback');f.textContent=s.value===s.dataset.answer?'✓ Richtig!':'Noch nicht. Prüfe die Zusammenfassung oben.';f.style.color=s.value===s.dataset.answer?'#28704c':'#a94c2e'});const n=t.querySelector('.check-number');if(n)n.addEventListener('click',()=>{const i=t.querySelector('[data-number]'),f=t.querySelector('.feedback');const ok=i.value!==''&&Math.abs(Number(i.value)-Number(i.dataset.number))<0.011;f.textContent=ok?'✓ Richtig gerechnet!':'Bitte Ergebnis, Einheiten und Rechenweg noch einmal prüfen.';f.style.color=ok?'#28704c':'#a94c2e'});const b=t.querySelector('.reveal');if(b)b.addEventListener('click',()=>t.querySelector('.answer').classList.toggle('visible'))});
+</script><style>
+.bw-timer{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:14px;background:#eaf3f8;border-radius:12px;margin:13px 0;border:1px solid #c4d9e7}
+.bw-timer strong{font-size:1.7rem;font-variant-numeric:tabular-nums;color:#102c43}
+.bw-timer button,.bw-feedback-btn{border:0;border-radius:9px;background:#23658b;color:#fff;padding:9px 13px;font-weight:800;cursor:pointer}
+.bw-timer button{font-size:.9rem}.bw-timer button.secondary{background:#fff;color:#23658b;border:1px solid #c4d9e7}
+.bw-summary{padding:14px 17px;background:#fff8e9;border:1px solid #eacb92;border-radius:12px;margin-top:14px}
+.bw-summary h3{margin:0 0 8px;color:#6d501e}.bw-summary p{margin:0;line-height:1.6}
+.bw-topic-feedback{margin-top:12px;padding:13px;background:#f3f8fb;border:1px solid #dbe5ec;border-radius:12px}
+.bw-topic-feedback textarea{width:100%;min-height:65px;border:1px solid #bdceda;border-radius:9px;padding:10px;font:inherit;display:block;margin:7px 0}
+.bw-topic-feedback .hint{margin-top:8px;color:#23658b;font-weight:750}
+</style>
+<script>
+(function(){
+const summaries=[
+'Feste, flüssige und gasförmige Brennstoffe unterscheiden sich in Lagerung und Bereitstellung. Typische Beispiele: Pellets, Heizöl und Erdgas.',
+'Eine Verbrennung benötigt Brennstoff, Sauerstoff und Wärme bzw. Zündenergie. Wird eine Voraussetzung entzogen, kann sie erlöschen.',
+'Heizöl wird durch fraktionierte Destillation aus Rohöl gewonnen. Erdgas erhält durch Odorierung einen Warngeruch.',
+'Bei der Entschwefelung wird unter anderem Schwefelwasserstoff gebildet. Eine Claus-Anlage gewinnt daraus elementaren Schwefel.',
+'Der Brennwert Hₛ enthält zusätzlich die Kondensationswärme des Wasserdampfs. Daher gilt Hₛ > Hᵢ.',
+'Die relative Dichte vergleicht zwei Dichten und ist einheitenlos. Bei Brenngasen ist Luft der Bezugsstoff.',
+'Der Wobbeindex W = Hₛ,V / √d hilft, die Wärmebelastung und Austauschbarkeit von Brenngasen bei vergleichbaren Bedingungen einzuordnen.'
+];
+const questions=[
+'Ordne gedanklich drei Brennstoffe ihren Aggregatzuständen zu.',
+'Erkläre, warum eine Flamme unter einem Deckel erlischt.',
+'Erkläre einem Kunden den Unterschied zwischen Destillation und Odorierung.',
+'Wozu dient die Entschwefelung vor der Verbrennung?',
+'Erkläre in einem Satz den Unterschied zwischen Heizwert und Brennwert.',
+'Was bedeutet eine relative Gasdichte von d = 0,65 gegenüber Luft?',
+'Warum ist der Wobbeindex bei der Umstellung zwischen Brenngasen relevant?'
+];
+const hints=[
+'Beispiele: Pellets = fest; Heizöl = flüssig; Erdgas = gasförmig.',
+'Es fehlt der Sauerstoffnachschub. Ohne Sauerstoff kann das Feuer nicht weiterbrennen.',
+'Destillation trennt Rohölfraktionen nach Siedebereichen; Odorierung fügt Erdgas einen Warn-Geruchsstoff hinzu.',
+'Schwefelverbindungen werden reduziert, damit bei der Verbrennung weniger Schwefeldioxid entsteht.',
+'Beim Brennwert wird die Kondensationswärme berücksichtigt, beim Heizwert nicht.',
+'Das Gas ist unter denselben Bedingungen weniger dicht als Luft; d hat keine Einheit.',
+'Der Index berücksichtigt den Energieinhalt je Gasvolumen und die relative Dichte. Auch weitere Gaseigenschaften sind zu prüfen.'
+];
+let interval=null,remaining=180;
+function stop(){if(interval!==null){clearInterval(interval);interval=null;}}
+function renderTime(){const t=document.getElementById('bw-time');if(t)t.textContent=String(Math.floor(remaining/60)).padStart(2,'0')+':'+String(remaining%60).padStart(2,'0');}
+function start(){if(interval!==null||remaining<=0)return;interval=setInterval(()=>{remaining=Math.max(0,remaining-1);renderTime();if(!remaining){stop();const m=document.getElementById('bw-timer-message');if(m)m.textContent='Die drei Minuten sind um. Vergleiche jetzt deine Ergebnisse mit den Rückmeldungen.';}},1000)}
+function decorate(n){
+const host=document.getElementById('map-topic');if(!host)return;
+stop();remaining=180;
+const timer=document.createElement('div');timer.className='bw-timer';timer.innerHTML='<span>⏱️ Bearbeitungszeit pro Thema</span><strong id="bw-time" aria-live="off">03:00</strong><button type="button" id="bw-pause">Pause</button><button type="button" class="secondary" id="bw-reset">Neu starten</button><span id="bw-timer-message" role="status"></span>';
+host.insertBefore(timer,host.children[1]||null);
+const summary=document.createElement('div');summary.className='bw-summary';summary.innerHTML='<h3>Das nehmen wir aus diesem Thema mit</h3><p>'+summaries[n]+'</p>';
+host.appendChild(summary);
+const reflection=document.createElement('div');reflection.className='bw-topic-feedback';reflection.innerHTML='<strong>Abschlussfrage – selbst formulieren</strong><p>'+questions[n]+'</p><textarea aria-label="Deine Erklärung" placeholder="Deine Antwort in eigenen Worten …"></textarea><button class="bw-feedback-btn" type="button">Rückmeldung anzeigen</button><div class="hint" role="status"></div>';
+host.appendChild(reflection);
+reflection.querySelector('button').onclick=()=>{const entered=reflection.querySelector('textarea').value.trim();reflection.querySelector('.hint').textContent=entered.length<8?'Formuliere zunächst eine eigene Antwort (mindestens ein vollständiger Gedanke).':'Vergleiche deine Antwort: '+hints[n];};
+timer.querySelector('#bw-pause').onclick=()=>{const btn=timer.querySelector('#bw-pause');if(interval!==null){stop();btn.textContent='Fortsetzen'}else{start();btn.textContent='Pause'}};
+timer.querySelector('#bw-reset').onclick=()=>{stop();remaining=180;renderTime();timer.querySelector('#bw-timer-message').textContent='';timer.querySelector('#bw-pause').textContent='Pause';start();};
+renderTime();start();
+}
+document.querySelectorAll('[data-topic]').forEach(b=>b.addEventListener('click',()=>{const n=Number(b.dataset.topic);if(Number.isInteger(n)&&n>=0&&n<summaries.length)decorate(n)}));
+})();
 </script></body></html>
