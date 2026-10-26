@@ -1057,6 +1057,19 @@ document.getElementById('mapClose').onclick=closeMap;
 document.getElementById('mapBackdrop').onclick=e=>{if(e.target.id==='mapBackdrop')closeMap();};
 document.addEventListener('keydown',e=>{if(e.key==='Escape' && document.getElementById('mapBackdrop').classList.contains('open'))closeMap();});
 
+function waermemengeFormelnHtml(){
+ return '<section class="unit-box" aria-label="Formelsammlung Wärmemenge">'+
+ '<h3>🧮 Formelsammlung: Wärmemenge berechnen</h3>'+
+ '<p><strong>1. Erwärmung eines Stoffes:</strong> <code>Q = m · c · ΔT</code></p>'+
+ '<p>Q = Wärmemenge [kJ], m = Masse [kg], c = spezifische Wärmekapazität [kJ/(kg·K)], ΔT = Temperaturänderung [K]. Für Temperaturunterschiede gilt: 1 K = 1 °C.</p>'+
+ '<p><strong>2. Mit Wasservolumen:</strong> <code>Q = ρ · V · c · ΔT</code>, denn <code>m = ρ · V</code>. Für Wasser näherungsweise ρ = 1 kg/l und c = 4,19 kJ/(kg·K).</p>'+
+ '<p><strong>3. Umrechnung:</strong> <code>Q [kWh] = Q [kJ] / 3600</code>. Bei Wasser: <code>Q [kWh] ≈ V [l] · 1,163 · ΔT [K] / 1000</code>.</p>'+
+ '<p><strong>4. Wärmeenergie aus Leistung und Zeit:</strong> <code>Q = P · t</code> (P in kW, t in h, Q in kWh).</p>'+
+ '<p><strong>5. Energie aus Brennstoffen:</strong> <code>E = Brennstoffmenge · Heizwert (H<sub>u</sub>)</code>; nutzbare Wärme näherungsweise <code>Q<sub>nutz</sub> = E · η</code> (η als Dezimalzahl).</p>'+
+ '<div class="term"><strong>Beispiel:</strong> 200 l Wasser von 20 °C auf 60 °C erwärmen: ΔT = 40 K; Q = 200 · 4,19 · 40 = 33 520 kJ ≈ <strong>9,31 kWh</strong> (ohne Wärmeverluste).</div>'+
+ '<p class="small-note">Merke: Bei der Wassererwärmung berechnen wir die aufgenommene Wärmemenge; beim Brennstoff zunächst dessen Energieinhalt. Wärmeverluste und Wirkungsgrad sind bei einer realen Anlage zusätzlich zu berücksichtigen.</p>'+
+ '</section>';
+}
 function openUnit(bw,i){
  let u=LERNEINHEITEN[bw][i], bd=document.getElementById('unitBackdrop'), body=document.getElementById('unitBody');
  document.getElementById('unitKicker').textContent='Blockwoche '+bw+' · Stunde '+(i+1);
@@ -1066,7 +1079,7 @@ function openUnit(bw,i){
    body.innerHTML='<section class="unit-box"><h3>Leitfrage</h3><p>'+esc(u.question)+'</p></section>'+extraContentHtml(bw,i)+'<section class="unit-box"><h3>Materialien zu dieser Stunde</h3>'+materialButtons(bw,i+1)+'</section><div class="unit-footer"><span class="small-note">Arbeitsblätter vollständig? Dann Stunde abschließen.</span><button class="btn primary" id="unitDone" type="button">✓ Stunde erledigt</button></div>';
    initCombustionLesson(body.querySelector('#combLesson'));
  }else{
-   body.innerHTML='<div class="unit-grid"><section class="unit-box"><h3>Leitfrage</h3><p>'+esc(u.question)+'</p></section><section class="unit-box"><h3>Fachliche Grundlagen</h3><ul>'+u.infos.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></section></div><div class="unit-grid"><section class="unit-box"><h3>Fachbegriffe</h3><div class="glossary">'+u.terms.map(x=>'<div class="term"><strong>'+esc(x[0])+'</strong><br>'+esc(x[1])+'</div>').join('')+'</div></section><section class="unit-box practice"><h3>Praxisauftrag</h3><p>'+esc(u.practice)+'</p></section></div><section class="unit-box funfact"><h3>Zusatzwissen</h3><p>'+esc(u.funfact)+'</p></section>'+extraContentHtml(bw,i)+'<section class="unit-box"><h3>Materialien zu dieser Stunde</h3>'+materialButtons(bw,i+1)+'</section><section class="unit-box"><h3>Übungen und Selbstkontrolle</h3>'+u.tasks.map((t,j)=>taskHtml(t,j)).join('')+'</section><div class="unit-footer"><span class="small-note">Erst selbst lösen, dann kontrollieren.</span><button class="btn primary" id="unitDone" type="button">✓ Stunde erledigt</button></div>';
+   body.innerHTML='<div class="unit-grid"><section class="unit-box"><h3>Leitfrage</h3><p>'+esc(u.question)+'</p></section><section class="unit-box"><h3>Fachliche Grundlagen</h3><ul>'+u.infos.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></section></div><div class="unit-grid"><section class="unit-box"><h3>Fachbegriffe</h3><div class="glossary">'+u.terms.map(x=>'<div class="term"><strong>'+esc(x[0])+'</strong><br>'+esc(x[1])+'</div>').join('')+'</div></section><section class="unit-box practice"><h3>Praxisauftrag</h3><p>'+esc(u.practice)+'</p></section></div><section class="unit-box funfact"><h3>Zusatzwissen</h3><p>'+esc(u.funfact)+'</p></section>'+extraContentHtml(bw,i)+(bw===2 && (i===0 || i===1) ? waermemengeFormelnHtml() : '')+'<section class="unit-box"><h3>Materialien zu dieser Stunde</h3>'+materialButtons(bw,i+1)+'</section><section class="unit-box"><h3>Übungen und Selbstkontrolle</h3>'+u.tasks.map((t,j)=>taskHtml(t,j)).join('')+'</section><div class="unit-footer"><span class="small-note">Erst selbst lösen, dann kontrollieren.</span><button class="btn primary" id="unitDone" type="button">✓ Stunde erledigt</button></div>';
    body.querySelectorAll('.exercise').forEach((b,j)=>{let t=u.tasks[j],fb=b.querySelector('.ex-feedback');b.querySelector('.ex-check').onclick=()=>{let r=checkTask(t,b);fb.className='ex-feedback '+(r[0]?'ok':'bad');fb.textContent=r[1];};let sb=b.querySelector('.ex-sample');if(sb)sb.onclick=()=>{let a=b.querySelector('.sample-answer');a.style.display=a.style.display==='block'?'none':'block';};});
  }
  document.getElementById('unitDone').onclick=()=>{let z=weekState(bw),p=z[0],st=z[1];st.hours[i]=true;saveProgress(p);closeUnit();renderContent();};
