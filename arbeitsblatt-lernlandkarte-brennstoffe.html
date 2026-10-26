@@ -107,14 +107,14 @@ const hints=[
 'Das Gas ist unter denselben Bedingungen weniger dicht als Luft; d hat keine Einheit.',
 'Der Index berücksichtigt den Energieinhalt je Gasvolumen und die relative Dichte. Auch weitere Gaseigenschaften sind zu prüfen.'
 ];
-let interval=null,remaining=180;
+let interval=null,remaining=120;
 function stop(){if(interval!==null){clearInterval(interval);interval=null;}}
 function renderTime(){const t=document.getElementById('bw-time');if(t)t.textContent=String(Math.floor(remaining/60)).padStart(2,'0')+':'+String(remaining%60).padStart(2,'0');}
-function start(){if(interval!==null||remaining<=0)return;interval=setInterval(()=>{remaining=Math.max(0,remaining-1);renderTime();if(!remaining){stop();const m=document.getElementById('bw-timer-message');if(m)m.textContent='Die drei Minuten sind um. Vergleiche jetzt deine Ergebnisse mit den Rückmeldungen.';}},1000)}
+function start(){if(interval!==null||remaining<=0)return;interval=setInterval(()=>{remaining=Math.max(0,remaining-1);renderTime();if(!remaining){stop();const m=document.getElementById('bw-timer-message');if(m)m.textContent='Die zwei Minuten sind um. Vergleiche jetzt deine Ergebnisse mit den Rückmeldungen.';}},1000)}
 function decorate(n){
 const host=document.getElementById('map-topic');if(!host)return;
-stop();remaining=180;
-const timer=document.createElement('div');timer.className='bw-timer';timer.innerHTML='<span>⏱️ Bearbeitungszeit pro Thema</span><strong id="bw-time" aria-live="off">03:00</strong><button type="button" id="bw-pause">Pause</button><button type="button" class="secondary" id="bw-reset">Neu starten</button><span id="bw-timer-message" role="status"></span>';
+stop();remaining=120;
+const timer=document.createElement('div');timer.className='bw-timer';timer.innerHTML='<span>⏱️ Bearbeitungszeit pro Thema</span><strong id="bw-time" aria-live="off">02:00</strong><button type="button" id="bw-pause">Pause</button><button type="button" class="secondary" id="bw-reset">Neu starten</button><span id="bw-timer-message" role="status"></span>';
 host.insertBefore(timer,host.children[1]||null);
 const summary=document.createElement('div');summary.className='bw-summary';summary.innerHTML='<h3>Das nehmen wir aus diesem Thema mit</h3><p>'+summaries[n]+'</p>';
 host.appendChild(summary);
@@ -122,7 +122,7 @@ const reflection=document.createElement('div');reflection.className='bw-topic-fe
 host.appendChild(reflection);
 reflection.querySelector('button').onclick=()=>{const entered=reflection.querySelector('textarea').value.trim();reflection.querySelector('.hint').textContent=entered.length<8?'Formuliere zunächst eine eigene Antwort (mindestens ein vollständiger Gedanke).':'Vergleiche deine Antwort: '+hints[n];};
 timer.querySelector('#bw-pause').onclick=()=>{const btn=timer.querySelector('#bw-pause');if(interval!==null){stop();btn.textContent='Fortsetzen'}else{start();btn.textContent='Pause'}};
-timer.querySelector('#bw-reset').onclick=()=>{stop();remaining=180;renderTime();timer.querySelector('#bw-timer-message').textContent='';timer.querySelector('#bw-pause').textContent='Pause';start();};
+timer.querySelector('#bw-reset').onclick=()=>{stop();remaining=120;renderTime();timer.querySelector('#bw-timer-message').textContent='';timer.querySelector('#bw-pause').textContent='Pause';start();};
 renderTime();start();
 }
 document.querySelectorAll('[data-topic]').forEach(b=>b.addEventListener('click',()=>{const n=Number(b.dataset.topic);if(Number.isInteger(n)&&n>=0&&n<summaries.length)decorate(n)}));
