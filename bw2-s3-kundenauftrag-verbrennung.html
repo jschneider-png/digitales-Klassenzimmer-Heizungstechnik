@@ -28,15 +28,19 @@ const questions=[
 const solved=Array(9).fill(false);
 const checkCode=value=>value.trim().toUpperCase()===codeLetters.join('');
 let i=0;const stage=document.getElementById('stage'),prev=document.getElementById('prev'),next=document.getElementById('next'),counter=document.getElementById('counter'),dots=document.getElementById('dots');
+const opened=Array(9).fill(false);
 function quizMarkup(n){
  const q=questions[n];
- return '<div class="codehint"><strong>Expertencheck · Folie '+(n+1)+'</strong><p>'+q.q+'</p><div class="quizchoices">'+q.a.map((a,k)=>'<button type="button" class="quizoption" data-choice="'+k+'" '+(solved[n]?'disabled':'')+'>'+String.fromCharCode(65+k)+'. '+a+'</button>').join('')+'</div><p id="quizfeedback" role="status" aria-live="polite">'+(solved[n]?'Richtig beantwortet!':'Wähle die fachlich richtige Antwort.')+'</p>'+(solved[n]?'<p><strong>Dein Codebuchstabe:</strong> <span class="codeletter">'+codeLetters[n]+'</span> · Notiere ihn.</p>':'')+'</div>';
+ const toggle='<button type="button" class="answerbtn quiztoggle" aria-expanded="'+opened[n]+'" aria-controls="quizpanel" id="quiztoggle">'+(opened[n]?'Expertenfrage schließen':solved[n]?'Expertenfrage erneut ansehen':'Expertenfrage öffnen')+'</button>';
+ if(!opened[n])return '<div class="codehint"><strong>Expertencheck · Folie '+(n+1)+'</strong><p>Prüfe dein Fachwissen, wenn du die Inhalte bearbeitet hast.</p>'+toggle+(solved[n]?'<p><strong>Codebuchstabe verdient:</strong> <span class="codeletter">'+codeLetters[n]+'</span></p>':'')+'</div>';
+ return '<div class="codehint"><strong>Expertencheck · Folie '+(n+1)+'</strong><p>'+toggle+'</p><div id="quizpanel"><p>'+q.q+'</p><div class="quizchoices">'+q.a.map((a,k)=>'<button type="button" class="quizoption" data-choice="'+k+'" '+(solved[n]?'disabled':'')+'>'+String.fromCharCode(65+k)+'. '+a+'</button>').join('')+'</div><p id="quizfeedback" role="status" aria-live="polite">'+(solved[n]?'Richtig beantwortet!':'Wähle die fachlich richtige Antwort.')+'</p>'+(solved[n]?'<p><strong>Dein Codebuchstabe:</strong> <span class="codeletter">'+codeLetters[n]+'</span> · Notiere ihn.</p>':'')+'</div></div>';
 }
 function render(){
  stage.innerHTML='<span class="pill">Folie '+(i+1)+'</span><h2>'+slides[i][0]+'</h2>'+slides[i][1]+quizMarkup(i);
  prev.disabled=i===0;next.textContent=i===slides.length-1?'Von vorne ↻':'Weiter →';counter.textContent=(i+1)+' / '+slides.length;
  dots.innerHTML=slides.map((_,n)=>'<button type="button" aria-label="Folie '+(n+1)+(solved[n]?', Expertencheck geschafft':'')+'" '+(n===i?'aria-current="step"':'')+'></button>').join('');
  dots.querySelectorAll('button').forEach((b,n)=>b.onclick=()=>{i=n;render()});
+ const toggle=document.getElementById('quiztoggle');if(toggle)toggle.onclick=()=>{opened[i]=!opened[i];render()};
  stage.querySelectorAll('[data-choice]').forEach(b=>b.onclick=()=>{
    if(solved[i])return;
    if(Number(b.dataset.choice)===questions[i].correct){solved[i]=true;render()}
