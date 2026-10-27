@@ -17,8 +17,18 @@
 .map-buttons button{font-size:.9rem;background:#edf4f8;border:1px solid #c5d7e4;color:#23658b}
 #map-topic[hidden],.legacy-panel[hidden]{display:none!important}
 #map-topic{scroll-margin-top:16px}
+
+/* Fachliche Korrektur direkt über dem beschrifteten Rasterbild: Feld 6 */
+.interactive-map .gas-density-correction{position:absolute;left:39%;top:69.9%;width:26.9%;height:25.1%;padding:1% 1.1%;background:linear-gradient(145deg,#f1eaff 0%,#eceafb 100%);color:#24213d;line-height:1.28;pointer-events:none;display:flex;flex-direction:column;gap:.6cqw;font-size:clamp(7px,1.27cqw,15px);border-radius:1.1cqw;overflow:hidden;z-index:1}
+.interactive-map{container-type:inline-size}
+.gas-density-correction .gdc-formula{align-self:center;border:1px solid #8869d4;background:#f8f4ff;border-radius:.65cqw;padding:.45cqw 1.2cqw;font-size:1.35em;font-weight:700}
+.gas-density-correction .gdc-examples{display:grid;grid-template-columns:repeat(3,1fr);gap:.6cqw;margin-top:.2cqw}
+.gas-density-correction .gdc-examples span{border-radius:.6cqw;background:#ded2f7;padding:.5cqw .2cqw;text-align:center}
+.gas-density-correction .gdc-examples strong{display:block}
+.gas-density-correction .gdc-small{font-size:.92em}
+@media print{.interactive-map .gas-density-correction{print-color-adjust:exact;-webkit-print-color-adjust:exact}}
 </style></head><body><header><a href="lernpfad.html?bw=1">← Zurück zu Blockwoche 1</a><div class="tag">Wiederholung vor den Wärmewerten</div><h1>Arbeitsblatt: Lernlandkarte Brennstoffe</h1><p>Die wichtigsten Grundbegriffe verstehen, erklären und anwenden. Erst die Zusammenfassung lesen, dann ohne Hilfe lösen und anschließend selbst kontrollieren.</p></header><main class="wrap"><section class="panel" id="map-start"><h2>Wiederholung der 1. Blockwoche</h2><p>Klicke auf einen Begriff im Bild. Erst danach erscheinen Erklärung und passende Übung.</p>
-<div class="interactive-map"><img src="lernlandkarte-brennstoffe-interaktiv.png" alt="Lernlandkarte Brennstoffe – sieben anklickbare Fachthemen">
+<div class="interactive-map"><img src="lernlandkarte-brennstoffe-interaktiv.png" alt="Lernlandkarte Brennstoffe – sieben anklickbare Fachthemen"><div class="gas-density-correction" aria-label="Relative Gasdichte bezogen auf Luft"><div><strong>Relative Gasdichte</strong>: Verhältnis der Dichte eines Brenngases zur Dichte von Luft bei gleichem Druck und gleicher Temperatur.</div><div class="gdc-formula">d = ρ<sub>Gas</sub> / ρ<sub>Luft</sub></div><div class="gdc-examples"><span><strong>Erdgas</strong>d ≈ 0,6<br>leichter</span><span><strong>Propan</strong>d ≈ 1,5<br>schwerer</span><span><strong>Butan</strong>d ≈ 2,0<br>schwerer</span></div><div class="gdc-small">d ist einheitenlos. Werte sind Näherungen für gleiche Bezugsbedingungen.</div></div>
 <button class="z1" data-topic="0" aria-label="Brennstoffarten öffnen"></button>
 <button class="z2" data-topic="1" aria-label="Verbrennung und Feuerdreieck öffnen"></button>
 <button class="z3" data-topic="2" aria-label="Heizöl und Erdgas öffnen"></button>
