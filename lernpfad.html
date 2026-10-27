@@ -386,6 +386,24 @@ footer{background:#0f273a;color:#aec1cf;padding:30px 0;margin-top:28px}.footer-r
 
 .fuel-popup{position:fixed;inset:0;z-index:9999;background:rgba(8,25,40,.78);display:none;align-items:center;justify-content:center;padding:16px}.fuel-popup.open{display:flex}.fuel-popup-panel{width:min(760px,100%);max-height:85vh;overflow:auto;background:white;border-radius:20px;padding:24px;box-shadow:0 22px 75px rgba(0,0,0,.3)}.fuel-popup-head{display:flex;align-items:start;justify-content:space-between;gap:16px}.fuel-popup-head h3{margin:0 0 15px;font-size:1.5rem}.fuel-popup-close{background:#e8f1f6;color:#173f5a;border:0;border-radius:11px;padding:10px 14px;cursor:pointer;font-weight:900}.fuel-board{margin-top:22px;border:2px solid #b7cfdd;border-radius:15px;padding:20px;background:#fff}.fuel-board h3{margin:0 0 10px}.fuel-board .fuel-formula{font-size:1.1rem;margin:7px 0}.fuel-tip{background:#fff4dd;border-left:4px solid #d68a20;border-radius:9px;padding:12px;margin:12px 0}.fuel-practice-tip{background:#e9f4ee;border-left:4px solid #528066;border-radius:9px;padding:12px;margin:12px 0}
 .fuel-board-cue{display:inline-block;margin:0 0 5px;font-size:1rem;line-height:1.2;cursor:help;opacity:.65}
+
+/* BW2 · Stunde 1: durchklickbare Heizöl/Pellet-Zusammenfassung */
+.summary-wrap{background:linear-gradient(135deg,#e8f4fa,#fffaf0);border:1px solid #bfd6e3;border-radius:18px;padding:18px}
+.summary-wrap h3{margin:0 0 8px;color:#153b55}
+.summary-stage{background:#fff;border:1px solid #d5e4eb;border-radius:16px;min-height:290px;padding:clamp(18px,4vw,30px);margin-top:14px}
+.summary-stage h4{font-size:clamp(1.25rem,3vw,1.75rem);color:#123e5c;margin:8px 0 17px}
+.summary-stage p,.summary-stage li{font-size:1.05rem;line-height:1.65;color:#29495a}
+.summary-formula{background:#eaf5fa;border-left:5px solid #23658b;border-radius:10px;padding:16px;font-size:clamp(1.05rem,2.5vw,1.4rem);font-weight:800;color:#143d56;overflow-wrap:anywhere;margin:13px 0}
+.summary-hint{background:#fff7e6;border-left:4px solid #e59b36;padding:12px;border-radius:9px;color:#624a25}
+.summary-controls{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:15px}
+.summary-controls button{min-width:115px}
+.summary-progress{font-weight:850;color:#28546c}
+.summary-dots{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.summary-dots button{height:10px;width:24px;padding:0;border:0;border-radius:8px;background:#b5cfdd;cursor:pointer}
+.summary-dots button[aria-current="step"]{background:#23658b}
+.summary-stage [hidden]{display:none!important}
+@media(max-width:550px){.summary-controls button{min-width:90px}.summary-stage{min-height:360px}}
+
 </style><style id="plainGrade12">
 :root{--radius:8px} body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
 .plain-sequence{margin:20px 0 28px;padding:22px;border:1px solid #cbd5e1;border-radius:8px;background:#fff;color:#1e293b;box-shadow:none}
@@ -1146,6 +1164,28 @@ function initFuelLesson(root){
  prev.onclick=()=>{idx=Math.max(0,idx-1);draw();};next.onclick=()=>{idx=Math.min(ss.length-1,idx+1);draw();};draw();
 }
 
+
+function pelletSummaryHtml(){
+ return '<section class="summary-wrap" id="pelletSummary"><h3>📽️ Zusammenfassung · Vom Heizöl zu Holzpellets</h3><p>10 Folien zum Durchklicken – Kundenauftrag, Formeln und nachvollziehbarer Rechenweg.</p><div class="summary-stage" id="summaryStage" aria-live="polite"></div><div class="summary-dots" id="summaryDots" aria-label="Folien auswählen"></div><div class="summary-controls"><button type="button" class="btn secondary" id="summaryPrev">← Zurück</button><span class="summary-progress" id="summaryCounter"></span><button type="button" class="btn primary" id="summaryNext">Weiter →</button></div></section>';
+}
+function initPelletSummary(root){
+ const slides=[
+ ['Der Kundenauftrag','<p>„Ich brauche normalerweise <strong>2.500 Liter Heizöl</strong>. Wie viele Holzpellets liefern ungefähr genauso viel Energie?“</p><p><strong>Unser Ziel:</strong> Die benötigte Pelletmasse in kg und Tonnen bestimmen.</p>'],
+ ['1 · Gegeben und gesucht','<p><strong>Gegeben:</strong> V<sub>Öl</sub> = 2.500 l</p><p><strong>Angenommene Heizwerte:</strong> H<sub>u,Öl</sub> = 10 kWh/l; H<sub>u,Pellets</sub> = 5 kWh/kg.</p><p><strong>Gesucht:</strong> m<sub>Pellets</sub> in kg und t.</p><div class="summary-hint">Liter (Volumen) und Kilogramm (Masse) dürfen nicht direkt gleichgesetzt werden.</div>'],
+ ['2 · Welchen Kennwert brauchen wir?','<p>Der <strong>Heizwert H<sub>u</sub></strong> gibt an, wie viel Energie eine Brennstoffeinheit ohne Nutzung der Kondensationswärme liefert.</p><p>Heizöl: <strong>kWh/l</strong> · Pellets: <strong>kWh/kg</strong>.</p><p>Wir vergleichen beide über die gemeinsame Größe <strong>Energie (kWh)</strong>.</p>'],
+ ['3 · Formel für die Heizöl-Energie','<p><strong>Brennstoffmenge × Heizwert = Energie.</strong></p><div class="summary-formula">Q<sub>Öl</sub> = V<sub>Öl</sub> × H<sub>u,Öl</sub></div><p>Einheitencheck: l × kWh/l = kWh.</p>'],
+ ['4 · Energie ausrechnen','<div class="summary-formula">Q<sub>Öl</sub> = 2.500 l × 10 kWh/l<br>= 25.000 kWh</div><p>Wir müssen also ungefähr <strong>25.000 kWh Brennstoffenergie</strong> durch Pellets bereitstellen.</p>'],
+ ['5 · Formel für Holzpellets','<p>Bei Pellets verwenden wir die Masse:</p><div class="summary-formula">Q<sub>Pellets</sub> = m<sub>Pellets</sub> × H<sub>u,Pellets</sub></div><p>Gesucht ist <strong>m</strong> – also stellen wir die Formel um.</p>'],
+ ['6 · Formel umstellen','<p>Wir teilen beide Seiten durch den Heizwert.</p><div class="summary-formula">m<sub>Pellets</sub> = Q<sub>Pellets</sub> / H<sub>u,Pellets</sub></div><p>Für gleiche Brennstoffenergie setzen wir Q<sub>Pellets</sub> = 25.000 kWh.</p><p>Einheitencheck: kWh / (kWh/kg) = kg.</p>'],
+ ['7 · Einsetzen und berechnen','<div class="summary-formula">m<sub>Pellets</sub> = 25.000 kWh / (5 kWh/kg)<br>= 5.000 kg</div><p><strong>Umrechnung:</strong> 1 t = 1.000 kg.</p><div class="summary-formula">5.000 kg = 5 t</div>'],
+ ['8 · Kundengerechte Antwort','<p>„Für die gleiche Brennstoffenergie wie <strong>2.500 Liter Heizöl</strong> brauchen Sie näherungsweise <strong>5.000 kg bzw. 5 Tonnen Holzpellets</strong>.“</p><div class="summary-hint"><strong>Wichtig für die Praxis:</strong> Echte Heizwerte können abweichen (Pellets etwa 4,8–5 kWh/kg); auch die Wirkungsgrade von Alt- und Neuanlage sind ggf. verschieden. Das Ergebnis ist eine überschlägige Energieäquivalenz, keine exakte Bedarfsplanung.</div>'],
+ ['9 · Selbstkontrolle','<p>Für <strong>1.000 l Heizöl</strong>: Wie viele kg Pellets braucht man mit denselben Werten?</p><button type="button" class="btn secondary" id="summaryReveal">Lösung anzeigen</button><div id="summaryAnswer" hidden><div class="summary-formula">Q = 1.000 × 10 = 10.000 kWh<br>m = 10.000 / 5 = 2.000 kg = 2 t</div><p><strong>Merke:</strong> Erst Energie berechnen, dann auf die Pelletmasse umrechnen.</p></div>']
+ ];
+ let index=0;const stage=root.querySelector('#summaryStage'),dots=root.querySelector('#summaryDots'),prev=root.querySelector('#summaryPrev'),next=root.querySelector('#summaryNext'),count=root.querySelector('#summaryCounter');
+ function show(n){index=Math.max(0,Math.min(slides.length-1,n));stage.innerHTML='<span class="badge">Folie '+(index+1)+'</span><h4>'+slides[index][0]+'</h4>'+slides[index][1];count.textContent=(index+1)+' / '+slides.length;prev.disabled=index===0;next.textContent=index===slides.length-1?'Nochmal ↻':'Weiter →';dots.innerHTML=slides.map((_,i)=>'<button type="button" aria-label="Folie '+(i+1)+'" '+(i===index?'aria-current="step"':'')+'></button>').join('');dots.querySelectorAll('button').forEach((b,i)=>b.onclick=()=>show(i));let reveal=stage.querySelector('#summaryReveal');if(reveal)reveal.onclick=()=>{stage.querySelector('#summaryAnswer').hidden=false;reveal.hidden=true;};}
+ prev.onclick=()=>show(index-1);next.onclick=()=>show(index===slides.length-1?0:index+1);show(0);
+}
+
 function openUnit(bw,i){
  let u=LERNEINHEITEN[bw][i], bd=document.getElementById('unitBackdrop'), body=document.getElementById('unitBody');
  document.getElementById('unitKicker').textContent='Blockwoche '+bw+' · Stunde '+(i+1);
@@ -1162,7 +1202,7 @@ function openUnit(bw,i){
    body.innerHTML='<div class="unit-grid"><section class="unit-box"><h3>Leitfrage</h3><p>'+esc(u.question)+'</p></section><section class="unit-box"><h3>Fachliche Grundlagen</h3><ul>'+u.infos.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></section></div><div class="unit-grid"><section class="unit-box"><h3>Fachbegriffe</h3><div class="glossary">'+u.terms.map(x=>'<div class="term"><strong>'+esc(x[0])+'</strong><br>'+esc(x[1])+'</div>').join('')+'</div></section><section class="unit-box practice"><h3>Praxisauftrag</h3><p>'+esc(u.practice)+'</p></section></div><section class="unit-box funfact"><h3>Zusatzwissen</h3><p>'+esc(u.funfact)+'</p></section>'+extraContentHtml(bw,i)+(bw===2 && (i===0 || i===1) ? waermemengeFormelnHtml() : '')+'<section class="unit-box"><h3>Materialien zu dieser Stunde</h3>'+materialButtons(bw,i+1)+'</section><section class="unit-box"><h3>Übungen und Selbstkontrolle</h3>'+u.tasks.map((t,j)=>taskHtml(t,j)).join('')+'</section><div class="unit-footer"><span class="small-note">Erst selbst lösen, dann kontrollieren.</span><button class="btn primary" id="unitDone" type="button">✓ Stunde erledigt</button></div>';
    body.querySelectorAll('.exercise').forEach((b,j)=>{let t=u.tasks[j],fb=b.querySelector('.ex-feedback');b.querySelector('.ex-check').onclick=()=>{let r=checkTask(t,b);fb.className='ex-feedback '+(r[0]?'ok':'bad');fb.textContent=r[1];};let sb=b.querySelector('.ex-sample');if(sb)sb.onclick=()=>{let a=b.querySelector('.sample-answer');a.style.display=a.style.display==='block'?'none':'block';};});
  }
- document.getElementById('unitDone').onclick=()=>{let z=weekState(bw),p=z[0],st=z[1];st.hours[i]=true;saveProgress(p);closeUnit();renderContent();};
+ if(bw===2 && i===0){body.querySelector('.unit-footer').insertAdjacentHTML('beforebegin',pelletSummaryHtml());initPelletSummary(body.querySelector('#pelletSummary'));}\n document.getElementById('unitDone').onclick=()=>{let z=weekState(bw),p=z[0],st=z[1];st.hours[i]=true;saveProgress(p);closeUnit();renderContent();};
  bd.classList.add('open');bd.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';
 }
 function closeUnit(){document.querySelectorAll('body > .fuel-popup').forEach(x=>x.remove());let b=document.getElementById('unitBackdrop');b.classList.remove('open');b.setAttribute('aria-hidden','true');document.body.style.overflow='';}
@@ -1180,7 +1220,7 @@ document.getElementById('unitClose').onclick=closeUnit;document.getElementById('
    let c=document.createElement('article');c.className='topic-card'+(st.hours[i]?' is-done':'');
    let route=(bw.bw===2&&i===0)?'<div class="topic-route"><div class="topic-route-title">Dein Lernweg · Wärmewerte</div><a class="topic-route-link" href="https://lernplattform.bycs.de/mod/folder/view.php?id=101609248" target="_blank" rel="noopener"><span class="n">1</span><img src="https://lernplattform.bycs.de/theme/mebis/pix/bycs-lp-logo.svg" alt="BayernCloud Schule"><span><strong>Lernmaterial · Wärmewerte</strong><small>Grundlagen erarbeiten</small></span></a><a class="topic-route-link" href="https://lernplattform.bycs.de/mod/hvp/view.php?id=103361171" target="_blank" rel="noopener"><span class="n">2</span><img src="https://lernplattform.bycs.de/theme/mebis/pix/bycs-lp-logo.svg" alt="BayernCloud Schule"><span><strong>Übung · Brennstoff-Check</strong><small>Wissen anwenden und überprüfen</small></span></a></div>':'';
    c.innerHTML='<div class="badge">Stunde '+(i+1)+' <span class="tasktype">Pflicht</span></div><h4>'+esc(title)+'</h4><p>'+esc(LERNEINHEITEN[bw.bw][i].question)+'</p>'+route+'<button class="btn secondary open-unit" type="button">Lerneinheit öffnen →</button>'+(bw.bw===2&&i===0?'<a class="btn outline" style="width:100%;margin-top:8px" href="waermewerte-uebung.html">🌶️ Übung macht den Meister →</a>':'')+(bw.bw===2&&i===0?'<a class="btn outline" style="width:100%;margin-top:8px" href="waermewerte-challenge.html">🌶️🌶️ Wärmewerte-Challenge · 3 Niveaus →</a>':'')+(bw.bw===2&&i===3?'<a class="btn outline" style="width:100%;margin-top:8px" href="emissionen-abgase.html">🌫️ Abgase & Emissionen interaktiv →</a>':'')+materialButtons(bw.bw,i+1)+(direct?'<a class="btn outline" style="width:100%;margin-top:8px" href="'+direct+'" target="_blank" rel="noopener">Direktlink / Mebis ↗</a>':'')+'<button class="done-toggle '+(st.hours[i]?'done':'')+'" type="button">'+(st.hours[i]?'✓ erledigt':'als erledigt markieren')+'</button>';
-   c.querySelector('.open-unit').onclick=()=>openUnit(bw.bw,i);
+   if(bw.bw===2 && i===0){const sb=document.createElement('button');sb.type='button';sb.className='btn primary';sb.style.cssText='width:100%;margin-top:9px';sb.textContent='📽️ Zusammenfassung · 2.500 l Heizöl → Pellets';sb.onclick=()=>{openUnit(2,0);document.getElementById('pelletSummary')?.scrollIntoView({block:'start'});};c.insertBefore(sb,c.querySelector('.done-toggle'));}\n   c.querySelector('.open-unit').onclick=()=>openUnit(bw.bw,i);
    c.querySelector('.done-toggle').onclick=()=>{let q=weekState(bw.bw),p=q[0],ss=q[1];ss.hours[i]=!ss.hours[i];saveProgress(p);renderContent();};
    tg.appendChild(c);
  });
