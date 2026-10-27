@@ -157,6 +157,39 @@ footer{padding:20px 0;color:#6f8390;font-size:.82rem}
 }
 @media(max-width:440px){.week-map-grid{grid-template-columns:1fr}}
 
+
+/* Sichtbare Bildkacheln für Lernlandkarten und Jahresreise */
+.room-feature{
+  position:absolute;z-index:6;display:block;text-decoration:none;
+  border-radius:14px;overflow:hidden;border:2px solid rgba(255,255,255,.88);
+  box-shadow:0 8px 22px rgba(19,59,82,.22);
+  background:#fff;line-height:1.2;transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease
+}
+.room-feature:hover,.room-feature:focus-visible{
+  transform:translateY(-3px) scale(1.012);box-shadow:0 12px 28px rgba(19,59,82,.29);
+  border-color:#9bd6ee;outline:none
+}
+.room-feature img{display:block;width:100%;height:100%;object-fit:cover}
+.room-feature-label{
+  position:absolute;left:0;right:0;bottom:0;padding:8px 10px;
+  background:linear-gradient(180deg,rgba(10,55,83,0),rgba(10,55,83,.92));
+  color:#fff;font-size:.78rem;font-weight:900;text-shadow:0 1px 2px rgba(0,0,0,.3)
+}
+.learningmap-feature{left:10.7%;top:9.8%;width:26.4%;height:34.2%}
+.journey-feature{right:2.9%;top:8.8%;width:21.2%;height:28.8%}
+@media(max-width:760px){
+ .room-feature-label{font-size:.58rem;padding:5px 6px}
+ .room-feature{border-width:1px;border-radius:7px}
+}
+
+.learning-dialog-head{border-bottom:1px solid #c9dfe9;padding-bottom:12px}
+.week-map-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.week-map-btn{position:relative;overflow:hidden;background:#f8fcfe}
+.week-map-btn::after{
+  content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent 35%,rgba(148,211,236,.13));pointer-events:none
+}
+.week-map-btn:hover{background:#eaf6fc}
+
 </style>
 </head>
 <body>
@@ -189,6 +222,14 @@ footer{padding:20px 0;color:#6f8390;font-size:.82rem}
     <div class="classroom-shell">
       <div class="room">
         <img src="startbild-heizungstechnik-neu.png?v=20261025-1500" alt="Virtuelles Klassenzimmer Heizungstechnik mit integrierter Lernlandkarte, Jahresreise und zwölf Blockwochen">
+        <a href="#" class="room-feature learningmap-feature learningmap-card" aria-label="Lernlandkarten der 12 Blockwochen öffnen">
+          <img src="lernlandkarte-startseite.svg?v=20261027" alt="Lernlandkarte Heizungstechnik – 12 Blockwochen">
+          <span class="room-feature-label">Lernlandkarten · 12 Blockwochen öffnen</span>
+        </a>
+        <a href="jahresreise-karte.html" class="room-feature journey-feature" aria-label="Jahresreise Heizungstechnik öffnen">
+          <img src="jahresreise.png?v=20261027" alt="Jahresreise Heizungstechnik">
+          <span class="room-feature-label">Jahresreise öffnen</span>
+        </a>
 
         <svg class="hotspot-map" viewBox="0 0 1536 1024" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-label="Anklickbare Bereiche im virtuellen Klassenzimmer">
           <!-- Lernlandkarte: exakt das sichtbare Poster als Klickfläche -->
@@ -210,14 +251,14 @@ footer{padding:20px 0;color:#6f8390;font-size:.82rem}
           <a href="lernpfad.html?bw=2" class="week-hotspot" data-icon-x="-155" data-title="BW 2 · Verbrennung" data-info="Heizwert und Brennwert|Energieinhalt|Verbrennung und Emissionen" aria-label="Blockwoche 2 öffnen"><rect x="142" y="712" width="119" height="232" rx="10"/></a>
           <a href="lernpfad.html?bw=3" class="week-hotspot" data-icon-x="-279" data-title="BW 3 · Heizöllagerung" data-info="Tankarten und Aufbau|Befüllung und Entlüftung|Sicherheit und Schutzmaßnahmen" aria-label="Blockwoche 3 öffnen"><rect x="266" y="712" width="119" height="232" rx="10"/></a>
           <a href="lernpfad.html?bw=4" class="week-hotspot" data-icon-x="-403" data-title="BW 4 · Festbrennstofflager" data-info="Pellets, Scheitholz und Hackschnitzel|Lagerbedingungen|Austragung und Sicherheit" aria-label="Blockwoche 4 öffnen"><rect x="390" y="712" width="119" height="232" rx="10"/></a>
-          <a href="lernpfad.html?bw=5" class="week-hotspot" data-icon-x="-527" data-title="BW 5 · Wärmeerzeuger" data-info="Kessel und Wärmeerzeuger|Brennwerttechnik|Biomasse und Anlagenwahl" aria-label="Blockwoche 5 öffnen"><rect x="514" y="712" width="119" height="232" rx="10"/></a>
-          <a href="lernpfad.html?bw=6" class="week-hotspot" data-icon-x="-651" data-title="BW 6 · Abgastechnik" data-info="Abgasführung und Schornstein|Förderdruck und Druckverluste|Kondensat und Brandschutz" aria-label="Blockwoche 6 öffnen"><rect x="638" y="712" width="119" height="232" rx="10"/></a>
-          <a href="lernpfad.html?bw=7" class="week-hotspot" data-icon-x="-775" data-title="BW 7 · Hydraulik" data-info="Rohrnetz, Pumpen und Ventile|Volumenstrom und Druckverlust|Hydraulischer Abgleich" aria-label="Blockwoche 7 öffnen"><rect x="762" y="712" width="119" height="232" rx="10"/></a>
-          <a href="lernpfad.html?bw=8" class="week-hotspot" data-icon-x="-899" data-title="BW 8 · Regelung" data-info="Steuerung und Sensorik|Regelstrategien|Hydraulischer Abgleich" aria-label="Blockwoche 8 öffnen"><rect x="886" y="712" width="119" height="232" rx="10"/></a>
-          <a href="lernpfad.html?bw=9" class="week-hotspot" data-icon-x="-1023" data-title="BW 9 · Effizienz" data-info="Energieeinsparung|Anlagenoptimierung|Förderung und Wirtschaftlichkeit" aria-label="Blockwoche 9 öffnen"><rect x="1010" y="712" width="119" height="232" rx="10"/></a>
-          <a href="lernpfad.html?bw=10" class="week-hotspot" data-icon-x="-1147" data-title="BW 10 · Wärmepumpe Grundlagen" data-info="Grundprinzip und Kältekreislauf|Wärmequellen|Komponenten und Leistungszahl" aria-label="Blockwoche 10 öffnen"><rect x="1134" y="712" width="119" height="232" rx="10"/></a>
-          <a href="lernpfad.html?bw=11" class="week-hotspot" data-icon-x="-1271" data-title="BW 11 · Wärmepumpe optimieren" data-info="Auslegung und Betriebsweise|COP, SCOP und Jahresarbeitszahl|Fehlersuche und Optimierung" aria-label="Blockwoche 11 öffnen"><rect x="1258" y="712" width="119" height="232" rx="10"/></a>
-          <a href="lernpfad.html?bw=12" class="week-hotspot" data-icon-x="-1395" data-title="BW 12 · Projekt & Anwendung" data-info="Anlagenplanung|Inbetriebnahme und Übergabe|Praxisbeispiele und Fachgespräch" aria-label="Blockwoche 12 öffnen"><rect x="1382" y="712" width="136" height="232" rx="10"/></a>
+          <a href="lernpfad.html?bw=5" class="week-hotspot" data-icon-x="-527" data-title="BW 5 · Abgassysteme I" data-info="Aufgabe und Arten von Abgassystemen|Naturzug, Förderdruck und Druckverluste|Werkstoffe und Querschnitt" aria-label="Blockwoche 5 öffnen"><rect x="514" y="712" width="119" height="232" rx="10"/></a>
+          <a href="lernpfad.html?bw=6" class="week-hotspot" data-icon-x="-651" data-title="BW 6 · Abgassysteme II" data-info="Feuchtebetrieb und Kondensat|Brandschutz und Abstände|Verbrennungsluft und Anlagenplanung" aria-label="Blockwoche 6 öffnen"><rect x="638" y="712" width="119" height="232" rx="10"/></a>
+          <a href="lernpfad.html?bw=7" class="week-hotspot" data-icon-x="-775" data-title="BW 7 · Abgasmessung" data-info="Messgrößen und Messgerät|Messung durchführen|Messwerte auswerten und Störungen erkennen" aria-label="Blockwoche 7 öffnen"><rect x="762" y="712" width="119" height="232" rx="10"/></a>
+          <a href="lernpfad.html?bw=8" class="week-hotspot" data-icon-x="-899" data-title="BW 8 · Wärmepumpe I" data-info="Grundprinzip und Kältekreislauf|Hauptbauteile und Leistungszahl|Eignungsprüfung eines Gebäudes" aria-label="Blockwoche 8 öffnen"><rect x="886" y="712" width="119" height="232" rx="10"/></a>
+          <a href="lernpfad.html?bw=9" class="week-hotspot" data-icon-x="-1023" data-title="BW 9 · Wärmepumpe II" data-info="Luft als Wärmequelle|Erdreich als Wärmequelle|Grundwasser und Wärmequellenvergleich" aria-label="Blockwoche 9 öffnen"><rect x="1010" y="712" width="119" height="232" rx="10"/></a>
+          <a href="lernpfad.html?bw=10" class="week-hotspot" data-icon-x="-1147" data-title="BW 10 · Wärmepumpe III" data-info="Betriebsweisen|Hydraulische Einbindung|Warmwasserbereitung und Systemplanung" aria-label="Blockwoche 10 öffnen"><rect x="1134" y="712" width="119" height="232" rx="10"/></a>
+          <a href="lernpfad.html?bw=11" class="week-hotspot" data-icon-x="-1271" data-title="BW 11 · Wärmepumpe IV" data-info="COP, SCOP und Jahresarbeitszahl|Betriebskosten und Umweltwirkung|Fehlersuche und Optimierung" aria-label="Blockwoche 11 öffnen"><rect x="1258" y="712" width="119" height="232" rx="10"/></a>
+          <a href="lernpfad.html?bw=12" class="week-hotspot" data-icon-x="-1395" data-title="BW 12 · Projekt & Abschluss" data-info="Wärmepumpenanlage auslegen|System auswählen und Kunden beraten|Inbetriebnahme, Übergabe und Abschluss" aria-label="Blockwoche 12 öffnen"><rect x="1382" y="712" width="136" height="232" rx="10"/></a>
         </svg>
 
         <div id="weekHoverInfo" class="week-hover-info" aria-live="polite">
@@ -249,15 +290,15 @@ footer{padding:20px 0;color:#6f8390;font-size:.82rem}
             <a class="week-map-btn" href="lernlandkarte-bw1.png" target="_blank"><span class="week-map-no">1</span><span><strong>BW 1 · Brennstoffe</strong><small>Lernlandkarte öffnen</small></span></a>
             <a class="week-map-btn" href="lernlandkarte-bw2.png" target="_blank"><span class="week-map-no">2</span><span><strong>BW 2 · Verbrennung</strong><small>Lernlandkarte öffnen</small></span></a>
             <a class="week-map-btn" href="lernlandkarte-bw3.png" target="_blank"><span class="week-map-no">3</span><span><strong>BW 3 · Heizöllagerung</strong><small>Lernlandkarte öffnen</small></span></a>
-            <a class="week-map-btn" href="lernlandkarte-bw4.png" target="_blank"><span class="week-map-no">4</span><span><strong>BW 4 · Brennstofflagerung</strong><small>Lernlandkarte öffnen</small></span></a>
-            <a class="week-map-btn" href="lernlandkarte-bw5.png" target="_blank"><span class="week-map-no">5</span><span><strong>BW 5 · Heizwert & Brennwert</strong><small>Lernlandkarte öffnen</small></span></a>
-            <a class="week-map-btn" href="lernlandkarte-bw6.png" target="_blank"><span class="week-map-no">6</span><span><strong>BW 6 · Abgastechnik</strong><small>Lernlandkarte öffnen</small></span></a>
-            <a class="week-map-btn" href="lernlandkarte-bw7.png" target="_blank"><span class="week-map-no">7</span><span><strong>BW 7 · Abgassysteme</strong><small>Lernlandkarte öffnen</small></span></a>
-            <a class="week-map-btn" href="lernlandkarte-bw8.png" target="_blank"><span class="week-map-no">8</span><span><strong>BW 8 · Abgasmessung</strong><small>Lernlandkarte öffnen</small></span></a>
-            <a class="week-map-btn" href="lernlandkarte-bw9.png" target="_blank"><span class="week-map-no">9</span><span><strong>BW 9 · Wärmepumpe Grundlagen</strong><small>Lernlandkarte öffnen</small></span></a>
-            <a class="week-map-btn" href="lernlandkarte-bw10.png" target="_blank"><span class="week-map-no">10</span><span><strong>BW 10 · Wärmepumpentechnik</strong><small>Lernlandkarte öffnen</small></span></a>
-            <a class="week-map-btn" href="lernlandkarte-bw11.png" target="_blank"><span class="week-map-no">11</span><span><strong>BW 11 · Wärmepumpen optimieren</strong><small>Lernlandkarte öffnen</small></span></a>
-            <a class="week-map-btn" href="lernlandkarte-bw12.png" target="_blank"><span class="week-map-no">12</span><span><strong>BW 12 · Wärmepumpenprojekt</strong><small>Lernlandkarte öffnen</small></span></a>
+            <a class="week-map-btn" href="lernlandkarte-bw4.png" target="_blank"><span class="week-map-no">4</span><span><strong>BW 4 · Festbrennstofflager</strong><small>Lernlandkarte öffnen</small></span></a>
+            <a class="week-map-btn" href="lernlandkarte-bw5.png" target="_blank"><span class="week-map-no">5</span><span><strong>BW 5 · Abgassysteme I</strong><small>Lernlandkarte öffnen</small></span></a>
+            <a class="week-map-btn" href="lernlandkarte-bw6.png" target="_blank"><span class="week-map-no">6</span><span><strong>BW 6 · Abgassysteme II</strong><small>Lernlandkarte öffnen</small></span></a>
+            <a class="week-map-btn" href="lernlandkarte-bw7.png" target="_blank"><span class="week-map-no">7</span><span><strong>BW 7 · Abgasmessung</strong><small>Lernlandkarte öffnen</small></span></a>
+            <a class="week-map-btn" href="lernlandkarte-bw8.png" target="_blank"><span class="week-map-no">8</span><span><strong>BW 8 · Wärmepumpe I</strong><small>Lernlandkarte öffnen</small></span></a>
+            <a class="week-map-btn" href="lernlandkarte-bw9.png" target="_blank"><span class="week-map-no">9</span><span><strong>BW 9 · Wärmepumpe II</strong><small>Lernlandkarte öffnen</small></span></a>
+            <a class="week-map-btn" href="lernlandkarte-bw10.png" target="_blank"><span class="week-map-no">10</span><span><strong>BW 10 · Wärmepumpe III</strong><small>Lernlandkarte öffnen</small></span></a>
+            <a class="week-map-btn" href="lernlandkarte-bw11.png" target="_blank"><span class="week-map-no">11</span><span><strong>BW 11 · Wärmepumpe IV</strong><small>Lernlandkarte öffnen</small></span></a>
+            <a class="week-map-btn" href="lernlandkarte-bw12.png" target="_blank"><span class="week-map-no">12</span><span><strong>BW 12 · Projekt & Abschluss</strong><small>Lernlandkarte öffnen</small></span></a>
           </div>
         </div>
       </div>
@@ -301,10 +342,10 @@ footer{padding:20px 0;color:#6f8390;font-size:.82rem}
 <script>
 (function(){
   const dlg=document.getElementById('learningMapDialog');
-  const openBtn=document.querySelector('.learningmap-hotspot');
+  const openBtns=[...document.querySelectorAll('.learningmap-hotspot,.learningmap-card')];
   const closeBtn=document.getElementById('closeLearningMap');
-  if(dlg && openBtn && closeBtn){
-    openBtn.addEventListener('click',()=>dlg.showModal());
+  if(dlg && openBtns.length && closeBtn){
+    openBtns.forEach(openBtn=>openBtn.addEventListener('click',e=>{e.preventDefault();dlg.showModal();}));
     closeBtn.addEventListener('click',()=>dlg.close());
     dlg.addEventListener('click',e=>{if(e.target===dlg) dlg.close();});
   }
