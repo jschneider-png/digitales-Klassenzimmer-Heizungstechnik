@@ -368,6 +368,16 @@ footer{background:#0f273a;color:#aec1cf;padding:30px 0;margin-top:28px}.footer-r
  .comb-global-timer .timer-label{font-size:.58rem}
  .comb-global-timer .timer-value{font-size:1rem}
 }
+
+/* Nur BW 2 · Stunde 2: Brennstoffbedarf */
+.fuel-deck{background:white;border:1px solid #dbe5ec;border-radius:17px;overflow:hidden}
+.fuel-deck-top{padding:15px 19px;background:#123c58;color:white;display:flex;justify-content:space-between;gap:10px;align-items:center}
+.fuel-slide{display:none;padding:24px;min-height:300px}.fuel-slide.active{display:block}.fuel-slide h3{font-size:1.55rem;color:#173c55;margin:0 0 14px}
+.fuel-slide p,.fuel-slide li{line-height:1.65}.fuel-formula{font-size:1.18rem;background:#eaf3f8;border-left:4px solid #23658b;border-radius:10px;padding:15px;overflow-wrap:anywhere;margin:14px 0}
+.fuel-data{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.fuel-data span{background:#f0f6fa;padding:11px;border-radius:10px}
+.fuel-slide-nav{display:flex;justify-content:space-between;align-items:center;gap:8px;border-top:1px solid #dbe5ec;padding:14px 19px}
+.fuel-exercise{padding:17px;border:1px solid #dbe5ec;background:#fff;border-radius:14px;margin:12px 0}.fuel-exercise h4{margin:0 0 9px}.fuel-exercise details{margin-top:12px;background:#eff5f8;padding:11px;border-radius:9px}.fuel-exercise summary{cursor:pointer;font-weight:800;color:#23658b}
+@media(max-width:600px){.fuel-data{grid-template-columns:1fr}.fuel-slide{padding:18px}}
 </style><style id="plainGrade12">
 :root{--radius:8px} body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
 .plain-sequence{margin:20px 0 28px;padding:22px;border:1px solid #cbd5e1;border-radius:8px;background:#fff;color:#1e293b;box-shadow:none}
@@ -1078,12 +1088,41 @@ function waermemengeFormelnHtml(){
  '<div class="term"><strong>Rechenbeispiel (Heizöl)</strong><p><strong>Aufgabe:</strong> Wie groß ist der Energieinhalt von 150 l Heizöl bei einem angenommenen Heizwert von 10 kWh/l?</p><p><strong>Gegeben:</strong><br>V = 150 l<br>H<sub>i</sub> = 10 kWh/l</p><p><strong>Gesucht:</strong><br>Q in kWh</p><p><strong>Formel:</strong><br><code>Q = V · H<sub>i</sub></code></p><p><strong>Einsetzen:</strong><br><code>Q = 150 l · 10 kWh/l</code></p><p><strong>Ergebnis:</strong><br><code>Q = 1.500 kWh</code></p><p class="small-note">Das ist der Energieinhalt des Brennstoffs. Die tatsächlich nutzbare Wärme hängt vom Wirkungsgrad der Anlage ab.</p></div>'+
  '</section>';
 }
+
+function fuelLessonHtml(){
+ const slides=[
+ ['Der Kundenauftrag','<p><strong>Situation:</strong> Bei einer Öltanküberprüfung wird Korrosion festgestellt. Der vorhandene Öltank muss saniert werden. Der Kunde möchte wissen, wie viel Heizöl seine Anlage ungefähr pro Jahr benötigt.</p><p><strong>Unser Auftrag:</strong> Schätze zuerst den Verbrauch. Berechne danach den Brennstoffbedarf getrennt für <strong>Raumheizung</strong> und <strong>Trinkwassererwärmung</strong>.</p>'],
+ ['Die Daten aus dem Auftrag','<div class="fuel-data"><span>Ölheizkessel: <strong>36,0 kW</strong></span><span>Jahresnutzungsgrad Heizung: <strong>88 %</strong></span><span>Vorrats-Wasserheizer: <strong>180 l</strong></span><span>Jahresnutzungsgrad Warmwasser: <strong>75 %</strong></span><span>Warmwasserverbrauch: <strong>50 m³/a</strong></span><span>Temperatur: <strong>10 °C → 60 °C</strong></span></div><p>Im Keller steht ein Heizöltank mit 9.000 l Nennvolumen. <strong>Wichtig:</strong> Tankvolumen ist nicht gleich Jahresverbrauch!</p>'],
+ ['Erst nachdenken – dann rechnen','<p><strong>7-Minuten-Kundenauftrag:</strong></p><ol><li>Welche Faktoren beeinflussen den Brennstoffverbrauch?</li><li>Wie viele Liter Heizöl werden ungefähr pro Jahr benötigt? Notiere deinen Schätzwert.</li><li>Für welche zwei Aufgaben im Haus wird Brennstoff gebraucht?</li></ol><p>Vergleiche deine Vermutung mit einer Partnerin oder einem Partner. <strong>Die Schätzung wird noch nicht bewertet.</strong></p>'],
+ ['Formel 1: Wärmebedarf Warmwasser','<p>Wir nutzen die bekannte Formel aus der Wärmelehre nur als Werkzeug. Hier geht es darum, daraus einen <strong>Jahresbrennstoffbedarf</strong> zu ermitteln.</p><div class="fuel-formula"><strong>Q<sub>WW</sub> = V · 1,163 · Δϑ</strong><br><small>V in m³/a · 1,163 kWh/(m³·K) · Δϑ in K → Q in kWh/a</small></div><p>Temperaturdifferenz aus dem Auftrag: <strong>60 − 10 = 50 K</strong>.</p>'],
+ ['Formel 2: Verluste und Brennstoff','<div class="fuel-formula"><strong>E<sub>B</sub> = Q<sub>Nutz</sub> / η<sub>a</sub></strong><br><small>Jahresnutzungsgrad als Dezimalzahl einsetzen: 75 % = 0,75.</small></div><div class="fuel-formula"><strong>B = E<sub>B</sub> / H<sub>i</sub></strong><br><small>B in l/a bei H<sub>i</sub> in kWh/l.</small></div><p>Für die ersten Öl-Aufgaben verwenden wir den <strong>vereinfachten Übungswert H<sub>i</sub> = 10 kWh/l</strong>. Der konkrete Tabellenbuchwert kann abweichen.</p>'],
+ ['Formel 3: Raumheizung und Kosten','<p>Für die jährliche Gebäudeheizung benötigen wir zusätzlich eine <strong>angenommene Vollbenutzungsstundenzahl</strong>. Die Nennleistung allein ergibt noch keinen Jahresverbrauch.</p><div class="fuel-formula"><strong>Q<sub>H,a</sub> ≈ P · t<sub>V</sub></strong><br><strong>B<sub>H</sub> ≈ Q<sub>H,a</sub> / (η<sub>H</sub> · H<sub>i</sub>)</strong></div><div class="fuel-formula"><strong>Kosten = Brennstoffmenge · Preis je Einheit</strong></div><p><strong>Gesamtbedarf:</strong> B<sub>gesamt</sub> = B<sub>H</sub> + B<sub>WW</sub>. Nutzungsgrade von Heizung und Warmwasser getrennt anwenden.</p>'],
+ ['Gemeinsam: der erste Rechenschritt','<p>Aus dem Kundenauftrag: V = 50 m³/a, Δϑ = 50 K.</p><div class="fuel-formula">Q<sub>WW</sub> = 50 · 1,163 · 50 = <strong>2.907,5 kWh/a</strong></div><p>Jetzt du: Teile durch 0,75 und anschließend durch 10 kWh/l. Wie viele Liter Heizöl pro Jahr entfallen ungefähr auf das Warmwasser?</p><p><strong>Dann geht es mit den leichten Übungsaufgaben weiter.</strong></p>']
+ ];
+ return '<section class="fuel-deck" aria-label="Präsentation zum Brennstoffbedarf"><div class="fuel-deck-top"><strong>Präsentation · Kundenauftrag Brennstoffbedarf</strong><span id="fuelCounter">1 / '+slides.length+'</span></div>'+slides.map((x,i)=>'<article class="fuel-slide'+(i===0?' active':'')+'" data-slide="'+i+'"><h3>'+x[0]+'</h3>'+x[1]+'</article>').join('')+'<div class="fuel-slide-nav"><button type="button" class="btn secondary" id="fuelPrev">← Zurück</button><span class="small-note">Folie für Folie gemeinsam erarbeiten</span><button type="button" class="btn primary" id="fuelNext">Weiter →</button></div></section>'+
+ '<section class="unit-box"><h3>Leichte Übungsaufgaben · erst selbst rechnen</h3><p>Nach der Präsentation übst du in kleinen Schritten. Öffne den Lösungsweg erst, wenn du gerechnet hast.</p>'+
+ '<div class="fuel-exercise"><h4>1 · Warmwasser: Temperaturdifferenz</h4><p>Trinkwasser wird von 8 °C auf 55 °C erwärmt. Wie groß ist Δϑ?</p><details><summary>Lösung und Rechenweg anzeigen</summary><p>Δϑ = 55 − 8 = <strong>47 K</strong>.</p></details></div>'+
+ '<div class="fuel-exercise"><h4>2 · Warmwasser: Jahreswärmebedarf (Amateur)</h4><p>Eine Familie benötigt 50 m³ Warmwasser pro Jahr; Erwärmung von 8 °C auf 55 °C. Berechne Q<sub>WW</sub>.</p><details><summary>Lösung und Rechenweg anzeigen</summary><p>Q = 50 · 1,163 · 47 = <strong>2.733,05 kWh/a</strong>.</p></details></div>'+
+ '<div class="fuel-exercise"><h4>3 · Jahresnutzungsgrad verstehen</h4><p>Für Warmwasser sind 9.019 kWh/a Nutzwärme nötig. η<sub>a</sub> = 60 %. Berechne zunächst die benötigte Brennstoffenergie.</p><details><summary>Lösung und Rechenweg anzeigen</summary><p>E<sub>B</sub> = 9.019 / 0,60 = <strong>15.031,67 kWh/a</strong>.</p></details></div>'+
+ '<div class="fuel-exercise"><h4>4 · Brennstoffmenge ausrechnen (Amateur)</h4><p>Nutze das Ergebnis aus Aufgabe 3 und den Übungswert Heizöl EL: H<sub>i</sub> = 10 kWh/l.</p><details><summary>Lösung und Rechenweg anzeigen</summary><p>B = 15.031,67 / 10 = <strong>ca. 1.503 l/a</strong>.</p></details></div>'+
+ '<div class="fuel-exercise"><h4>5 · Zurück zum Kundenauftrag</h4><p>Berechne den jährlichen Heizölbedarf für die Trinkwassererwärmung aus der Präsentation und vergleiche ihn mit deiner anfänglichen Schätzung. Für die Raumheizung fehlt noch eine Vollbenutzungsstundenzahl.</p><details><summary>Lösung und Rechenweg anzeigen</summary><p>Q<sub>WW</sub> = 2.907,5 kWh/a; E<sub>B,WW</sub> = 2.907,5 / 0,75 = 3.876,67 kWh/a; B<sub>WW</sub> = 3.876,67 / 10 = <strong>ca. 388 l/a</strong>. Das ist nur Warmwasser, nicht der gesamte Jahresverbrauch.</p></details></div></section>'+
+ '<section class="unit-box"><h3>Danach: differenziert weiterüben</h3><p><strong>Amateur:</strong> Wärmebedarf → Jahresnutzungsgrad → Heizölbedarf. <strong>Profi:</strong> Mehrfamilienhaus, Propan, Kosten und kombinierter Bedarf. <strong>Überflieger:</strong> Duschkosten und Energieträgervergleich.</p><p>Die Aufgaben stammen inhaltlich aus deinen Arbeitsblättern. Für Preisaufgaben den Preis aus der Aufgabenstellung oder einen aktuell recherchierten Preis verwenden; keine veralteten Preiswerte als aktuelle Preise behandeln.</p></section>';
+}
+function initFuelLesson(root){
+ let idx=0,ss=Array.from(root.querySelectorAll('.fuel-slide')),prev=root.querySelector('#fuelPrev'),next=root.querySelector('#fuelNext'),counter=root.querySelector('#fuelCounter');
+ function draw(){ss.forEach((x,i)=>x.classList.toggle('active',i===idx));counter.textContent=(idx+1)+' / '+ss.length;prev.disabled=idx===0;next.disabled=idx===ss.length-1;}
+ prev.onclick=()=>{idx=Math.max(0,idx-1);draw();};next.onclick=()=>{idx=Math.min(ss.length-1,idx+1);draw();};draw();
+}
+
 function openUnit(bw,i){
  let u=LERNEINHEITEN[bw][i], bd=document.getElementById('unitBackdrop'), body=document.getElementById('unitBody');
  document.getElementById('unitKicker').textContent='Blockwoche '+bw+' · Stunde '+(i+1);
  document.getElementById('unitTitle').textContent=u.title;
  const combustionSpecial=(bw===2 && i===2);
- if(combustionSpecial){
+ if(bw===2 && i===1){
+   body.innerHTML=fuelLessonHtml()+extraContentHtml(bw,i)+'<section class="unit-box"><h3>Materialien zu dieser Stunde</h3>'+materialButtons(bw,i+1)+'</section><div class="unit-footer"><span class="small-note">Präsentation und Aufgaben bearbeitet?</span><button class="btn primary" id="unitDone" type="button">✓ Stunde erledigt</button></div>';
+   initFuelLesson(body);
+ }else if(combustionSpecial){
    body.innerHTML='<section class="unit-box"><h3>Leitfrage</h3><p>'+esc(u.question)+'</p></section>'+extraContentHtml(bw,i)+'<section class="unit-box"><h3>Materialien zu dieser Stunde</h3>'+materialButtons(bw,i+1)+'</section><div class="unit-footer"><span class="small-note">Arbeitsblätter vollständig? Dann Stunde abschließen.</span><button class="btn primary" id="unitDone" type="button">✓ Stunde erledigt</button></div>';
    initCombustionLesson(body.querySelector('#combLesson'));
  }else{
