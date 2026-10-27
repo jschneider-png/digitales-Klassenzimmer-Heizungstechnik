@@ -1146,7 +1146,6 @@ function initFuelLesson(root){
  prev.onclick=()=>{idx=Math.max(0,idx-1);draw();};next.onclick=()=>{idx=Math.min(ss.length-1,idx+1);draw();};draw();
 }
 
-
 function openUnit(bw,i){
  let u=LERNEINHEITEN[bw][i], bd=document.getElementById('unitBackdrop'), body=document.getElementById('unitBody');
  document.getElementById('unitKicker').textContent='Blockwoche '+bw+' · Stunde '+(i+1);
