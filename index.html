@@ -158,30 +158,6 @@ footer{padding:20px 0;color:#6f8390;font-size:.82rem}
 @media(max-width:440px){.week-map-grid{grid-template-columns:1fr}}
 
 
-/* Sichtbare Bildkacheln für Lernlandkarten und Jahresreise */
-.room-feature{
-  position:absolute;z-index:6;display:block;text-decoration:none;
-  border-radius:14px;overflow:hidden;border:2px solid rgba(255,255,255,.88);
-  box-shadow:0 8px 22px rgba(19,59,82,.22);
-  background:#fff;line-height:1.2;transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease
-}
-.room-feature:hover,.room-feature:focus-visible{
-  transform:translateY(-3px) scale(1.012);box-shadow:0 12px 28px rgba(19,59,82,.29);
-  border-color:#9bd6ee;outline:none
-}
-.room-feature img{display:block;width:100%;height:100%;object-fit:cover}
-.room-feature-label{
-  position:absolute;left:0;right:0;bottom:0;padding:8px 10px;
-  background:linear-gradient(180deg,rgba(10,55,83,0),rgba(10,55,83,.92));
-  color:#fff;font-size:.78rem;font-weight:900;text-shadow:0 1px 2px rgba(0,0,0,.3)
-}
-.learningmap-feature{left:10.7%;top:9.8%;width:26.4%;height:34.2%}
-.journey-feature{right:2.9%;top:8.8%;width:21.2%;height:28.8%}
-@media(max-width:760px){
- .room-feature-label{font-size:.58rem;padding:5px 6px}
- .room-feature{border-width:1px;border-radius:7px}
-}
-
 .learning-dialog-head{border-bottom:1px solid #c9dfe9;padding-bottom:12px}
 .week-map-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
 .week-map-btn{position:relative;overflow:hidden;background:#f8fcfe}
@@ -222,15 +198,6 @@ footer{padding:20px 0;color:#6f8390;font-size:.82rem}
     <div class="classroom-shell">
       <div class="room">
         <img src="startbild-heizungstechnik-neu.png?v=20261025-1500" alt="Virtuelles Klassenzimmer Heizungstechnik mit integrierter Lernlandkarte, Jahresreise und zwölf Blockwochen">
-        <a href="#" class="room-feature learningmap-feature learningmap-card" aria-label="Lernlandkarten der 12 Blockwochen öffnen">
-          <img src="lernlandkarte-startseite.svg?v=20261027" alt="Lernlandkarte Heizungstechnik – 12 Blockwochen">
-          <span class="room-feature-label">Lernlandkarten · 12 Blockwochen öffnen</span>
-        </a>
-        <a href="jahresreise-karte.html" class="room-feature journey-feature" aria-label="Jahresreise Heizungstechnik öffnen">
-          <img src="jahresreise.png?v=20261027" alt="Jahresreise Heizungstechnik">
-          <span class="room-feature-label">Jahresreise öffnen</span>
-        </a>
-
         <svg class="hotspot-map" viewBox="0 0 1536 1024" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-label="Anklickbare Bereiche im virtuellen Klassenzimmer">
           <!-- Lernlandkarte: exakt das sichtbare Poster als Klickfläche -->
           <a href="#" class="learningmap-hotspot" aria-label="Lernlandkarte Heizungstechnik öffnen">
