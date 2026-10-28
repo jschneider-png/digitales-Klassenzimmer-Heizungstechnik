@@ -1249,7 +1249,7 @@ function materialLink(bw,h,key){
  return '';
 }
 function materialButtons(bw,h){
- const buttons=[['arbeitsblaetter','Arbeitsblätter'],['zusatzmaterial','Zusatzmaterial']];
+ const buttons=[['arbeitsblaetter','Arbeitsblätter'],...(Number(bw)===2 && Number(h)===2 ? [['uebung','Übung']] : []),['zusatzmaterial','Zusatzmaterial']];
  return '<div class="material-link-row">'+buttons.map(([key,label])=>{
    const url=materialLink(bw,h,key);
    return url?'<a class="btn outline material-link" target="_blank" rel="noopener noreferrer" href="'+esc(url)+'">'+label+' ↗</a>':'<span class="btn outline material-link material-unset" title="Noch kein Link hinterlegt">'+label+' · Link folgt</span>';
