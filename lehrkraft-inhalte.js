@@ -23,7 +23,7 @@ window.LEHRKRAFT = {
   // Bei leerem Link wird der Button als "Link folgt" dargestellt.
   STUNDEN_MATERIAL: {
     1: { 1: { arbeitsblaetter: "", zusatzmaterial: "" }, 2: { arbeitsblaetter: "", zusatzmaterial: "" }, 3: { arbeitsblaetter: "", zusatzmaterial: "" }, 4: { arbeitsblaetter: "", zusatzmaterial: "" } },
-    2: { 1: { arbeitsblaetter: "", zusatzmaterial: "" }, 2: { arbeitsblaetter: "", zusatzmaterial: "" }, 3: { arbeitsblaetter: "", zusatzmaterial: "" }, 4: { arbeitsblaetter: "", zusatzmaterial: "" } },
+    2: { 1: { arbeitsblaetter: "", zusatzmaterial: "" }, 2: { arbeitsblaetter: "https://lernplattform.bycs.de/mod/resource/view.php?id=104083319", zusatzmaterial: "bw2-s2-tafelbild-jahresheizoelbedarf.html" }, 3: { arbeitsblaetter: "", zusatzmaterial: "" }, 4: { arbeitsblaetter: "", zusatzmaterial: "" } },
     3: { 1: { arbeitsblaetter: "", zusatzmaterial: "" }, 2: { arbeitsblaetter: "", zusatzmaterial: "" }, 3: { arbeitsblaetter: "", zusatzmaterial: "" }, 4: { arbeitsblaetter: "", zusatzmaterial: "" } },
     4: { 1: { arbeitsblaetter: "", zusatzmaterial: "" }, 2: { arbeitsblaetter: "", zusatzmaterial: "" }, 3: { arbeitsblaetter: "", zusatzmaterial: "" }, 4: { arbeitsblaetter: "", zusatzmaterial: "" } },
     5: { 1: { arbeitsblaetter: "", zusatzmaterial: "" }, 2: { arbeitsblaetter: "", zusatzmaterial: "" }, 3: { arbeitsblaetter: "", zusatzmaterial: "" }, 4: { arbeitsblaetter: "", zusatzmaterial: "" } },
